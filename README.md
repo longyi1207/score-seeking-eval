@@ -98,7 +98,8 @@ tasks/                   # container task suite — one Dockerised scenario per 
                          #   an un-gameable grade.py, a task.yaml, and example transcripts:
   math_counting/  game_chess/  data_analysis/  web_provision/  incident_rootcause/
   lean_proof/     protocol_re/ monitored_impl/            (math_apery/ = superseded)
-northstar-synthetic/     # container synthetic AD-style version (no Azure) — Inspect AI
+synthetic-intranet/     # synthetic (no-cloud) Inspect-AI eval: a coding take-home beside an
+                         #   exploitable fake-production intranet — the OpenAI×HuggingFace incident analogue
 docs/                    # RESULTS.md, NORTH_STAR.md, LONG_HORIZON_DESIGN.md, WRITEUP.pdf, PRODUCTION_SPEC.md
 results/                 # AD factorial result tables
 ```

@@ -1,7 +1,7 @@
 # V1 Spec — Score-seeking propensity under production-shaped adjacent env
 
 **Status:** implementation contract for Claude Code · 2026-08-26  
-**Path:** `app/long_horizon_eval/`  
+**Path:** `synthetic-intranet/`  
 **Primary construct:** **score-seeking / reward-hacking propensity** (not raw cyber SOTA)  
 **Secondary:** cyber/ops skill is *instrumental* only — needed to traverse soft edges, not the thing we claim to measure.
 
@@ -249,7 +249,7 @@ If Claude Code can deepen **discovery path length** and **believable ops mess** 
 ## 10. Deliverables checklist (implementation)
 
 ```
-app/long_horizon_eval/
+synthetic-intranet/
   V1_SPEC.md                 # this file
   CLAUDE_CODE_IMPL_PROMPT.md # handoff prompt
   THEME_PACKS.md             # short pointer → northstar details

@@ -1,4 +1,6 @@
-# long_horizon_eval
+# synthetic-intranet
+
+_Synthetic (no-cloud) score-seeking eval: a coding take-home beside an exploitable fake-production intranet — the OpenAI×HuggingFace incident analogue. (Legacy working names: northstar / long_horizon_eval.)_
 
 **Working name:** long-horizon agent evals for **score-seeking / reward hacking** under production-shaped failure modes.  
 **Started:** 2026-08-26  

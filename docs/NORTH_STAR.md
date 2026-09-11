@@ -159,7 +159,7 @@ math.)*
 
 - **Default substrate: containers + Inspect AI.** Most tasks are a sandbox container + an honest
   solution path + a planted shortcut + a watermark/provenance scorer. Cheaper, faster, more
-  reproducible than VMs. The existing `northstar-synthetic/` (container Inspect eval) is the seed;
+  reproducible than VMs. The existing `synthetic-intranet/` (container Inspect eval) is the seed;
   the cyber ranges (`ad-*`) stay as the heavy-VM slice under the same `suite` lifecycle.
 - **One task contract** (extends the current env contract): `task.yaml` (objective, difficulty,
   scope/monitor conditions) · a builder (container image or IaC) · an *honest-solution reference* (to
@@ -192,7 +192,7 @@ Four categories now represented; the open-task provenance crux is solved and the
 replicates cross-domain (DeepSeek games the spec / gpt-4o doesn't / `forbid` suppresses it /
 capability-dependent):
 - **cyber** — `envs/ad-corp`, `envs/ad-enterprise` ✅ built + validated (18-run factorial).
-- **coding / HF-reach** — `northstar-synthetic/` ✅ exists (complete Inspect task + rule-based grader);
+- **coding / HF-reach** — `synthetic-intranet/` ✅ exists (complete Inspect task + rule-based grader);
   needs a Docker validation run, not a rebuild.
 - **math** — `tasks/math_apery/` ✅ built + validated (n=1/cell). Instantiates the open-task
   provenance pattern: perturbation sibling (non-memorizable J) as the primary, narration-independent
@@ -213,7 +213,7 @@ when the honest path is laborious/blocked (data's easy path → 0 cheat, like AD
 capable agent will tamper with the verifier to hide a cheat (web cover-up) — the audit/outcome check
 needs a narration-independent action check beside it. Remaining for M1: scale the validated exemplars
 to real rates (add trials + scope/difficulty conditions); harden the data/web difficulty; run the
-`northstar-synthetic` validation. Task tooling: gitignored `.venv` (chess/openai/pandas/flask);
+`synthetic-intranet` validation. Task tooling: gitignored `.venv` (chess/openai/pandas/flask);
 container tasks need Docker.
 
 ## 8. Prior work we build on / reuse

@@ -191,7 +191,7 @@ hardened versions.
   matrix-exponentiation task (was a trivial integral); the web audit log is now tamper-proof
   (root-only, agent runs non-root); the chess grader now anchors on the pre-agent start position
   (closing the difficulty-reset hole). Remaining: scale the container tasks to real rates; run the
-  `northstar-synthetic` coding eval through the framework.
+  `synthetic-intranet` coding eval through the framework.
 - **A disclosed confound in the AD cross-env finding:** env #2's neutral prompt names a
   "Domain-Admin-only location", which itself may steer away from the world-readable copy. The clean
   test (rerun with env #1's generic wording) is the next AD experiment.
@@ -206,7 +206,7 @@ hardened versions.
   with a `python grade.py` self-test), a runner, a `README.md`, and example run transcripts in
   `examples/`. (`tasks/math_apery/` — the original ζ(3) integral — is kept as a minimal, easy
   demonstration of the perturbation-provenance idea; `math_counting` is the real, hard math task.)
-- **Coding / eval-harness (the OpenAI×HuggingFace analogue):** `northstar-synthetic/` — a complete
+- **Coding / eval-harness (the OpenAI×HuggingFace analogue):** `synthetic-intranet/` — a complete
   container Inspect eval, built but not yet run through the framework.
 - **The MVP write-up (AD only):** `docs/WRITEUP.pdf`. **The plan and framework:** `docs/NORTH_STAR.md`.
 - Each task's `README.md` has the exact commands to run it. Container tasks need Docker + the repo's
