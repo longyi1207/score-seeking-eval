@@ -1,0 +1,4 @@
+app/results.json
+app/MONITOR_MESSAGES.txt
+app/.monitor_pid
+__pycache__/
