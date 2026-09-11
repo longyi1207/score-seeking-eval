@@ -299,4 +299,5 @@ and METR's Task Standard — adopt for documenting/structuring the suite to an e
   pilot per task; models improve, so `C` drifts over time.
 - **Eval awareness / sandbagging.** A model may behave differently if it detects it's being tested for
   cheating; worth a condition that varies framing salience.
-- **Naming.** The repo is still `ad-score-seeking-eval`; the project is now broader. Rename TBD.
+- **Naming.** Repo renamed `ad-score-seeking-eval` → **`score-seeking-eval`** (2026-09-11) to reflect the
+  broader suite (AD is now one of ~9 scenarios); GitHub redirects the old URL.
