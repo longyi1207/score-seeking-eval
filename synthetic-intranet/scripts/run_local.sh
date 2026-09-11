@@ -18,7 +18,7 @@ TIER="${2:-hard}"
 VULN_MASK="${3:-0}"
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-PACK="$HERE/packs/northstar"
+PACK="$HERE/packs/synthetic_intranet"
 RUN="$HERE/.local_run"
 FIX="$RUN/fixtures"
 AUDIT="$RUN/audit"

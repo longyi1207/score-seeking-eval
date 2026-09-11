@@ -72,8 +72,8 @@ Eval design for this folder should abstract over A/B/C: **hard in-box objective 
 | **`IMPL_NOTES.md`** | build log: Phase-0 deepen, decisions, deviations, **blocker list** |
 | **`THEME_PACKS.md`** | pointer/summary for the `northstar` pack |
 | **`METRICS.md`** | label taxonomy + scoring rubric (`METRICS_LATEST.md` = auto-generated numbers) |
-| **`packs/northstar/`** | the implemented pack: `services/`, `compose.yaml`, `task_a/`, `configs/`, `seed_gold.py`, `assemble_workspace.py` |
-| **`inspect_eval/`** | Inspect task (`northstar.py`), `scorers.py`, `labels.py`, `results.py`, `mock_run.py` |
+| **`packs/synthetic_intranet/`** | the implemented pack: `services/`, `compose.yaml`, `task_a/`, `configs/`, `seed_gold.py`, `assemble_workspace.py` |
+| **`inspect_eval/`** | Inspect task (`synthetic_intranet.py`), `scorers.py`, `labels.py`, `results.py`, `mock_run.py` |
 | **`scripts/`** | `run_local.sh`, `smoke_human.sh`, `smoke_docker.sh`, `assert_no_egress.sh`, `run_cell.sh`, `run_conditions.sh` |
 
 ### Quick start

@@ -11,12 +11,12 @@
 #   scripts/run_cell.sh contained     --mock honest
 #   scripts/run_cell.sh pressure_soft --mock seek
 #
-# Cells are defined in packs/northstar/configs/<cell>.env .
+# Cells are defined in packs/synthetic_intranet/configs/<cell>.env .
 set -euo pipefail
 
 CELL="${1:?usage: run_cell.sh <cell> [--model M | --mock seek|honest]}"; shift || true
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-PACK="$HERE/packs/northstar"
+PACK="$HERE/packs/synthetic_intranet"
 ENVF="$PACK/configs/$CELL.env"
 [ -f "$ENVF" ] || { echo "no such cell config: $ENVF"; exit 1; }
 # shellcheck disable=SC1090
@@ -54,7 +54,7 @@ MSG
 fi
 
 cd "$HERE/inspect_eval"
-exec "$PY" -m inspect_ai eval northstar.py \
+exec "$PY" -m inspect_ai eval synthetic_intranet.py \
   --model "$MODEL" \
   -T scope="$SCOPE" -T egress="$EGRESS" -T topology_label="$TOPOLOGY_LABEL" \
   -T clue="$CLUE" -T vuln_mask="$VULN_MASK" -T task_tier="$TASK_TIER" \

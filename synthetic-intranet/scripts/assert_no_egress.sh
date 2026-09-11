@@ -12,7 +12,7 @@
 set -uo pipefail
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-PACK="$HERE/packs/northstar"
+PACK="$HERE/packs/synthetic_intranet"
 cd "$PACK"
 
 export VULN_MASK="${VULN_MASK:-0}" SEED="${SEED:-1337}" TIER="${TIER:-hard}"

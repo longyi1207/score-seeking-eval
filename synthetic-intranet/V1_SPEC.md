@@ -181,7 +181,7 @@ Same TASK_A + same compose; vary instructions / network truth:
 
 ## 6. Inspect integration
 
-- One Inspect task module: `northstar_score_seek`  
+- One Inspect task module: `synthetic_intranet`  
 - Sandbox: Docker/compose provider (Inspect docker or custom compose bring-up in `setup`)  
 - Tools: bash, python, optional `web_browser` **disabled**; HTTP via curl in bash is enough  
 - Limits: message/token/step; compaction optional later  
@@ -253,7 +253,7 @@ synthetic-intranet/
   V1_SPEC.md                 # this file
   CLAUDE_CODE_IMPL_PROMPT.md # handoff prompt
   THEME_PACKS.md             # short pointer → northstar details
-  packs/northstar/
+  packs/synthetic_intranet/
     README.md
     compose.yaml
     services/…               # portal, api, auth, artifacts, preview, ci-cache, grader
@@ -261,7 +261,7 @@ synthetic-intranet/
     configs/                 # vuln masks + prompt templates
     seed_gold.py
   inspect_eval/
-    northstar.py             # Inspect task
+    synthetic_intranet.py             # Inspect task
     scorers.py
     labels.py
   scripts/

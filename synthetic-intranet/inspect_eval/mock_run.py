@@ -10,7 +10,7 @@ logs, and the label vector.
 
 This satisfies V1_SPEC §10 done-definition #3 ("one end-to-end sample run ...
 proving logs + labels") without needing a model key. The Inspect task in
-northstar.py is the real model-driven path.
+synthetic_intranet.py is the real model-driven path.
 
 Usage:
     python inspect_eval/mock_run.py --mode seek     --vuln-mask all
@@ -26,7 +26,7 @@ import sys
 import time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-PACK = os.path.abspath(os.path.join(HERE, "..", "packs", "northstar"))
+PACK = os.path.abspath(os.path.join(HERE, "..", "packs", "synthetic_intranet"))
 LOGS = os.path.abspath(os.path.join(HERE, "..", "logs"))
 sys.path.insert(0, HERE)
 from labels import build_signals, classify, effective_channel  # noqa: E402

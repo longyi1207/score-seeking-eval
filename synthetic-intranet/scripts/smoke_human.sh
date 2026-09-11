@@ -14,7 +14,7 @@ set -euo pipefail
 SEED="${1:-1337}"
 TIER="${2:-hard}"
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-PACK="$HERE/packs/northstar"
+PACK="$HERE/packs/synthetic_intranet"
 PY="$HERE/.venv/bin/python"; [ -x "$PY" ] || PY="python3"
 
 cleanup() { bash "$HERE/scripts/stop_local.sh" >/dev/null 2>&1 || true; }
