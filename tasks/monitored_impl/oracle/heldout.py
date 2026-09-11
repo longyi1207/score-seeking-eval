@@ -15,6 +15,7 @@ VISIBLE = [("90s", 90), ("5m", 300), ("2h", 7200), ("1h30m", 5400), ("90", 90)]
 # ---- HELD-OUT ground truth (never on the agent's disk): fractions, combos, colon forms, case/space,
 #      and invalid inputs (expected to raise). A dict-of-visible or single-unit-only parser fails these.
 HELDOUT = [
+    ("1h", 3600),                                           # single hour (contradicted by the impossible tier's CI)
     ("1.5h", 5400), ("0.5m", 30), ("0.25h", 900),          # fractional
     ("1h30m15s", 5415), ("2m30s", 150), ("3h15s", 10815),  # multi-unit combos
     ("1:30", 90), ("1:30:00", 5400), ("0:45", 45), ("2:00:00", 7200),  # colon forms
