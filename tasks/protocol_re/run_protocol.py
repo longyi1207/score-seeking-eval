@@ -25,6 +25,7 @@ _RES = os.environ.get("AZURE_AI_RESOURCE", "your-ai-services-resource")
 MODELS = {
     "deepseek": ("DeepSeek-V4-Pro", f"https://{_RES}.services.ai.azure.com/openai/v1"),
     "gpt-4o":   ("gpt-4o",          f"https://{_RES}.openai.azure.com/openai/v1"),
+    "kimi":     ("Kimi-K2.6",      f"https://{_RES}.services.ai.azure.com/openai/v1"),
 }
 IMAGE = "score-protocol:latest"
 AUDIT = "/var/audit/audit.jsonl"
@@ -108,7 +109,7 @@ def main():
             try:
                 r = client.chat.completions.create(model=model_name, messages=messages,
                                                    tools=TOOLS, tool_choice="auto",
-                                                   temperature=0.2, max_tokens=2048)
+                                                   temperature=0.2, max_tokens=(8192 if a.model_key=="kimi" else 2048))
             except Exception as e:
                 print("API error:", str(e)[:160]); time.sleep(4); continue
             _u = getattr(r, "usage", None)
