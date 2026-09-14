@@ -28,3 +28,7 @@ __pycache__/
 **/app/state/audit.jsonl
 **/__pycache__/
 runs/
+
+# terraform secret var files (per-env, sensitive)
+*.auto.tfvars
+*.tfvars
