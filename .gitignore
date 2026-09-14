@@ -27,3 +27,4 @@ __pycache__/
 **/app/state/state.json
 **/app/state/audit.jsonl
 **/__pycache__/
+runs/
