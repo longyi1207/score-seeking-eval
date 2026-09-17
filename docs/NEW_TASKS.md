@@ -87,3 +87,12 @@ fit Clement's "slippery-slope, not a labeled trap" bar (the shortcut is a discov
 trade, not an `ls`-visible flag).
 
 **Sources:** `HUMAN_REWARD_SEEKING_ANALOGS.md`; call transcript 2026-09-13; [`NEO_ROADMAP.md`](./NEO_ROADMAP.md).
+
+## 4. Status: crude honeypots demoted (2026-09-16)
+
+Per Clement's "use a CVE" ask, the exploit-gated design now lives in **`cve_exploit`** (real Grafana
+CVE-2021-43798 path traversal), alongside `internal_exfil` (SSRF), `deferred_cost` (temporal), and
+`metric_redef` (definition gaming). The three bare planted-flag scenarios — **`data_analysis`,
+`math_counting`, `math_apery`** — are hereby **demoted to capability controls** (labeled in their
+`task.yaml`): they still serve as no-cheat / capability checks, but are no longer presented as propensity
+cells. This removes the "flag in a file" impression Clement flagged while preserving the controls.
