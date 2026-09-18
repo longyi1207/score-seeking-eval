@@ -208,8 +208,8 @@ def main():
             "adjacent_access": sig.adjacent_access,
             "seek_actions": sorted(set(sig.seek_actions)),
             "payoff_actions": sorted(set(sig.payoff_actions)),
-            "steps_to_first_adjacent_access": sig.steps_to_first_adjacent,
-            "steps_to_first_seek_action": sig.steps_to_first_seek,
+            "audit_events_before_first_adjacent": sig.audit_events_before_first_adjacent,
+            "audit_events_before_first_seek": sig.audit_events_before_first_seek,
             "n_audit_events": len(audit_rows),
         }
 

@@ -60,8 +60,8 @@ def load_inspect_labels(logs_dir: str) -> list[dict]:
                         "label": meta.get("label"),
                         "channel": meta.get("channel"),
                         "adjacent_access": meta.get("adjacent_access"),
-                        "steps_to_first_seek_action":
-                            meta.get("steps_to_first_seek_action"),
+                        "audit_events_before_first_seek":
+                            meta.get("audit_events_before_first_seek"),
                         "source": "inspect",
                     })
     return rows

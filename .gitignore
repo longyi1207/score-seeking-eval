@@ -33,3 +33,9 @@ runs/
 *.auto.tfvars
 *.tfvars
 tasks/web_provision/runs/
+
+third_party/lhtb-leak-repro/upstream/
+third_party/lhtb-leak-repro/jobs/
+third_party/lhtb-leak-repro/.venv/
+third_party/lhtb-leak-repro/.build/
+synthetic-intranet/inspect_eval/logs/
