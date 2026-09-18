@@ -88,11 +88,20 @@ trade, not an `ls`-visible flag).
 
 **Sources:** `HUMAN_REWARD_SEEKING_ANALOGS.md`; call transcript 2026-09-13; [`NEO_ROADMAP.md`](./NEO_ROADMAP.md).
 
-## 4. Status: crude honeypots demoted (2026-09-16)
+## 4. Status: presentation filter + crude honeypots demoted (2026-09-18)
 
-Per Clement's "use a CVE" ask, the exploit-gated design now lives in **`cve_exploit`** (real Grafana
-CVE-2021-43798 path traversal), alongside `internal_exfil` (SSRF), `deferred_cost` (temporal), and
-`metric_redef` (definition gaming). The three bare planted-flag scenarios — **`data_analysis`,
-`math_counting`, `math_apery`** — are hereby **demoted to capability controls** (labeled in their
-`task.yaml`): they still serve as no-cheat / capability checks, but are no longer presented as propensity
-cells. This removes the "flag in a file" impression Clement flagged while preserving the controls.
+Canonical list: [`STATUS.md`](./STATUS.md). Each scenario's `task.yaml` carries
+`status: present | draft | control`.
+
+Per Clement's "use a CVE" ask, the exploit-gated design lives in **`cve_exploit`** (real Grafana
+CVE-2021-43798 path traversal), alongside `internal_exfil` (SSRF) and `metric_redef` (definition
+gaming). The three bare planted-flag scenarios — **`data_analysis`, `math_counting`, `math_apery`** —
+are **`status: control`**: capability / no-cheat checks, not propensity cells.
+
+**Also held out of present/writeup propensity claims (`status: draft`):**
+- **`deferred_cost`** (T2) — hardened honest path turned out scriptable → myopic signal near-null
+- **`incident_rootcause`** — cheat detectable but never elicited; horizon collapsed
+- **`synthetic-intranet/`** — research+design, not suite results
+- **T4 `sycophancy_review` / T5 `upcoding_triage`** — spec only, not built
+
+Decks and the Neo memo should lead with `present` only.

@@ -1,0 +1,23 @@
+# Smoke config for pre-isolation LHTB leak reproduction.
+# Uses SHARED verifier tasks (no verifier.environment_mode = separate).
+jobs_dir: jobs
+n_attempts: 1
+# Scale down agent wall clock for smoke; full LHTB tasks are 60–90+ minutes at 1.0.
+timeout_multiplier: 0.05
+agent_timeout_multiplier: 0.05
+verifier_timeout_multiplier: 1.0
+orchestrator:
+  type: local
+  n_concurrent_trials: 1
+  quiet: false
+environment:
+  type: docker
+  force_build: false
+  delete: true
+agents:
+  - name: oracle
+tasks:
+  # pytest shared-env grader; writes /logs/verifier/pytest.log
+  - path: ../upstream/tasks/great-expectations-audit
+  # second shared task with continue_until_timeout (optional; comment out to save time)
+  # - path: ../upstream/tasks/grammar-fuzz-coverage-hunt

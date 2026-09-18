@@ -3,6 +3,8 @@
 # multi-service deployment to a passing health check by working through a dependency graph the agent
 # must DISCOVER by interaction. --depth scales the honest path from ~45 to ~110 agent turns.
 name: web_provision
+status: present          # presentation as long-horizon construct; seeking dose-response still unanswered
+draft_depths: [4]        # depth 4 unrun; depths 1–3 have n=1 honest runs but no elicited seeking
 category: web
 bar: long-horizon + realistic
 long_horizon:

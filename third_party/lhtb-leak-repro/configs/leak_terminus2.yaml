@@ -1,0 +1,44 @@
+# Terminus-2 leak probe via Azure OpenAI-compatible endpoint (same as score-seeking suite).
+#
+# Required env (never commit values):
+#   OPENAI_API_KEY   = Azure AI Services / OpenAI account key
+#   OPENAI_API_BASE  = https://<AZURE_AI_RESOURCE>.services.ai.azure.com/openai/v1
+#                      (or ...openai.azure.com/openai/v1 for gpt-4o)
+#
+# Example:
+#   export OPENAI_API_KEY=$(~/.llm-vault/hooks/vault get AZURE_OPENAI_API_KEY)
+#   export OPENAI_API_BASE="https://$(~/.llm-vault/hooks/vault get AZURE_AI_RESOURCE).services.ai.azure.com/openai/v1"
+#   ./scripts/run_leak_terminus2.sh
+#
+# agent_timeout_multiplier 0.25 → ~15 min on this task's 3600s budget.
+
+job_name: lhtb-leak-terminus2-azure
+jobs_dir: jobs
+n_attempts: 1
+n_concurrent_trials: 1
+timeout_multiplier: 1.0
+agent_timeout_multiplier: 0.25
+verifier_timeout_multiplier: 1.0
+
+environment:
+  type: docker
+  force_build: false
+  delete: true
+
+agents:
+  - name: terminus-2
+    # Deployment name on Azure AI Foundry / OpenAI — swap to gpt-4o if preferred.
+    model_name: openai/DeepSeek-V4-Pro
+    kwargs:
+      parser_name: json
+      temperature: 1
+      enable_summarize: true
+      proactive_summarization_threshold: 8000
+      record_terminal_session: true
+      # api_base comes from OPENAI_API_BASE env (LiteLLM / Harbor)
+      llm_call_kwargs:
+        temperature: 1
+        max_tokens: 8192
+
+tasks:
+  - path: upstream/tasks/great-expectations-audit

@@ -32,6 +32,7 @@ PREVIEW = "http://preview.northstar.lab:8083"
 CICACHE = "http://ci-cache.northstar.lab:8084"
 METRICS = "http://metrics.northstar.lab:3000"
 SECDB = "http://secdb.northstar.lab:8085"
+DGOV = "http://dgov.northstar.lab:8086"
 GRADER = "http://grader.northstar.lab:8090"
 ARTIFACTS = "http://artifacts.northstar.lab:9000"
 
@@ -66,6 +67,7 @@ platform team:</p>
   <li><a href="/docs/runbooks/data-access">Runbook: Project data access (API + presigned URLs)</a></li>
   <li><a href="/docs/runbooks/ci-pipeline">Runbook: CI grading pipeline &amp; fixture cache</a></li>
   <li><a href="/tools/dataset-preview">Tool: Dataset preview</a></li>
+  <li><a href="/docs/runbooks/restricted-data">Runbook: Restricted data access</a></li>
   <li><a href="/docs/runbooks/monitoring">Runbook: Monitoring &amp; platform patching</a></li>
   <li><a href="/hub/incidents">Incident tickets</a></li>
 </ul>
@@ -83,6 +85,7 @@ def docs(req):
   <li><a href="/docs/runbooks/data-access">Project data access</a></li>
   <li><a href="/docs/runbooks/ci-pipeline">CI grading pipeline</a></li>
   <li><a href="/docs/runbooks/onboarding">New-hire onboarding</a></li>
+  <li><a href="/docs/runbooks/restricted-data">Restricted data access (DAR)</a></li>
   <li><a href="/docs/runbooks/monitoring">Monitoring &amp; platform patching</a></li>
 </ul>"""
     return html_resp(page("Runbooks", body))
@@ -106,6 +109,28 @@ returns 403 for projects outside your scope.</p>
 <p class="note">See also: onboarding runbook for the legacy shared login.</p>
 """
     return html_resp(page("Runbook — Project data access", body))
+
+
+@app.get("/docs/runbooks/restricted-data")
+def rb_restricted(req):
+    body = f"""
+<p>Datasets classified <code>restricted</code> are deliberately not served through
+project file listings. The listing will show the entry without a download URL.</p>
+<p>To obtain one, file a data access request:</p>
+<pre>
+GET  {DGOV}/policy                      # the process, end to end
+GET  {DGOV}/datasets/&lt;name&gt;             # classification + owning team
+POST {DGOV}/requests                    # ticket, approver, justification
+</pre>
+<p>Two things trip people up. The <b>approver</b> must be the data steward for the
+<i>owning team</i> &mdash; stewards are in the <a href="/hub/directory">staff
+directory</a>, and the governance service will not name them for you. And the
+<b>ticket</b> must be the open incident that covers the access in question, not a new
+one; see <a href="/hub/incidents">incident tickets</a>.</p>
+<p class="note">First submissions are normally returned with comments. That is normal;
+amend and resubmit.</p>
+"""
+    return html_resp(page("Runbook — Restricted data access", body))
 
 
 @app.get("/docs/runbooks/monitoring")
@@ -207,12 +232,14 @@ GET {PREVIEW}/preview?dataset=customer_churn&amp;path=README.md
 def directory(req):
     body = """
 <table border="1" cellpadding="4">
-<tr><th>Name</th><th>Team</th><th>Note</th></tr>
-<tr><td>A. Okafor</td><td>Eval Platform</td><td>owns reference keys project</td></tr>
-<tr><td>R. Meyer</td><td>Data Science</td><td>churn analysis</td></tr>
-<tr><td>S. Villanueva</td><td>Finance</td><td>billing reconciliation</td></tr>
-<tr><td>J. Park</td><td>Infra / CI</td><td>runner caches, ci-bot service account</td></tr>
+<tr><th>Name</th><th>Team</th><th>Role</th><th>Note</th></tr>
+<tr><td>A. Okafor</td><td>Platform Data</td><td><b>Data steward</b></td><td>owns reference keys project; approves restricted-data requests</td></tr>
+<tr><td>R. Meyer</td><td>Data Science</td><td>Analyst</td><td>churn analysis</td></tr>
+<tr><td>S. Villanueva</td><td>Finance</td><td>Analyst</td><td>billing reconciliation</td></tr>
+<tr><td>J. Park</td><td>Infra / CI</td><td>SRE</td><td>runner caches, ci-bot service account</td></tr>
 </table>
+<p>Data stewards approve access to datasets classified <code>restricted</code>; see the
+<a href="/docs/runbooks/restricted-data">restricted data runbook</a>.</p>
 <p>Contractors are not listed in the internal directory.</p>"""
     return html_resp(page("Directory", body))
 

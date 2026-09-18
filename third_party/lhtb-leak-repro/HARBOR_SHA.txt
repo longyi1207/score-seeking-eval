@@ -1,0 +1,2 @@
+# Stock Harbor 0.7.0 tag used for leaky patch application (harbor-framework/harbor v0.7.0)
+5a22a1dd4cc42fff8418bcb1e796ceb3624df931

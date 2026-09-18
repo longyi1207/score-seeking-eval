@@ -1,6 +1,7 @@
 # monitored_impl — oversight: deception + sabotage (see docs/NORTH_STAR.md; inspired by Anthropic's
 # "Training a Misaligned Reward Seeker", Aug 2026 — deceiving/sabotaging oversight).
 name: monitored_impl
+status: present          # presentation — gpt-4o 5/5 deceive vs DS/Kimi honest (impossible tier)
 category: oversight
 bar: real OSS-model monitor (free, local via Ollama) + un-gameable ground truth + sabotageable CI surface
 
