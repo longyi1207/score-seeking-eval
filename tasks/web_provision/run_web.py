@@ -112,20 +112,49 @@ def event(path: str, **kw):
         f.write(json.dumps({"t": round(time.time(), 3), **kw}) + "\n")
 
 
+RETRYABLE = {408, 409, 429, 500, 502, 503, 504}
+
+
+def classify_api_error(e):
+    """
+    Retry only what can succeed on a retry. A depth-3 run burned 8 minutes retrying a 400 eight
+    times: Azure's content filter had blocked the model's own response with label 'Jailbreak' (a
+    false positive on sysadmin work full of bearer tokens and secrets). That is deterministic for
+    the context, and -- like a dead container -- it is not a model result and must not grade as one.
+    """
+    txt = str(e)
+    status = (getattr(e, "status_code", None)
+              or getattr(getattr(e, "response", None), "status_code", None))
+    if "content_filter" in txt or "Jailbreak" in txt:
+        return "content_filter", txt[:400]
+    if status is not None and 400 <= status < 500 and status not in RETRYABLE:
+        return "fatal", txt[:400]
+    return "retry", txt[:400]
+
+
 def complete(client, model_name, messages, max_tokens, temperature, out_path, step, retries):
-    """one model call, retried with backoff. Retries do NOT consume a turn of the agent's budget."""
+    """
+    One model call. Returns (response, None) or (None, reason). Retries do NOT consume a turn of the
+    agent's budget, and non-retryable errors abort immediately instead of sleeping through a backoff
+    ladder that cannot help.
+    """
     for attempt in range(1, retries + 1):
         try:
             return client.chat.completions.create(model=model_name, messages=messages, tools=TOOLS,
                                                   tool_choice="auto", temperature=temperature,
-                                                  max_tokens=max_tokens)
+                                                  max_tokens=max_tokens), None
         except Exception as e:
+            kind, detail = classify_api_error(e)
+            event(out_path, kind="api_error", step=step, attempt=attempt, error_kind=kind,
+                  error=detail)
+            if kind != "retry":
+                print(f"    ! {kind} at turn {step} — not retryable: {detail[:160]}", flush=True)
+                return None, f"{kind}: {detail[:200]}"
             wait = min(60, 2 ** attempt)
             print(f"    ! api error (attempt {attempt}/{retries}, retrying in {wait}s): "
-                  f"{str(e)[:160]}", flush=True)
-            event(out_path, kind="api_error", step=step, attempt=attempt, error=str(e)[:400])
+                  f"{detail[:160]}", flush=True)
             time.sleep(wait)
-    return None
+    return None, f"api unavailable after {retries} attempts"
 
 
 def main():
@@ -183,10 +212,10 @@ def main():
     crashed = None
     try:
         for step in range(start_step, max_steps + 1):
-            r = complete(client, model_name, messages, max_tokens, a.temperature, a.out, step,
-                         a.api_retries)
+            r, why = complete(client, model_name, messages, max_tokens, a.temperature, a.out, step,
+                              a.api_retries)
             if r is None:
-                crashed = f"api unavailable after {a.api_retries} attempts"
+                crashed = f"API: {why} at turn {step}"
                 break
             _u = getattr(r, "usage", None)
             if _u:
@@ -238,16 +267,21 @@ def main():
     except Exception as e:                      # keep the container so the run can be resumed
         crashed = f"{type(e).__name__}: {e}"
 
-    infra = (crashed or "").startswith("INFRA:")
-    hjson = "" if infra else dexec(cid, "curl -s http://localhost:8000/health")
+    # env_dead: the container is gone, so there is nothing left to read. nonresult: anything that
+    # ended the run for a reason outside the agent's control -- never graded as a model outcome.
+    env_dead = (crashed or "").startswith("INFRA:")
+    nonresult = env_dead or (crashed or "").startswith("API:")
+    infra = nonresult
+    hjson = "" if env_dead else dexec(cid, "curl -s http://localhost:8000/health")
     try:
         healthy = bool(json.loads(hjson).get("healthy"))
     except Exception:
         healthy = False
-    audit = "" if infra else dexec(cid, "cat /var/audit/audit.jsonl")   # root-only, tamper-proof
+    audit = "" if env_dead else dexec(cid, "cat /var/audit/audit.jsonl")   # root-only, tamper-proof
     # An environment that died tells us nothing about the model; never grade it as a result.
     verdict = ({"label": "infra_error", "channel": "none",
-                "signals": {"reason": crashed, "last_good_turn": step - 1}} if infra
+                "signals": {"reason": crashed, "last_good_turn": step - 1,
+                            "partial_audit": sorted(grader._audit_keys(audit)[0])}} if nonresult
                else grader.grade(healthy, audit, transcript, depth=a.depth))
     result = {"model": model_name, "model_key": a.model_key, "scope": a.scope, "depth": a.depth,
               "max_steps": max_steps, "container": cid, "steps": step,
@@ -263,7 +297,8 @@ def main():
     if verdict["signals"].get("missing_milestones"):
         print(f"     missing milestones: {verdict['signals']['missing_milestones']}")
     if infra:
-        print(f"     NOT A MODEL RESULT — the environment died ({crashed}); rerun the cell.")
+        print(f"     NOT A MODEL RESULT — run ended outside the agent's control ({crashed}); "
+              f"rerun the cell.")
     if crashed:
         print(f"     INCOMPLETE ({crashed}); container kept — resume with:\n"
               f"     {sys.executable} {__file__} --resume {a.out}")
