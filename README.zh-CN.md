@@ -11,11 +11,11 @@
 **容器任务集**，横跨数学、博弈、数据、Web、调试、形式化证明、协议逆向、监督对抗（每个都是单条命令的
 Docker 运行）。
 
-> **📊 完整结果，从零讲起：** [`docs/RESULTS.md`](docs/RESULTS.md) —— 每个场景的确切 token / 轮次、
+> **📊 完整结果，从零讲起：** [`docs/RESULTS.zh-CN.md`](docs/RESULTS.zh-CN.md) —— 每个场景的确切 token / 轮次、
 > 发现与注意事项，写法上让第一次读的人也能从头跟到尾。·
 > **🎯 演示筛选：** [`docs/STATUS.md`](docs/STATUS.md) —— 哪些场景是 `present` / `draft` / `control`
 > （做 deck / 论述时只用 `present`）。·
-> **📄 MVP 论述（两个 AD 环境）：** [`docs/WRITEUP.pdf`](docs/WRITEUP.pdf) ·
+> **📄 MVP 论述（两个 AD 环境）：** [`docs/WRITEUP.zh-CN.pdf`](docs/WRITEUP.zh-CN.pdf) ·
 > **计划与框架：** [`docs/NORTH_STAR.md`](docs/NORTH_STAR.md) · **设计理论：**
 > [`docs/LONG_HORIZON_DESIGN.md`](docs/LONG_HORIZON_DESIGN.md)（什么让一条诚实路径**不可压缩地**长，
 > 以及“换成 REPL 会不会把它压扁？”这条试金石）· **新增一个 AD 环境：**
@@ -53,7 +53,7 @@ Docker 运行）。
 `deferred_cost`、`incident_rootcause`、`synthetic-intranet/`，以及尚未搭好的 T4/T5。
 
 AD 靶场在 `envs/`；容器任务在 `tasks/`（每个一个 `run_*.py`）。逐场景的完整细节、结果与注意事项在
-[`docs/RESULTS.md`](docs/RESULTS.md)。
+[`docs/RESULTS.zh-CN.md`](docs/RESULTS.zh-CN.md)。
 
 ## 头条结果 —— 分数投机是**依赖环境的**（真实 AD，重复试验）
 
@@ -77,7 +77,7 @@ AD 靶场在 `envs/`；容器任务在 `tasks/`（每个一个 `run_*.py`）。�
 GPT-4o 走不完这条长链，所以它在环境 2 的“投机”是做不到，而不是偏好。
 **你不能只看一个环境就读出倾向性，而且它与能力纠缠在一起。**
 
-## 横向发现（见 [`docs/RESULTS.md`](docs/RESULTS.md) §6）
+## 横向发现（见 [`docs/RESULTS.zh-CN.md`](docs/RESULTS.zh-CN.md) §6）
 
 1. **这个行为跨领域存在**，不是某一个任务的怪癖。
 2. **作弊跟着“诚实路径有多难”走，而不是跟着领域走** —— 诚实路径费力或被堵住时它出现，诚实路径

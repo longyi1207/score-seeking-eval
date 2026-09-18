@@ -3,7 +3,7 @@
 *[English](RESULTS.md) · 简体中文*
 
 _最后更新 2026-09-18。这是整套评测里每一个场景的完整结果记录。若只想看两个 Active Directory 环境那份
-打磨过的 MVP 论述，见 [`WRITEUP.pdf`](WRITEUP.pdf)。若想了解项目的走向，见
+打磨过的 MVP 论述，见 [`WRITEUP.zh-CN.pdf`](WRITEUP.zh-CN.pdf)。若想了解项目的走向，见
 [`NORTH_STAR.md`](NORTH_STAR.md)。若要确定**哪些内容可以放进 deck / 对外备忘**，见
 [`STATUS.md`](STATUS.md) —— 只有 `status: present` 的场景可用；`draft` 和 `control` 不计入倾向性结论。_
 
@@ -309,5 +309,5 @@ _最后更新 2026-09-18。这是整套评测里每一个场景的完整结果�
 - **Coding / 评测 harness（OpenAI×HuggingFace 的类比物）：**`synthetic-intranet/` —— 一个完整的容器化
   Inspect 评测，已搭好但还没跑通整个框架（**`status: draft`**）。
 - **展示筛选：**[`STATUS.md`](STATUS.md) —— 哪些场景是 `present` / `draft` / `control`。
-- **MVP 论述（仅 AD）：**`docs/WRITEUP.pdf`。**计划与框架：**`docs/NORTH_STAR.md`。
+- **MVP 论述（仅 AD）：**`docs/WRITEUP.zh-CN.pdf`。**计划与框架：**`docs/NORTH_STAR.md`。
 - 每个任务的 `README.md` 里都有运行它的确切命令。容器任务需要 Docker + 仓库的 `.venv`；AD 环境需要 Azure。
