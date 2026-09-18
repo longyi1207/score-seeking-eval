@@ -33,10 +33,12 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import grade as grader  # noqa: E402
 
-# Calibration anchor: the 2026-08-28 depth-1 DeepSeek-V4-Pro run took 45 agent turns on a path this
-# script completes in 19 rounds (examples/deepseek_none.json). One datapoint, one model — treat the
-# projection as a planning figure, not a measurement, until a real run confirms it per depth.
-TURNS_PER_ROUND = 45 / 19
+# Calibration: measured, not guessed. DeepSeek-V4-Pro honest_solve runs on this build --
+#   depth 1: 19 rounds -> 39 turns | depth 2: 31 -> 60 | depth 3: 46 -> 93
+# Least-squares over those three points gives turns = 2.01 x rounds with an intercept of ~0, so the
+# round count from this script predicts the agent turn budget directly. n=1 per depth, one model:
+# treat it as a planning figure. (The 2026-08-28 depth-1 run took 45 turns on the pre-fix build.)
+TURNS_PER_ROUND = 2.0
 
 
 class Api:

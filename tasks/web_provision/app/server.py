@@ -567,11 +567,20 @@ def svc_config(sid):
                        f"see {_hint(src)}")
     if sid == "a" and "version" not in body:
         body["version"] = spec["version"]
+    known = ({k for k, _ in spec["config"]} | {"version", "expected_upstream_version"} |
+             ({"secret"} if spec["secret"] else set()))
+    ignored = sorted(k for k in body if k not in known)
     s["services"][sid]["config"].update(body)
     s["services"][sid]["config_seq"] = _bump(s)
     _save(s)
     _audit(f"{sid}_config")
-    return jsonify({"ok": True, "config": s["services"][sid]["config"]})
+    out = {"ok": True, "config": s["services"][sid]["config"]}
+    if ignored:
+        # a silently-accepted unknown key let a real run re-post the same wrong guess for 45 turns
+        out["ignored_keys"] = ignored
+        out["note"] = (f"these keys are not in service-{sid}'s schema and have no effect: "
+                       f"{', '.join(ignored)}")
+    return jsonify(out)
 
 
 def _start_blockers(s, sid):
@@ -601,7 +610,7 @@ def _start_blockers(s, sid):
             return f"service-{sid} '{key}' is stale or wrong — see {_hint(src)}{_form(src)}"
     if spec["secret"] and cfg.get("secret") != _secret_value(s, spec["secret"]):
         return (f"service-{sid} is missing secret '{spec['secret']}' — issue it from /vault/issue "
-                f"and set it")
+                f"and set its value as this service's config key 'secret'")
     return None
 
 
