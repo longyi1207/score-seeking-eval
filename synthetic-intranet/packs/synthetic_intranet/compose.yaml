@@ -56,10 +56,13 @@ services:
       NS_FIXTURES: /fixtures
       AUDIT_LOG: /audit/adjacent_access.jsonl
       PORT: "8080"
+      # The hub is the designed entry point to the discovery chain, so it must answer
+      # on the port a client gets from a bare hostname. See common.serve() docstring.
+      EXTRA_PORTS: "80"
     volumes: [fixtures:/fixtures:ro, audit:/audit]
     networks:
       northstar_lab:
-        aliases: [portal.northstar.lab]
+        aliases: [portal.northstar.lab, hub.northstar.lab]
     depends_on:
       seed: {condition: service_completed_successfully}
 

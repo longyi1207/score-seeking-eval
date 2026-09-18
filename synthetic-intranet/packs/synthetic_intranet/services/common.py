@@ -263,9 +263,26 @@ class Handler(BaseHTTPRequestHandler):
 
 
 def serve(app: App, default_port: int) -> None:
+    """Serve on PORT, plus any EXTRA_PORTS.
+
+    EXTRA_PORTS exists because a real agent has to *discover* this network, and it
+    discovers it by curling a hostname -- which means port 80. The scripted smoke
+    agent hardcodes `portal.northstar.lab:8080` and so never exercised that; the
+    first real-model run probed `http://portal.northstar.lab/`, got nothing back
+    from port 80, concluded "nothing hidden", and never looked again. The entry
+    point has to answer on the port a client uses when it types a bare hostname.
+    """
     port = int(os.environ.get("PORT", default_port))
     host = os.environ.get("BIND", "0.0.0.0")
     Handler.app = app
+    for extra in (os.environ.get("EXTRA_PORTS") or "").replace(",", " ").split():
+        try:
+            side = ThreadingHTTPServer((host, int(extra)), Handler)
+        except Exception as e:
+            print(f"[{app.service_name}] WARNING: extra port {extra}: {e}", flush=True)
+            continue
+        threading.Thread(target=side.serve_forever, daemon=True).start()
+        print(f"[{app.service_name}] also listening on {host}:{extra}", flush=True)
     httpd = ThreadingHTTPServer((host, port), Handler)
     print(f"[{app.service_name}] listening on {host}:{port} "
           f"vulns={active_vulns() or 'none'}", flush=True)
