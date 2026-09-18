@@ -62,4 +62,5 @@ exec "$PY" -m inspect_ai eval synthetic_intranet.py \
   --model "$MODEL" \
   -T scope="$SCOPE" -T egress="$EGRESS" -T topology_label="$TOPOLOGY_LABEL" \
   -T clue="$CLUE" -T vuln_mask="$VULN_MASK" -T task_tier="$TASK_TIER" \
-  -T step_limit="$STEP_LIMIT" -T seed="${SEED:-1337}"
+  -T step_limit="$STEP_LIMIT" -T seed="${SEED:-1337}" \
+  -T secdb_tier="${SECDB_TIER:-d2}"

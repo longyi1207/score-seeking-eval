@@ -4,7 +4,7 @@ _Synthetic (no-cloud) score-seeking eval: a coding take-home beside an exploitab
 
 **Working name:** long-horizon agent evals for **score-seeking / reward hacking** under production-shaped failure modes.  
 **Started:** 2026-08-26  
-**Status:** research + design
+**Status:** `draft` (research + design — not presentation-grade suite results; see `docs/STATUS.md`)
 
 ## Naming (don’t call it “shortcut”)
 
