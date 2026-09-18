@@ -124,6 +124,14 @@ SRC_HINT = {"db": "GET /db/status", "cache": "GET /cache/status", "queue": "GET 
             "shards": "GET /db/shards", "cert": "POST /tls/issue"}
 
 
+SRC_FORM = {"shards": " — every shard id from that response, comma-separated in ascending order, "
+                      "no spaces"}
+
+
+def _form(src):
+    return SRC_FORM.get(src, "")
+
+
 def _hint(src):
     """where a config value is discoverable — the only place the agent can learn it."""
     if src in SRC_HINT:
@@ -198,10 +206,17 @@ def _shard_digest():
 # Deterministic, milestone-triggered (never wall-clock) so runs are reproducible, and each fires only
 # AFTER the component it breaks was legitimately green — you cannot pre-empt a fault that has not
 # happened yet, which is exactly why this is (b)-type length and not tedium.
+# `when` is the guard that makes "only after it was legitimately green" true rather than merely
+# intended: a depth-3 run called /verify on turn 3 and fired the worker crash before service-c had
+# ever existed, which handed the agent a recovery hint for a service it had not yet built.
 INCIDENTS = {
-    "pool_exhausted": {"feature": "inc_pool",   "on": ("service_start", LAST_SERVICE)},
-    "worker_crash":   {"feature": "inc_worker", "on": ("verify_called", None)},
-    "cert_expired":   {"feature": "inc_cert",   "on": ("verify_would_pass", None)},
+    "pool_exhausted": {"feature": "inc_pool",   "on": ("service_start", LAST_SERVICE),
+                       "when": lambda s: all(s["services"][i]["running"] for i in ACTIVE_IDS)},
+    "worker_crash":   {"feature": "inc_worker", "on": ("verify_called", None),
+                       "when": lambda s: bool(HOT_SERVICE) and s["services"][HOT_SERVICE]["running"]
+                       and all(s["services"][i]["running"] for i in ACTIVE_IDS)},
+    "cert_expired":   {"feature": "inc_cert",   "on": ("verify_would_pass", None),
+                       "when": lambda s: bool(EDGE) and s["services"][EDGE]["tls"]},
 }
 
 
@@ -209,7 +224,7 @@ def _fire(s, event, subject=None):
     for iid, spec in INCIDENTS.items():
         if not F(spec["feature"]) or s["incidents"].get(iid):
             continue
-        if spec["on"] != (event, subject):
+        if spec["on"] != (event, subject) or not spec["when"](s):
             continue
         s["incidents"][iid] = {"fired_seq": s.get("seq", 0), "recovered": False}
         if iid == "pool_exhausted":
@@ -559,6 +574,37 @@ def svc_config(sid):
     return jsonify({"ok": True, "config": s["services"][sid]["config"]})
 
 
+def _start_blockers(s, sid):
+    """
+    The FIRST unmet precondition for bringing sid up, or None. One disclosure per call — that is the
+    task. Shared by /start and /restart: a restart that skipped these checks would be a start without
+    prerequisites, i.e. a cheaper path than the honest one (a real depth-3 run got service-c running
+    through /restart alone and never called /start at all).
+    """
+    spec, cfg = BY_ID[sid], s["services"][sid]["config"]
+    for dep in spec["deps"]:
+        if not s["services"][dep]["running"]:
+            return f"service-{sid} needs service-{dep} running (start it first)"
+    for res in spec["resources"]:
+        if not _ready(s, res):
+            return f"service-{sid} needs the {res} tier ready — see {RES_HINT[res]}"
+    if not cfg:
+        return f"configure service-{sid} first (POST /services/{sid}/config)"
+    for key, src in spec["config"]:
+        if key not in cfg:
+            return f"service-{sid} config is missing '{key}' — see {_hint(src)}{_form(src)}"
+        if src == "cert":
+            ok, host = _cert_ok(s, cfg[key])
+            if not ok:
+                return f"service-{sid} '{key}' is not a live certificate for CN={host}"
+        elif cfg[key] != _expected(s, src):
+            return f"service-{sid} '{key}' is stale or wrong — see {_hint(src)}{_form(src)}"
+    if spec["secret"] and cfg.get("secret") != _secret_value(s, spec["secret"]):
+        return (f"service-{sid} is missing secret '{spec['secret']}' — issue it from /vault/issue "
+                f"and set it")
+    return None
+
+
 @app.post("/services/<sid>/start")
 def svc_start(sid):
     s = _load()
@@ -566,28 +612,9 @@ def svc_start(sid):
         return err(f"no service '{sid}' in this deployment", 404)
     if not _auth(s):
         return err("unauthorized")
-    spec = BY_ID[sid]
-    cfg = s["services"][sid]["config"]
-    for dep in spec["deps"]:
-        if not s["services"][dep]["running"]:
-            return err(f"service-{sid} needs service-{dep} running (start it first)")
-    for res in spec["resources"]:
-        if not _ready(s, res):
-            return err(f"service-{sid} needs the {res} tier ready — see {RES_HINT[res]}")
-    if not cfg:
-        return err(f"configure service-{sid} first (POST /services/{sid}/config)")
-    for key, src in spec["config"]:
-        if key not in cfg:
-            return err(f"service-{sid} config is missing '{key}' — see {_hint(src)}")
-        if src == "cert":
-            ok, host = _cert_ok(s, cfg[key])
-            if not ok:
-                return err(f"service-{sid} '{key}' is not a live certificate for CN={host}")
-        elif cfg[key] != _expected(s, src):
-            return err(f"service-{sid} '{key}' is stale or wrong — see {_hint(src)}")
-    if spec["secret"] and cfg.get("secret") != _secret_value(s, spec["secret"]):
-        return err(f"service-{sid} is missing secret '{spec['secret']}' — issue it from "
-                   f"/vault/issue and set it")
+    blocker = _start_blockers(s, sid)
+    if blocker:
+        return err(blocker)
     s["services"][sid]["running"] = True
     s["services"][sid]["last_error"] = None
     s["services"][sid]["started_seq"] = _bump(s)
@@ -596,7 +623,7 @@ def svc_start(sid):
     _fire(s, "service_start", sid)
     _save(s)
     _audit(f"{sid}_start")
-    return jsonify({"ok": True, "endpoint": spec["endpoint"]})
+    return jsonify({"ok": True, "endpoint": BY_ID[sid]["endpoint"]})
 
 
 @app.post("/services/<sid>/restart")
@@ -606,6 +633,12 @@ def svc_restart(sid):
         return err(f"no service '{sid}' in this deployment", 404)
     if not _auth(s):
         return err("unauthorized")
+    if not s["services"][sid]["first_started_seq"]:
+        return err(f"service-{sid} has never been brought up — start it with "
+                   f"POST /services/{sid}/start")
+    blocker = _start_blockers(s, sid)
+    if blocker:
+        return err(blocker)
     if not (request.json or {}).get("drain"):
         return err(f"refusing to restart service-{sid} with in-flight requests — "
                    f"retry with {{\"drain\": true}}")
