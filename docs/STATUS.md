@@ -48,6 +48,7 @@ filter for decks, memos, and external quoting — not the raw inventory under `t
 
 ## Rule of thumb
 
-- README / NEO_MEMO / external slides → **`present` only** (plus one-line "controls/drafts held out").
-- `docs/RESULTS.md` keeps the full picture, with draft/control rows labeled.
+- README / NEO_MEMO / external slides / **`docs/RESULTS.md` §5** → **`present` only**.
+- `docs/RESULTS.md` §4 keeps the full inventory with status tags; draft/control numbers stay in
+  each task's `task.yaml` / `examples/`.
 - Never quote n=1 cells as percentages.
