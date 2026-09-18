@@ -76,6 +76,24 @@ def dexec(cid: str, cmd: str, timeout: int = 60, user: str | None = None) -> str
         return f"[timed out after {timeout}s]"
 
 
+DOCKER_DOWN = "failed to connect to the docker API"
+
+
+def infra_down(cid: str, out: str) -> str | None:
+    """
+    Distinguish 'the environment died' from 'the model failed'. A 2026-09-17 run lost Docker Desktop
+    at turn 84; every later tool call returned the socket error, the agent flailed for ten turns and
+    called done(), and the run graded as `fail` with an empty audit — a result that looks exactly
+    like a capability ceiling and is not one. RESULTS.md finding #8: a false accusation is as
+    corrosive to an eval as a missed cheat.
+    """
+    if DOCKER_DOWN in (out or ""):
+        return "docker daemon unavailable"
+    if not alive(cid):
+        return "container stopped"
+    return None
+
+
 def alive(cid: str) -> bool:
     p = subprocess.run(["docker", "inspect", "-f", "{{.State.Running}}", cid], capture_output=True)
     return p.returncode == 0 and p.stdout.strip() == b"true"
@@ -196,6 +214,11 @@ def main():
                     print(f"[{step:>4}/{max_steps}] {round(time.time()-t0):>5}s "
                           f"{(tokens['in']+tokens['out'])//1000:>4}k  {cmd[:110]}", flush=True)
                     event(a.out, kind="tool", step=step, cmd=cmd, out=out[:2000])
+                    down = infra_down(cid, out)
+                    if down:
+                        crashed = f"INFRA: {down} at turn {step}"
+                        stop = True
+                        break
                 elif tc.function.name == "done":
                     stop = True
                     messages.append({"role": "tool", "tool_call_id": tc.id,
@@ -215,13 +238,17 @@ def main():
     except Exception as e:                      # keep the container so the run can be resumed
         crashed = f"{type(e).__name__}: {e}"
 
-    hjson = dexec(cid, "curl -s http://localhost:8000/health")
+    infra = (crashed or "").startswith("INFRA:")
+    hjson = "" if infra else dexec(cid, "curl -s http://localhost:8000/health")
     try:
         healthy = bool(json.loads(hjson).get("healthy"))
     except Exception:
         healthy = False
-    audit = dexec(cid, "cat /var/audit/audit.jsonl")   # tamper-proof audit, read as root
-    verdict = grader.grade(healthy, audit, transcript, depth=a.depth)
+    audit = "" if infra else dexec(cid, "cat /var/audit/audit.jsonl")   # root-only, tamper-proof
+    # An environment that died tells us nothing about the model; never grade it as a result.
+    verdict = ({"label": "infra_error", "channel": "none",
+                "signals": {"reason": crashed, "last_good_turn": step - 1}} if infra
+               else grader.grade(healthy, audit, transcript, depth=a.depth))
     result = {"model": model_name, "model_key": a.model_key, "scope": a.scope, "depth": a.depth,
               "max_steps": max_steps, "container": cid, "steps": step,
               "hit_budget": step >= max_steps and not stop, "crashed": crashed,
@@ -233,8 +260,10 @@ def main():
     print(f"DONE {a.model_key}/{a.scope} depth={a.depth} -> {verdict['label']} "
           f"({verdict['channel']}) steps={step}/{max_steps} tok={tokens['in']+tokens['out']} "
           f"wall={result['wall_seconds']}s  [{a.out}]", flush=True)
-    if verdict["signals"]["missing_milestones"]:
+    if verdict["signals"].get("missing_milestones"):
         print(f"     missing milestones: {verdict['signals']['missing_milestones']}")
+    if infra:
+        print(f"     NOT A MODEL RESULT — the environment died ({crashed}); rerun the cell.")
     if crashed:
         print(f"     INCOMPLETE ({crashed}); container kept — resume with:\n"
               f"     {sys.executable} {__file__} --resume {a.out}")
