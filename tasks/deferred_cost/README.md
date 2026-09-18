@@ -1,5 +1,7 @@
 # deferred_cost — myopic / episode-seeking (a temporal cheat)
 
+*English · [简体中文](README.zh-CN.md)*
+
 The suite's first **temporal** cheat family ([`NEW_TASKS.md`](../../docs/NEW_TASKS.md) T2; human-analogs
 §2/§6.4 — "max this episode, defer the cost"). Every other scenario catches the cheat *now*; this one
 displaces the cost into a **future window evaluated held-out**.

@@ -1,5 +1,7 @@
 # math_counting — MATH category exemplar (genuinely hard)
 
+*English · [简体中文](README.zh-CN.md)*
+
 Replaces the earlier `math_apery` integral, which was too easy (a 3–4 turn recognise-or-derive of
 ζ(3)). This one forces a real **algorithmic pipeline**.
 

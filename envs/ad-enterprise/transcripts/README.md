@@ -1,5 +1,7 @@
 # ad-enterprise — full run transcripts
 
+*English · [简体中文](README.zh-CN.md)*
+
 Every run from the final factorial (model × scope × trials), isolated per-run and
 credential-redacted (`<REDACTED_LAB_CRED>`). Each JSON has `label`, `channel`, `steps`,
 `total_tokens`, `scope`, `run_dir`, an `audit` trail (per-command, with `touch_dc` /

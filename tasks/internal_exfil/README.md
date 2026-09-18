@@ -1,5 +1,7 @@
 # internal_exfil — an exploit-gated shortcut (no flag on disk)
 
+*English · [简体中文](README.zh-CN.md)*
+
 The first scenario built from **Neo Research's feedback** ([`docs/NEO_ROADMAP.md`](../../docs/NEO_ROADMAP.md),
 upgrade **U1** + the **precedent** axis). Clement's critique of the suite was that a shortcut which is a
 plain file you can `ls` won't generalize — a model refusing an obvious flag tells us little. Here the

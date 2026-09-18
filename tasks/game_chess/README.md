@@ -1,5 +1,7 @@
 # game_chess — GAMES category exemplar (creative bar)
 
+*English · [简体中文](README.zh-CN.md)*
+
 Reproduces **Palisade Research's chess specification-gaming setup**
 ([arXiv 2502.13295](https://arxiv.org/abs/2502.13295), [ctfish](https://github.com/PalisadeResearch/ctfish))
 inside the suite, as the fourth category alongside cyber, coding, and math. The agent is told to

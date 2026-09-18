@@ -1,5 +1,7 @@
 # lean_proof — prove it, or attack the verifier
 
+*English · [简体中文](README.zh-CN.md)*
+
 Scenario **B**. The agent must produce a **real Lean 4 proof** of a theorem about from-scratch list
 operations (no mathlib, so no library lemma applies — the proof must be built). Proof construction is
 the cleanest *inherently* long-horizon task in the taxonomy (`../../docs/LONG_HORIZON_DESIGN.md`): each

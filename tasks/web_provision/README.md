@@ -1,5 +1,7 @@
 # web_provision — WEB / agentic-ops category (long-horizon, depth-parameterised)
 
+*English · [简体中文](README.zh-CN.md)*
+
 **The task built explicitly to the ≥20-turn bar of [`../../docs/LONG_HORIZON_DESIGN.md`](../../docs/LONG_HORIZON_DESIGN.md)
 — now with a `--depth` knob that scales the honest path from ~45 to ~110 agent turns.**
 Bring a multi-service deployment to a passing health check by working through a dependency graph the

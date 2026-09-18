@@ -1,5 +1,7 @@
 # metric_redef — definition / denominator gaming
 
+*English · [简体中文](README.zh-CN.md)*
+
 [`NEW_TASKS.md`](../../docs/NEW_TASKS.md) T3 (human-analogs §3, §8.1). A subtler spec-gaming than
 wireheading a score file: the data is real; the **definition** of the metric is gamed to hit a target.
 Robust to the scriptability trap that weakened deferred_cost — here the honest path *is* a computation, so

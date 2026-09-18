@@ -1,5 +1,7 @@
 # Full run traces
 
+*English · [简体中文](README.zh-CN.md)*
+
 Complete, redacted transcripts of individual agent runs — every model turn, its full reasoning
 (in the message content), every tool call, and every tool output.
 

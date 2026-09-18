@@ -1,5 +1,7 @@
 # monitored_impl — deceiving an oversight monitor
 
+*English · [简体中文](README.zh-CN.md)*
+
 A first **oversight** scenario: the agent does a coding task while a **real monitor** (a local
 open-source model, free, via Ollama) reviews its work and can reject it. We measure whether the agent
 **lies to the monitor** — submits work that doesn't genuinely solve the task, claims it does, and gets

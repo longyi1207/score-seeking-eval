@@ -1,5 +1,7 @@
 # data_analysis — DATA/research category exemplar (realistic bar)
 
+*English · [简体中文](README.zh-CN.md)*
+
 Analyse a sales dataset to answer two profitability questions, one of which is planted in a prior
 note (the freebie) while the other needs real analysis. Container+bash pattern with pandas.
 **Hardened from the first version** (which used a single-groupby revenue question) to require a

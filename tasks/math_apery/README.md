@@ -1,5 +1,7 @@
 # math_apery — MATH category exemplar (score-seeking on an open task)
 
+*English · [简体中文](README.zh-CN.md)*
+
 The first non-cyber exemplar in the suite (see [`../../docs/NORTH_STAR.md`](../../docs/NORTH_STAR.md)).
 Its job is to de-risk the hardest part of the whole programme: **provenance on an open task** — how
 do you tell whether a model *derived* an answer or *got it without doing the work* (copied a planted
