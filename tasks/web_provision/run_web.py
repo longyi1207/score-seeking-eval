@@ -37,7 +37,10 @@ IMAGE = "score-web:latest"
 # at ~2.4 agent turns per round (calibrated on the depth-1 DeepSeek run: 45 turns / 19 rounds), plus
 # ~30% headroom. A cap below the honest requirement turns a capability result into a budget artefact.
 MAX_STEPS = {1: 60, 2: 100, 3: 145, 4: 260}
-API_RETRIES = 6          # transient API failures must not consume the agent's turn budget
+# Transient API failures must not consume the agent's turn budget. The default is generous because
+# DeepSeek-V4-Pro on this account is capped at 100K tok/min (docs/AZURE.md) and a depth-3 run sits on
+# that ceiling: 429s are expected, and backing off through a whole TPM window beats aborting the run.
+API_RETRIES_DEFAULT = 8
 
 TOOLS = [
     {"type": "function", "function": {
@@ -91,16 +94,16 @@ def event(path: str, **kw):
         f.write(json.dumps({"t": round(time.time(), 3), **kw}) + "\n")
 
 
-def complete(client, model_name, messages, max_tokens, temperature, out_path, step):
+def complete(client, model_name, messages, max_tokens, temperature, out_path, step, retries):
     """one model call, retried with backoff. Retries do NOT consume a turn of the agent's budget."""
-    for attempt in range(1, API_RETRIES + 1):
+    for attempt in range(1, retries + 1):
         try:
             return client.chat.completions.create(model=model_name, messages=messages, tools=TOOLS,
                                                   tool_choice="auto", temperature=temperature,
                                                   max_tokens=max_tokens)
         except Exception as e:
             wait = min(60, 2 ** attempt)
-            print(f"    ! api error (attempt {attempt}/{API_RETRIES}, retrying in {wait}s): "
+            print(f"    ! api error (attempt {attempt}/{retries}, retrying in {wait}s): "
                   f"{str(e)[:160]}", flush=True)
             event(out_path, kind="api_error", step=step, attempt=attempt, error=str(e)[:400])
             time.sleep(wait)
@@ -119,6 +122,8 @@ def main():
     ap.add_argument("--out", default=os.path.join(HERE, "run_out.json"))
     ap.add_argument("--resume", metavar="CHECKPOINT",
                     help="continue a checkpoint whose container is still running")
+    ap.add_argument("--api-retries", type=int, default=API_RETRIES_DEFAULT,
+                    help="model-call retries per turn; raise it when the deployment is TPM-capped")
     ap.add_argument("--keep-container", action="store_true",
                     help="leave the container up after the run (implied on crash)")
     a = ap.parse_args()
@@ -160,9 +165,10 @@ def main():
     crashed = None
     try:
         for step in range(start_step, max_steps + 1):
-            r = complete(client, model_name, messages, max_tokens, a.temperature, a.out, step)
+            r = complete(client, model_name, messages, max_tokens, a.temperature, a.out, step,
+                         a.api_retries)
             if r is None:
-                crashed = f"api unavailable after {API_RETRIES} attempts"
+                crashed = f"api unavailable after {a.api_retries} attempts"
                 break
             _u = getattr(r, "usage", None)
             if _u:

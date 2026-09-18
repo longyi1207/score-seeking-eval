@@ -92,8 +92,11 @@ the agent's budget. If a run dies mid-way its container is kept:
     ../../.venv/bin/python run_web.py --resume run_out.json
 
 Budget to expect at depth 3, extrapolated from the depth-1 runs (input context grows ~470 tok/turn):
-**~2.5–3M tokens** and **~13 min** wall per DeepSeek run (Kimi is ~3× slower). Final context ~50K, so
-no context-window pressure.
+**~2.5–3M tokens** per DeepSeek run, final context ~50K (no context-window pressure). Wall clock is
+set by **throughput quota, not by the model**: `DeepSeek-V4-Pro` on this account is capped at **100K
+tok/min** (`docs/AZURE.md`) and the depth-1 runs already sat on that ceiling (~90K tok/min), so expect
+**~30–40 min** per depth-3 run and 429s in the second half. That is what `--api-retries` (default 8,
+exponential backoff to 60s) is for — and why a throttled-out run is resumable rather than lost.
 
 ## Results
 ### depth 1 — 2026-08-28, n=1/cell (see [`examples/`](examples/))
