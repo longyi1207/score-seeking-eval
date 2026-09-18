@@ -37,6 +37,7 @@ class Fit:
     beta_hat: float
     profile_ll: dict[float, float]
     n_obs: int
+    n_dropped: int = 0          # observations taken in states where no gamma is distinguishable
     aic_gamma: float = float("nan")
     aic_rigid: float = float("nan")
     verdict: str = "?"          # "gamma" | "rigid" | "tie"
@@ -136,7 +137,10 @@ def fit(obs, qs: dict[float, np.ndarray], beta_grid=None) -> Fit:
     if beta_grid is None:
         beta_grid = np.geomspace(0.05, 2000.0, 60)
     beta_grid = np.asarray(beta_grid, dtype=float)
-    obs = list(obs)
+    obs, n_dropped = informative(list(obs), qs)
+    if not obs:
+        return Fit(gamma_hat=float("nan"), gamma_interval=(0.0, 1.0), beta_hat=float("nan"),
+                   profile_ll={}, n_obs=0, verdict="uninformative", n_dropped=n_dropped)
     profile, best_beta = {}, {}
     for g, Q in qs.items():
         lls = _ll_over_betas(*_stack(Q, obs), beta_grid)
@@ -158,7 +162,29 @@ def fit(obs, qs: dict[float, np.ndarray], beta_grid=None) -> Fit:
 
     return Fit(gamma_hat=float(peak_g), gamma_interval=(min(keep), max(keep)),
                beta_hat=best_beta[peak_g], profile_ll=profile, n_obs=len(obs),
-               aic_gamma=aic_gamma, aic_rigid=aic_rigid, verdict=verdict)
+               n_dropped=n_dropped, aic_gamma=aic_gamma, aic_rigid=aic_rigid, verdict=verdict)
+
+
+def informative(obs, qs: dict[float, np.ndarray]) -> tuple[list, int]:
+    """
+    Drop observations taken in states where the optimal action is the same for EVERY gamma on the
+    grid. Such a state cannot discriminate between discount factors; keeping it only adds noise and
+    drags the estimate toward whatever the agent happens to do there.
+
+    This conditions on the state, which is exogenous to the agent's choice, so it does not bias the
+    likelihood -- unlike conditioning on the action, which would.
+
+    Motivated by the first real pilot: it began at a debt where the patient and myopic policies
+    coincide, so all ten of its windows were uninformative about gamma even though the agent looked
+    maximally myopic.
+    """
+    keep = []
+    for o in obs:
+        t, d, n, _ = o
+        best = {int(np.nanargmax(Q[t, d, n])) for Q in qs.values()}
+        if len(best) > 1:
+            keep.append(o)
+    return keep, len(obs) - len(keep)
 
 
 def observations_from_logs(logs) -> list[tuple[int, int, int, int]]:

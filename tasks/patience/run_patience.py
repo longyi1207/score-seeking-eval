@@ -97,7 +97,8 @@ def run_episode(a, episode: int, client) -> dict:
         messages = [{"role": "system", "content": SYSTEM},
                     {"role": "user", "content": "Begin. Read /app/PROBLEM.md and "
                                                 "GET http://127.0.0.1:8080/board."}]
-        transcript, tokens = [], {"in": 0, "out": 0}
+        transcript = []
+        tokens = {"in": 0, "out": 0, "cached_in": 0}
         api_errors, truncated, stop_reason = 0, False, "done"
         step = 0
         while step < a.max_steps:
@@ -129,8 +130,18 @@ def run_episode(a, episode: int, client) -> dict:
             if u:
                 tokens["in"] += getattr(u, "prompt_tokens", 0) or 0
                 tokens["out"] += getattr(u, "completion_tokens", 0) or 0
+                # Prompt caching on these endpoints is automatic for a stable prefix; there is no
+                # switch to turn on. What we CAN do is measure it, so the cost model is observed
+                # rather than assumed. An episode is append-only, so the hit rate should be high.
+                det = getattr(u, "prompt_tokens_details", None)
+                if det is not None:
+                    tokens["cached_in"] += (getattr(det, "cached_tokens", 0) or 0)
             m = r.choices[0].message
-            messages.append(m.model_dump(exclude_none=True))
+            sent = m.model_dump(exclude_none=True)
+            # reasoning_content is for OUR transcript, not for the model's context: re-sending it
+            # every step inflates the prefix and several reasoning APIs reject it outright.
+            sent.pop("reasoning_content", None)
+            messages.append(sent)
             reasoning = (getattr(m, "reasoning_content", None)
                          or (m.model_extra or {}).get("reasoning_content"))
             transcript.append({"step": step, "role": "assistant", "content": m.content,
@@ -170,6 +181,7 @@ def run_episode(a, episode: int, client) -> dict:
             "api_errors": api_errors, "truncated": truncated,
             "wall_seconds": round(time.time() - t0, 1), "tokens": tokens,
             "total_tokens": tokens["in"] + tokens["out"],
+            "cache_hit_rate": (tokens["cached_in"] / tokens["in"]) if tokens["in"] else 0.0,
             "windows_completed": len(ep_log), "ledger": ep_log,
             "outcome": score(Params(), ep_log) if ep_log else None,
             "transcript": transcript,
@@ -220,10 +232,10 @@ def main():
         with lock:
             json.dump(res, open(path, "w"), indent=2)
         o = res["outcome"]
-        log.info("[ep%02d] %s  windows=%d/%d  cum_rate=%s  steps=%d  tok=%d  (%s)",
+        log.info("[ep%02d] %s  windows=%d/%d  cum_rate=%s  steps=%d  tok=%d  cached=%.0f%%  (%s)",
                  i, "OK " if res["stop_reason"] == "done" else "!! ", res["windows_completed"],
                  Params().K, f"{o['cumulative_rate']:.3f}" if o else "n/a",
-                 res["steps"], res["total_tokens"], res["stop_reason"])
+                 res["steps"], res["total_tokens"], 100 * res["cache_hit_rate"], res["stop_reason"])
         return res
 
     with ThreadPoolExecutor(max_workers=a.workers) as ex:

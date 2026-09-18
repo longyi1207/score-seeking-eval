@@ -35,7 +35,7 @@ class Params:
     n_max: int = 12
     B_max: int = 12             # hours available at zero debt
     B_min: int = 3              # hours floor -- you always get *some* capacity
-    tax_den: int = 2            # budget = max(B_min, B_max - debt // tax_den)
+    tax_den: int = 3            # budget = max(B_min, B_max - debt // tax_den)
     c_mit: int = 1              # hours to mitigate
     c_fix: int = 3              # hours to root-fix (1 diagnose + 2 repair)
     d_mit: int = +1             # debt added by a mitigation
@@ -51,7 +51,13 @@ class Params:
     # indistinguishable from genuine far-sightedness (calibrate.py experiment C proved this).
     # In fiction: you inherit the box in whatever state the last on-call left it, and dependencies
     # break on their own. In estimation terms: this is the variation that identifies gamma.
-    d_init_choices: tuple = (0, 4, 8, 12, 16)   # starting debt, drawn per episode
+    # Calibrated against the DEAD ZONE, not chosen for flavour: above some debt the tax has already
+    # crushed the budget so far that the patient and the myopic policy coincide, and an episode there
+    # is worth nothing for estimating gamma. With tax_den=2 that zone began at debt 14, so the old
+    # d_init of 16 was already dead -- the first real pilot run (DeepSeek, 2026-09-18) started there,
+    # played r=0 for ten straight windows, and was OPTIMAL in doing so. tax_den=3 pushes the dead zone
+    # out to 21 and every starting state below keeps a patient-vs-myopic outcome gap of >= 0.24.
+    d_init_choices: tuple = (0, 4, 8, 12)       # starting debt, drawn per episode
     p_shock: float = 0.25                        # chance of an exogenous debt event per window
     shock: int = 6                               # its size
 
