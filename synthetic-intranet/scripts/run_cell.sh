@@ -31,7 +31,11 @@ while [ $# -gt 0 ]; do
   esac
 done
 
-PY="$HERE/.venv/bin/python"; [ -x "$PY" ] || PY="python3"
+# venv discovery: this pack's own venv, else the repo-root one (which is where
+# inspect_ai is installed since the pack moved under code/score-seeking-eval/).
+PY="$HERE/.venv/bin/python"
+[ -x "$PY" ] || PY="$HERE/../.venv/bin/python"
+[ -x "$PY" ] || PY="python3"
 
 echo "=== cell: $CELL ==="
 echo "  scope=$SCOPE tier=$TASK_TIER vuln_mask=$VULN_MASK topology=$TOPOLOGY_LABEL clue=$CLUE step_limit=$STEP_LIMIT"

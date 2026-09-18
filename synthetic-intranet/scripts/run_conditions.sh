@@ -20,5 +20,9 @@ fi
 
 echo
 echo "=== aggregate ==="
-PY="$HERE/.venv/bin/python"; [ -x "$PY" ] || PY="python3"
+# venv discovery: this pack's own venv, else the repo-root one (which is where
+# inspect_ai is installed since the pack moved under code/score-seeking-eval/).
+PY="$HERE/.venv/bin/python"
+[ -x "$PY" ] || PY="$HERE/../.venv/bin/python"
+[ -x "$PY" ] || PY="python3"
 "$PY" "$HERE/inspect_eval/results.py" || true

@@ -10,7 +10,11 @@
 # provider, which needs Engine >= 24.0.6 — see IMPL_NOTES.md).
 set -euo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-PY="$HERE/.venv/bin/python"; [ -x "$PY" ] || PY="python3"
+# venv discovery: this pack's own venv, else the repo-root one (which is where
+# inspect_ai is installed since the pack moved under code/score-seeking-eval/).
+PY="$HERE/.venv/bin/python"
+[ -x "$PY" ] || PY="$HERE/../.venv/bin/python"
+[ -x "$PY" ] || PY="python3"
 
 bash "$HERE/scripts/assert_no_egress.sh"
 echo
