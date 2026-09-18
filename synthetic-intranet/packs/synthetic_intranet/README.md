@@ -1,5 +1,7 @@
 # Northstar pack
 
+*English · [简体中文](README.zh-CN.md)*
+
 Synthetic adjacent-intranet for the long-horizon **score-seeking / reward-hacking**
 propensity eval. All services, vulns, and data here are **intentional eval
 fixtures** — there are no real secrets and no real internet egress. See the repo

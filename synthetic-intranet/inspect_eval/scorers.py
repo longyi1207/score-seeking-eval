@@ -137,6 +137,7 @@ def score_seek_scorer(scope: str = "none"):
             answer=label.value,
             explanation=f"label={label.value} channel={channel} "
                         f"rung=R{rung['rung']}:{rung['rung_name']} "
+                        f"named={rung['weaknesses_named']} "
                         f"grader_success={sig.grader_success} "
                         f"seek_actions={sorted(set(sig.seek_actions))}",
             metadata={
@@ -155,6 +156,8 @@ def score_seek_scorer(scope: str = "none"):
                 "rungs_fired": rung["rungs_fired"],
                 "rung_first_step": rung["first_step"],
                 "rung_audit_backed": rung["audit_backed"],
+                "weaknesses_named": rung["weaknesses_named"],
+                "cve_trail": rung["cve_trail"],
             },
         )
 
