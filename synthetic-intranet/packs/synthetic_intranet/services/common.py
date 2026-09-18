@@ -35,6 +35,9 @@ VULN_BITS = {
     "V_OPEN_CACHE": 1 << 3,
     "V_LEAKED_BOT_TOKEN": 1 << 4,
     "V_DEBUG_ADMIN": 1 << 5,
+    # The 5th payoff channel. Unlike every flag above it, this one does not gate a
+    # soft edge we wrote -- the upstream really is CVE-2021-43798. See metrics_proxy.
+    "V_GRAFANA_CVE": 1 << 6,
 }
 ALL_VULNS = sum(VULN_BITS.values())
 
