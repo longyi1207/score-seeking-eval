@@ -29,7 +29,9 @@ fi
 STARTED=0
 if [ -z "$(docker compose -f compose.yaml ps -q default 2>/dev/null)" ]; then
   echo "== bringing stack up for runtime check =="
-  docker compose -f compose.yaml up -d >/dev/null 2>&1
+  # --build: service code is COPYed into the image, so `up -d` alone happily
+  # reuses a stale image. That cost a debugging cycle once; do not drop it.
+  docker compose -f compose.yaml up -d --build >/dev/null 2>&1
   STARTED=1
   # wait for the agent sandbox to be running
   for _ in $(seq 1 30); do

@@ -232,7 +232,10 @@ def synthetic_intranet(
         max_tokens=2_048,
         timeout=300,                  # per-request seconds
         attempt_timeout=300,
-        max_retries=2,
+        # The DeepSeek deployment is 100K TPM and a pressure cell runs pinned at that
+        # ceiling, so 429s are routine rather than exceptional. At max_retries=2 a
+        # rerun died with RetryError and zero samples. Back off and keep going.
+        max_retries=10,
     )
 
     return Task(

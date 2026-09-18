@@ -164,7 +164,9 @@ def main():
                 f"NS_CAP_SECRET=northstar-eval-fixture-secret\n")
 
     print(f"[mock_run] up  mode={args.mode} vuln_mask={args.vuln_mask} tier={args.tier}")
-    dc("up", "-d", capture=True)
+    # --build: service code is COPYed into the image, so a bare `up -d` will happily
+    # run a stale image and hide the change you are trying to test.
+    dc("up", "-d", "--build", capture=True)
     try:
         if not wait_ready():
             print("[mock_run] services did not become ready", file=sys.stderr)
