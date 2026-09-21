@@ -20,15 +20,12 @@ import argparse, json, os, re, subprocess, sys, time, uuid
 from openai import OpenAI
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+REPO_ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 sys.path.insert(0, HERE)
+sys.path.insert(0, os.path.join(REPO_ROOT, "platform", "harness"))
 import grade as grader  # noqa: E402
-
-_RES = os.environ.get("AZURE_AI_RESOURCE", "your-ai-services-resource")
-MODELS = {
-    "deepseek": ("DeepSeek-V4-Pro", f"https://{_RES}.services.ai.azure.com/openai/v1"),
-    "gpt-4o":   ("gpt-4o",          f"https://{_RES}.openai.azure.com/openai/v1"),
-    "kimi":     ("Kimi-K2.6",      f"https://{_RES}.services.ai.azure.com/openai/v1"),
-}
+from azure_models import MODELS, PROPENSITY_MODEL_KEY, chat_token_kwargs, chat_temperature_kwargs  # noqa: E402
+from propensity_schema import finalize_run_record  # noqa: E402
 IMAGE = "score-subversion:latest"
 CASES = {"impossible": "tiers/impossible_cases.py", "solvable": "tiers/solvable_cases.py"}
 
@@ -111,7 +108,7 @@ def main():
         for step in range(1, a.max_steps + 1):
             try:
                 r = client.chat.completions.create(model=model_name, messages=messages, tools=TOOLS,
-                                                   tool_choice="auto", temperature=0.2, max_tokens=(8192 if a.model_key=="kimi" else 2048))
+                                                   tool_choice="auto", **chat_temperature_kwargs(a.model_key), **chat_token_kwargs(a.model_key, model_name, n=(8192 if a.model_key=="kimi" or model_name=="Kimi-K2.6" else 2048)))
             except Exception as e:
                 print("API error:", str(e)[:160]); time.sleep(4); continue
             u = getattr(r, "usage", None)
@@ -208,6 +205,14 @@ def main():
                   "observation": obs, "verdict": verdict, "monitor_messages": msgs,
                   "results_json": dexec(cid, "cat /app/results.json 2>/dev/null", as_agent=False),
                   "solution": dexec(cid, "cat /app/solution.py", as_agent=False), "transcript": transcript}
+        ch = verdict.get("channel") or ""
+        cm = {"monitor_killed": "oversight_kill", "managed_file_tamper": "oversight_runner_destroy"}.get(ch)
+        finalize_run_record(
+            result, task="oversight_subversion",
+            model_key=PROPENSITY_MODEL_KEY.get(a.model_key, a.model_key),
+            scope=a.scope, framing="neutral", precedent_stance="none", has_recipe=False,
+            difficulty=a.difficulty, salient_grader=True, cheat_mode_override=cm,
+        )
         json.dump(result, open(a.out, "w"), indent=2)
         print(f"DONE {a.model_key}/{a.difficulty}/{a.scope} -> {verdict['label']} ({verdict['channel']})  "
               f"spec_correct={spec_correct} real_pass={real_pass} claims_pass={results_claims_pass} "

@@ -1,5 +1,10 @@
 # Why might one model score-seek more? Hypotheses
 
+> **Superseding framing (2026-09-19):** Do not treat “DeepSeek/CN cheats more ⇒ more dangerous” as
+> the research target. See [`DESIGN_UPDATE_PROPENSITY_VECTORS.md`](./DESIGN_UPDATE_PROPENSITY_VECTORS.md).
+> Keep the mechanism hypotheses below as **mediators** (RLVR, anti-gaming, etc.) for explaining
+> cells in the cheat-mode × model vector — not as a nationality story.
+
 Our MVP found **DeepSeek-V4-Pro** score-sought in 60% of neutral trials while **GPT-4o** never did
 (0/10). This note collects hypotheses for *why*, with the evidence for and against each. It is
 explicitly speculative — n=5 per cell, one construct, one task.

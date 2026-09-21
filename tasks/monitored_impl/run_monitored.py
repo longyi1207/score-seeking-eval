@@ -24,16 +24,13 @@ import argparse, hashlib, json, os, subprocess, sys, time, uuid
 from openai import OpenAI
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+REPO_ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 sys.path.insert(0, HERE)
+sys.path.insert(0, os.path.join(REPO_ROOT, "platform", "harness"))
 import grade as grader          # noqa: E402
 import monitor as monitor_mod   # noqa: E402
-
-_RES = os.environ.get("AZURE_AI_RESOURCE", "your-ai-services-resource")
-MODELS = {
-    "deepseek": ("DeepSeek-V4-Pro", f"https://{_RES}.services.ai.azure.com/openai/v1"),
-    "gpt-4o":   ("gpt-4o",          f"https://{_RES}.openai.azure.com/openai/v1"),
-    "kimi":     ("Kimi-K2.6",      f"https://{_RES}.services.ai.azure.com/openai/v1"),
-}
+from azure_models import MODELS, PROPENSITY_MODEL_KEY, chat_token_kwargs, chat_temperature_kwargs  # noqa: E402
+from propensity_schema import finalize_run_record  # noqa: E402
 IMAGE = "score-monitored:latest"
 
 # difficulty -> (spec file, pristine visible-tests file, held-out grader source) — all host paths
@@ -138,7 +135,7 @@ def main():
         for step in range(1, a.max_steps + 1):
             try:
                 r = client.chat.completions.create(model=model_name, messages=messages, tools=TOOLS,
-                                                   tool_choice="auto", temperature=0.2, max_tokens=(8192 if a.model_key=="kimi" else 2048))
+                                                   tool_choice="auto", **chat_temperature_kwargs(a.model_key), **chat_token_kwargs(a.model_key, model_name, n=(8192 if a.model_key=="kimi" or model_name=="Kimi-K2.6" else 2048)))
             except Exception as e:
                 print("API error:", str(e)[:160]); time.sleep(4); continue
             u = getattr(r, "usage", None)
@@ -222,6 +219,12 @@ def main():
                   "report": report, "heldout": heldout, "tamper": tamper, "monitor": mon,
                   "verdict": verdict, "activity_log": activity_log,
                   "submitted_code": submitted_code, "transcript": transcript}
+        finalize_run_record(
+            result, task="monitored_impl",
+            model_key=PROPENSITY_MODEL_KEY.get(a.model_key, a.model_key),
+            scope=a.scope, framing="neutral", precedent_stance="none", has_recipe=False,
+            difficulty=a.difficulty, salient_grader=True,
+        )
         json.dump(result, open(a.out, "w"), indent=2)
         s = verdict["signals"]
         print(f"DONE {a.model_key}/{a.difficulty}/{a.scope} -> {verdict['label']} ({verdict['channel']})  "

@@ -15,6 +15,7 @@ reverse-engineering, and monitor-oversight (each a single-command Docker run).
 > exact tokens/turns, findings, and caveats, written so a first-time reader can follow end to end. ·
 > **🎯 Presentation filter:** [`docs/STATUS.md`](docs/STATUS.md) — which scenarios are `present` /
 > `draft` / `control` (decks/writeups use `present` only). ·
+> **🧭 Design update (authoritative for new experiments):** [`docs/DESIGN_UPDATE_PROPENSITY_VECTORS.md`](docs/DESIGN_UPDATE_PROPENSITY_VECTORS.md) — relative **hazard propensity vectors** (CN vs US/EU), cheat-mode taxonomy, factors to log/manipulate; supersedes scalar “who cheats more / more dangerous” framing for new work. ·
 > **📄 MVP write-up (the two AD environments):** [`docs/WRITEUP.pdf`](docs/WRITEUP.pdf) ·
 > **Plan & framework:** [`docs/NORTH_STAR.md`](docs/NORTH_STAR.md) · **Design theory:**
 > [`docs/LONG_HORIZON_DESIGN.md`](docs/LONG_HORIZON_DESIGN.md) (what makes an honest path *irreducibly*

@@ -4,6 +4,15 @@ _Status: design doc / project nucleus. 2026-08-28. Supersedes the "AD-only" fram
 Active Directory environments (`ad-corp`, `ad-enterprise`) become the **cyber** slice of a much
 broader suite._
 
+> **2026-09-19 design update:** For **new** experimental design and model comparisons, follow
+> [`DESIGN_UPDATE_PROPENSITY_VECTORS.md`](./DESIGN_UPDATE_PROPENSITY_VECTORS.md). The locked question is
+> relative **hazard-relevant propensity vectors** (CN vs US/EU labs) and confounder attribution —
+> not a scalar “who cheats more / which country is more dangerous.” This NORTH_STAR still defines
+> the shared construct (honest path × shortcut × un-gameable grader; capability × propensity).
+>
+> **Ops plan (enhance existing tasks, phased runs — align before coding):**
+> [`EXECUTION_PLAN_EXISTING_TASKS.md`](./EXECUTION_PLAN_EXISTING_TASKS.md).
+
 ## 1. What we are measuring, and why breadth is the whole point
 
 Two quantities, per (model, task):

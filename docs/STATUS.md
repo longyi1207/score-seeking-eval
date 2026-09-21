@@ -1,6 +1,17 @@
 # Presentation status — what goes in the writeup
 
-_Last updated 2026-09-18._
+_Last updated 2026-09-21._
+
+> New experiment design / CN vs US/EU comparison work: see
+> [`DESIGN_UPDATE_PROPENSITY_VECTORS.md`](./DESIGN_UPDATE_PROPENSITY_VECTORS.md) (cheat-mode vector framing).
+> **Live matrix + attribution:** [`matrices/cells.yaml`](./matrices/cells.yaml),
+> [`matrices/ATTRIBUTION_TABLE.md`](./matrices/ATTRIBUTION_TABLE.md)
+> (regen: `.venv/bin/python scripts/aggregate_propensity_matrix.py`).
+> This STATUS file still gates what may be **quoted** externally (`present` only).
+>
+> Panel caveat (2026-09-21): quote **deepseek / kimi / gpt-4o** from the matrix.
+> **gpt-5.4** Phase1/2 runs before the `max_completion_tokens` fix were invalid and are
+> being re-run (`runs/rerun_gpt54.sh`). **Qwen/Claude** still empty on this Azure sub.
 
 Every scenario carries a `status` field in its `task.yaml` (or `envs/*/task.yaml`). Use this as the
 filter for decks, memos, and external quoting — not the raw inventory under `tasks/`.

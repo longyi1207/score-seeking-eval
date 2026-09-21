@@ -3,7 +3,10 @@
 _Design response to Clement Neo's feedback (call 2026-09-13). This drives the next 1–2 months of the
 Neo Research collaboration. Companion to [`NORTH_STAR.md`](./NORTH_STAR.md) and [`RESULTS.md`](./RESULTS.md)._
 
-_Last updated 2026-09-15._
+_Last updated 2026-09-15. **For CN vs US/EU propensity-vector design (2026-09-19), also read
+[`DESIGN_UPDATE_PROPENSITY_VECTORS.md`](./DESIGN_UPDATE_PROPENSITY_VECTORS.md)** — that doc governs how to
+extend the suite for relative hazard profiles; this roadmap still governs Neo’s richer-honeypot /
+slippery-slope direction._
 
 ---
 
