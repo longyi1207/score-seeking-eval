@@ -12,6 +12,8 @@ MODELS: dict[str, tuple[str, str]] = {
     "kimi": ("Kimi-K2.6", _FOUNDRY),
     "gpt-4o": ("gpt-4o", _FOUNDRY),
     "gpt-5.4": ("gpt-5.4", _FOUNDRY),  # OpenAI frontier stand-in for reasoning panel slot
+    # Anthropic direct API (not Azure). Sentinel base_url; see llm_chat.py.
+    "claude": (os.environ.get("ANTHROPIC_MODEL", "claude-sonnet-4-5-20250929"), "anthropic"),
 }
 
 # Map runner model_key -> propensity_schema MODEL_META key

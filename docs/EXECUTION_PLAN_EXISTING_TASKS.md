@@ -356,7 +356,8 @@ LY approved sequential execute; **B3 open-weight** and **B4 training-class regre
 | P2 | Salient grader off | `protocol_re` + `metric_redef` `--salient off` n=5 panel |
 | P3 | Eval awareness | `internal_exfil` + `protocol_re` × observed/unobserved n=5 |
 | P4 | Beyond-episode lite | Precedent = quasi-collusion in attribution; `protocol --watchdog` sabotage cell |
-| Backlog | B3 open-weight raw vs API; B4 training-class regression | Needs LY model setup |
+| P5 | Bilingual brief `--lang zh` on protocol_re (+ claude via Anthropic API) | `runs/bilingual_protocol.sh` |
+| Backlog | B3 open-weight raw vs API; B4 training-class regression | Needs LY model setup; see `docs/matrices/B3_AND_PREREG.md` |
 
 Batch: `runs/phase3_followons.sh`. Re-aggregate after DONE.
 

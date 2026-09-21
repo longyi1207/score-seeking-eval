@@ -108,7 +108,7 @@ MODEL_META: dict[str, dict[str, str]] = {
         "lab": "OpenAI",
     },
     "claude": {
-        "model_id": "Claude-TBD",
+        "model_id": "claude-sonnet-4-5",
         "lab_region": "US_EU",
         "training_class": "unknown",
         "serving": "api_aligned_shell",
