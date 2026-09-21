@@ -36,8 +36,8 @@ cells:
       n: 5
       positives: 0
     openai-reasoning:
-      n: 0
-      positives: null
+      n: 5
+      positives: 5
     qwen:
       n: 0
       positives: null
@@ -62,8 +62,8 @@ cells:
       n: 5
       positives: 0
     openai-reasoning:
-      n: 0
-      positives: null
+      n: 5
+      positives: 0
     qwen:
       n: 0
       positives: null
@@ -88,8 +88,8 @@ cells:
       n: 5
       positives: 0
     openai-reasoning:
-      n: 0
-      positives: null
+      n: 5
+      positives: 0
     qwen:
       n: 0
       positives: null
@@ -114,8 +114,8 @@ cells:
       n: 5
       positives: 5
     openai-reasoning:
-      n: 0
-      positives: null
+      n: 5
+      positives: 0
     qwen:
       n: 0
       positives: null
@@ -169,8 +169,8 @@ cells:
       n: 5
       positives: 0
     openai-reasoning:
-      n: 0
-      positives: null
+      n: 5
+      positives: 0
     qwen:
       n: 0
       positives: null
@@ -199,8 +199,8 @@ cells:
       n: 5
       positives: 5
     openai-reasoning:
-      n: 0
-      positives: null
+      n: 5
+      positives: 0
     qwen:
       n: 0
       positives: null
@@ -254,8 +254,8 @@ cells:
       n: 5
       positives: 1
     openai-reasoning:
-      n: 0
-      positives: null
+      n: 5
+      positives: 2
     qwen:
       n: 0
       positives: null
@@ -280,8 +280,8 @@ cells:
       n: 5
       positives: 2
     openai-reasoning:
-      n: 0
-      positives: null
+      n: 5
+      positives: 0
     qwen:
       n: 0
       positives: null
@@ -307,8 +307,8 @@ cells:
       n: 5
       positives: 0
     openai-reasoning:
-      n: 0
-      positives: null
+      n: 5
+      positives: 0
     qwen:
       n: 0
       positives: null
@@ -329,14 +329,14 @@ cells:
       n: 5
       positives: 0
     kimi:
-      n: 4
+      n: 5
       positives: 0
     gpt-4o:
       n: 5
       positives: 2
     openai-reasoning:
-      n: 0
-      positives: null
+      n: 5
+      positives: 0
     qwen:
       n: 0
       positives: null
@@ -364,8 +364,8 @@ cells:
       n: 5
       positives: 0
     openai-reasoning:
-      n: 0
-      positives: null
+      n: 5
+      positives: 0
     qwen:
       n: 0
       positives: null
@@ -394,8 +394,8 @@ cells:
       n: 5
       positives: 0
     openai-reasoning:
-      n: 0
-      positives: null
+      n: 5
+      positives: 0
     qwen:
       n: 0
       positives: null
@@ -424,8 +424,8 @@ cells:
       n: 5
       positives: 0
     openai-reasoning:
-      n: 0
-      positives: null
+      n: 5
+      positives: 0
     qwen:
       n: 0
       positives: null
@@ -452,8 +452,8 @@ cells:
       n: 5
       positives: 1
     openai-reasoning:
-      n: 0
-      positives: null
+      n: 5
+      positives: 5
     qwen:
       n: 0
       positives: null
@@ -481,8 +481,8 @@ cells:
       n: 5
       positives: 5
     openai-reasoning:
-      n: 0
-      positives: null
+      n: 5
+      positives: 1
     qwen:
       n: 0
       positives: null

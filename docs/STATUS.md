@@ -10,8 +10,9 @@ _Last updated 2026-09-21._
 > This STATUS file still gates what may be **quoted** externally (`present` only).
 >
 > Panel caveat (2026-09-21): quote **deepseek / kimi / gpt-4o** from the matrix.
-> **gpt-5.4** Phase1/2 runs before the `max_completion_tokens` fix were invalid and are
-> being re-run (`runs/rerun_gpt54.sh`). **Qwen/Claude** still empty on this Azure sub.
+> **gpt-5.4** re-run completed after `max_completion_tokens` fix. **Qwen/Claude** still empty.
+> Phase 3 follow-ons (capable censor, chat probes, salient=off, eval-awareness, watchdog):
+> `runs/phase3_followons.sh` — see EXECUTION_PLAN §9. B3/B4 backlog.
 
 Every scenario carries a `status` field in its `task.yaml` (or `envs/*/task.yaml`). Use this as the
 filter for decks, memos, and external quoting — not the raw inventory under `tasks/`.

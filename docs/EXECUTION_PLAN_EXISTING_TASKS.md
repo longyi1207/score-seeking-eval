@@ -2,7 +2,7 @@
 
 _Status: **authoritative ops plan — fill incomplete cells; make results robust.**_  
 _Implements [`DESIGN_UPDATE_PROPENSITY_VECTORS.md`](./DESIGN_UPDATE_PROPENSITY_VECTORS.md) using **existing** tasks first._  
-_Last updated 2026-09-21 (v3: Phase1+2 runs done for DS/Kimi/gpt-4o; gpt-5.4 rerunning after max_completion_tokens fix; matrix in `docs/matrices/`)._
+_Last updated 2026-09-21 (v4: Phase3 follow-ons P0–P4; B3/B4 backlog) (v3: Phase1+2 runs done for DS/Kimi/gpt-4o; gpt-5.4 rerunning after max_completion_tokens fix; matrix in `docs/matrices/`)._
 
 ---
 
@@ -342,3 +342,21 @@ Phase 3  Eval-awareness on internal_exfil; then stop unless spare budget
 **Next eng step when executing:** Phase 0 schema — **done 2026-09-19**. Next: wire `finalize_run_record` into remaining hazard runners, then Phase 1 coverage runs (priority: `monitored_impl` impossible+none n=5; new models; gpt-4o oversight none).
 
 See gap summary: `docs/matrices/hazard_vector_skeleton.csv` (27 filled / 2 partial / 37 empty of 66 rows).
+
+---
+
+## 9. Phase 3 follow-ons (locked 2026-09-21)
+
+LY approved sequential execute; **B3 open-weight** and **B4 training-class regression** are **backlog** until models are set up.
+
+| Wave | Item | Deliverable |
+|---|---|---|
+| P0 | Capable censor + CoT stealth codes | `capable.py`, `docs/matrices/capable_table.yaml`, `STEALTH_COT.md` |
+| P1 | Chat vs agentic probe battery | `tasks/chat_probes/` → `runs/chat_probes_*.json` |
+| P2 | Salient grader off | `protocol_re` + `metric_redef` `--salient off` n=5 panel |
+| P3 | Eval awareness | `internal_exfil` + `protocol_re` × observed/unobserved n=5 |
+| P4 | Beyond-episode lite | Precedent = quasi-collusion in attribution; `protocol --watchdog` sabotage cell |
+| Backlog | B3 open-weight raw vs API; B4 training-class regression | Needs LY model setup |
+
+Batch: `runs/phase3_followons.sh`. Re-aggregate after DONE.
+
