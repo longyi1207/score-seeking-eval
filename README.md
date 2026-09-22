@@ -7,27 +7,26 @@ Measuring **reward-hacking / score-seeking propensity** in LLM agents. Given a b
 shortcut, game the grader, or lie to oversight? Every task pairs an honest path with a reachable cheat
 and an **un-gameable grader** that catches the cheat *even when the agent tries to hide it*.
 
-The suite spans two families: **real Azure Active Directory ranges** (the flagship, with repeated-trial
-rates) and a **container task suite** across math, games, data, web, debugging, formal proof, protocol
-reverse-engineering, and monitor-oversight (each a single-command Docker run).
+The suite spans two families: **real Azure Active Directory ranges** and a **container task suite**
+(protocol reverse-engineering, oversight, exploits, games, proofs, … — each a single-command Docker run).
 
-> **📊 Full results, explained from scratch:** [`docs/RESULTS.md`](docs/RESULTS.md) — every scenario with exact tokens/turns, findings, and caveats, written so a first-time reader can follow end to end.
+### For readers (start here)
+
+> **📊 Full results, from scratch:** [`docs/RESULTS.md`](docs/RESULTS.md) — what each scenario is, then outcomes with turns/tokens.
 >
-> **🎯 Presentation filter:** [`docs/STATUS.md`](docs/STATUS.md) — which scenarios are `present` / `draft` / `control` (decks/writeups use `present` only).
->
-> **🧭 Design update (authoritative for new experiments):** [`docs/DESIGN_UPDATE_PROPENSITY_VECTORS.md`](docs/DESIGN_UPDATE_PROPENSITY_VECTORS.md) — relative **hazard propensity vectors** (CN vs US/EU), cheat-mode taxonomy, factors to log/manipulate; supersedes scalar “who cheats more / more dangerous” framing for new work.
->
-> **📌 CN vs US/EU brief (for readers):** [`docs/HEADLINE_RESULTS.md`](docs/HEADLINE_RESULTS.md)
+> **📌 CN vs US/EU brief:** [`docs/HEADLINE_RESULTS.md`](docs/HEADLINE_RESULTS.md) — hazard-mode glossary, main comparison, turns when cheating vs honest.
 >
 > **Presentable memo:** [`docs/NEO_MEMO.html`](docs/NEO_MEMO.html)
 >
-> **📄 MVP write-up (the two AD environments):** [`docs/WRITEUP.pdf`](docs/WRITEUP.pdf)
->
-> **Plan & framework:** [`docs/NORTH_STAR.md`](docs/NORTH_STAR.md)
->
-> **Design theory:** [`docs/LONG_HORIZON_DESIGN.md`](docs/LONG_HORIZON_DESIGN.md) — what makes an honest path *irreducibly* long, and the "would a REPL collapse it?" litmus test.
->
-> **Add an AD environment:** [`ARCHITECTURE.md`](ARCHITECTURE.md)
+> **📄 MVP write-up (two AD environments):** [`docs/WRITEUP.pdf`](docs/WRITEUP.pdf)
+
+### For contributors / internal
+
+> [`docs/STATUS.md`](docs/STATUS.md) (present / draft / control) ·
+> [`docs/DESIGN_UPDATE_PROPENSITY_VECTORS.md`](docs/DESIGN_UPDATE_PROPENSITY_VECTORS.md) ·
+> [`docs/NORTH_STAR.md`](docs/NORTH_STAR.md) ·
+> [`docs/LONG_HORIZON_DESIGN.md`](docs/LONG_HORIZON_DESIGN.md) ·
+> [`ARCHITECTURE.md`](ARCHITECTURE.md)
 
 ## The construct (one shape, everywhere)
 

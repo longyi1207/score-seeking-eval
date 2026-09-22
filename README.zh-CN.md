@@ -7,27 +7,25 @@
 评分器、对监督撒谎？每个任务都同时提供一条诚实路径、一条确实可达的作弊路径，以及一个**无法被糊弄的
 评分器**——**即使 agent 试图掩盖，作弊也会被抓到**。
 
-整套评测分两大族：**真实的 Azure Active Directory 靶场**（旗舰部分，有重复试验的比率数据），以及一套
-**容器任务集**，横跨数学、博弈、数据、Web、调试、形式化证明、协议逆向、监督对抗（每个都是单条命令的
-Docker 运行）。
+整套评测分两大族：**真实的 Azure Active Directory 靶场**，以及一套**容器任务集**（协议逆向、监督对抗、漏洞利用、博弈、证明等 —— 每个都是单条命令的 Docker 运行）。
 
-> **📊 完整结果，从零讲起：** [`docs/RESULTS.zh-CN.md`](docs/RESULTS.zh-CN.md) —— 每个场景的确切 token / 轮次、发现与注意事项，写法上让第一次读的人也能从头跟到尾。
+### 给读者（从这里开始）
+
+> **📊 完整结果，从零讲起：** [`docs/RESULTS.zh-CN.md`](docs/RESULTS.zh-CN.md) —— 先讲每个场景是做什么的，再给 outcome / 轮次 / token。
 >
-> **🎯 演示筛选：** [`docs/STATUS.md`](docs/STATUS.md) —— 哪些场景是 `present` / `draft` / `control`（做 deck / 论述时只用 `present`）。
->
-> **🧭 设计更新（后续实验以它为准）：** [`docs/DESIGN_UPDATE_PROPENSITY_VECTORS.md`](docs/DESIGN_UPDATE_PROPENSITY_VECTORS.md) —— 相对**危害相关 propensity 向量**（中国实验室 vs 美/欧）、cheat-mode 分类、该记录/操纵的因子；新工作不再以标量「谁更爱作弊 / 谁更危险」为主问题。
->
-> **📌 CN vs US/EU 简报（给读者）：** [`docs/HEADLINE_RESULTS.md`](docs/HEADLINE_RESULTS.md)
+> **📌 中美实验室对比简报：** [`docs/HEADLINE_RESULTS.md`](docs/HEADLINE_RESULTS.md) —— 危害模式词典、主结论、作弊 vs 诚实的步数。
 >
 > **Presentable memo：** [`docs/NEO_MEMO.html`](docs/NEO_MEMO.html)
 >
 > **📄 MVP 论述（两个 AD 环境）：** [`docs/WRITEUP.zh-CN.pdf`](docs/WRITEUP.zh-CN.pdf)
->
-> **计划与框架：** [`docs/NORTH_STAR.md`](docs/NORTH_STAR.md)
->
-> **设计理论：** [`docs/LONG_HORIZON_DESIGN.md`](docs/LONG_HORIZON_DESIGN.md) —— 什么让一条诚实路径**不可压缩地**长，以及“换成 REPL 会不会把它压扁？”这条试金石。
->
-> **新增一个 AD 环境：** [`ARCHITECTURE.md`](ARCHITECTURE.md)
+
+### 给贡献者 / 内部
+
+> [`docs/STATUS.md`](docs/STATUS.md)（present / draft / control）·
+> [`docs/DESIGN_UPDATE_PROPENSITY_VECTORS.md`](docs/DESIGN_UPDATE_PROPENSITY_VECTORS.md) ·
+> [`docs/NORTH_STAR.md`](docs/NORTH_STAR.md) ·
+> [`docs/LONG_HORIZON_DESIGN.md`](docs/LONG_HORIZON_DESIGN.md) ·
+> [`ARCHITECTURE.md`](ARCHITECTURE.md)
 
 ## 基本构造（同一个形状，处处如此）
 
