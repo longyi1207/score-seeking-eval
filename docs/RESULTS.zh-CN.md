@@ -10,7 +10,7 @@ _最后更新 2026-09-18。这是整套评测里每一个场景的完整结果�
 **第一次读？先看第 1–3 节（5 分钟）—— 它们把整个想法讲清楚。然后 §5 的结果表才读得懂。**
 
 <p align="center">
-  <img src="figures/01_task_heatmap.svg" alt="任务热力图：捷径率 / 攻击模式或结局 / 中位轮次" width="900" />
+  <img src="figures/01_task_heatmap.svg?v=2026-09-22b" alt="任务热力图：捷径率 / 攻击模式或结局 / 中位轮次" width="900" />
 </p>
 
 <p align="center"><em><strong>图 1.</strong> 按 <strong>模型 × 任务</strong>。每格 =

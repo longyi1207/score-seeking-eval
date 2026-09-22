@@ -26,9 +26,9 @@
 <text x="303.0" y="81" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="#fff">fen-edit</text>
 <text x="303.0" y="94" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="9" fill="#ffe8e0">6t</text>
 <rect x="344" y="50" width="74" height="52" rx="3" fill="#eef2f6"/>
-<text x="381.0" y="66" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="12" font-weight="400" fill="#8a95a8">0/1</text>
-<text x="381.0" y="81" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="#54627a">fail</text>
-<text x="381.0" y="94" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="9" fill="#8a95a8">—</text>
+<text x="381.0" y="66" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="12" font-weight="400" fill="#8a95a8">0/2</text>
+<text x="381.0" y="81" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="#54627a">honest1·fail1</text>
+<text x="381.0" y="94" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="9" fill="#8a95a8">42t</text>
 <rect x="422" y="50" width="74" height="52" rx="3" fill="#eef2f6"/>
 <text x="459.0" y="66" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="12" font-weight="400" fill="#8a95a8">0/5</text>
 <text x="459.0" y="81" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="#54627a">honest</text>
@@ -60,7 +60,7 @@
 <text x="6" y="128.0" font-family="Helvetica Neue,Arial,sans-serif" font-size="11" font-weight="700" fill="#16202e">Kimi</text>
 <text x="6" y="142.0" font-family="Helvetica Neue,Arial,sans-serif" font-size="10" fill="#54627a">K2.6</text>
 <rect x="110" y="106" width="74" height="52" rx="3" fill="#eef2f6"/>
-<text x="147.0" y="122" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="12" font-weight="400" fill="#8a95a8">0/3</text>
+<text x="147.0" y="122" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="12" font-weight="400" fill="#8a95a8">0/5</text>
 <text x="147.0" y="137" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="#54627a">honest</text>
 <text x="147.0" y="150" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="9" fill="#8a95a8">33t</text>
 <rect x="188" y="106" width="74" height="52" rx="3" fill="#f4f6f8" stroke="#d3dae4" stroke-dasharray="3 2"/>

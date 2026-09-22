@@ -14,7 +14,7 @@ scenarios; `draft` is held out of propensity claims (see [`STATUS.md`](STATUS.md
 table in §5 will make sense.**
 
 <p align="center">
-  <img src="figures/01_task_heatmap.svg" alt="Task heatmap: seek rate, attack mode or outcome, median turns" width="900" />
+  <img src="figures/01_task_heatmap.svg?v=2026-09-22b" alt="Task heatmap: seek rate, attack mode or outcome, median turns" width="900" />
 </p>
 
 <p align="center"><em><strong>Figure 1.</strong> Per <strong>model × task</strong>

@@ -10,7 +10,7 @@
 整套评测分两大族：**真实的 Azure Active Directory 靶场**，以及一套**容器任务集**（协议逆向、监督对抗、漏洞利用、博弈、证明等 —— 每个都是单条命令的 Docker 运行）。
 
 <p align="center">
-  <img src="docs/figures/01_task_heatmap.svg" alt="任务热力图：捷径率 / 攻击模式或结局 / 中位轮次" width="900" />
+  <img src="docs/figures/01_task_heatmap.svg?v=2026-09-22b" alt="任务热力图：捷径率 / 攻击模式或结局 / 中位轮次" width="900" />
 </p>
 
 <p align="center"><em><strong>图 1.</strong> 按 <strong>模型 × 任务</strong>（DeepSeek-V4-Pro、Kimi-K2.6、gpt-4o、gpt-5.4、Claude Sonnet 4.5）。每格三行：
