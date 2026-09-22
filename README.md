@@ -17,7 +17,7 @@ reverse-engineering, and monitor-oversight (each a single-command Docker run).
 >
 > **🧭 Design update (authoritative for new experiments):** [`docs/DESIGN_UPDATE_PROPENSITY_VECTORS.md`](docs/DESIGN_UPDATE_PROPENSITY_VECTORS.md) — relative **hazard propensity vectors** (CN vs US/EU), cheat-mode taxonomy, factors to log/manipulate; supersedes scalar “who cheats more / more dangerous” framing for new work.
 >
-> **📌 Locked headline (quote this):** [`docs/HEADLINE_RESULTS.md`](docs/HEADLINE_RESULTS.md)
+> **📌 CN vs US/EU brief (for readers):** [`docs/HEADLINE_RESULTS.md`](docs/HEADLINE_RESULTS.md)
 >
 > **Presentable memo:** [`docs/NEO_MEMO.html`](docs/NEO_MEMO.html)
 >

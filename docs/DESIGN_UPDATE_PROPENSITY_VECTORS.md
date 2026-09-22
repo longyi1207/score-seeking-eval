@@ -4,7 +4,7 @@ _Status: **authoritative for next experimental design**. Supersedes scalar “wh
 
 _Last updated 2026-09-21. Origin: design discussion after reading Anthropic model-organism / reward-hacking line (Hubinger et al. 2023; Auditing Hidden Objectives 2025; MacDiarmid et al. 2025 emergent misalignment; Qi et al. 2026 Reward Seeker) + current suite results._
 
-> **Locked headline (quote externally):** [`HEADLINE_RESULTS.md`](./HEADLINE_RESULTS.md).
+> **External brief:** [`HEADLINE_RESULTS.md`](./HEADLINE_RESULTS.md).
 > Presentable memo: [`NEO_MEMO.html`](./NEO_MEMO.html). Matrix: [`matrices/`](./matrices/).
 
 ---

@@ -17,7 +17,7 @@ Docker 运行）。
 >
 > **🧭 设计更新（后续实验以它为准）：** [`docs/DESIGN_UPDATE_PROPENSITY_VECTORS.md`](docs/DESIGN_UPDATE_PROPENSITY_VECTORS.md) —— 相对**危害相关 propensity 向量**（中国实验室 vs 美/欧）、cheat-mode 分类、该记录/操纵的因子；新工作不再以标量「谁更爱作弊 / 谁更危险」为主问题。
 >
-> **📌 锁定 headline（对外引用）：** [`docs/HEADLINE_RESULTS.md`](docs/HEADLINE_RESULTS.md)
+> **📌 CN vs US/EU 简报（给读者）：** [`docs/HEADLINE_RESULTS.md`](docs/HEADLINE_RESULTS.md)
 >
 > **Presentable memo：** [`docs/NEO_MEMO.html`](docs/NEO_MEMO.html)
 >

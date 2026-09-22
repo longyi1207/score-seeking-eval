@@ -2,11 +2,11 @@
 
 _Last updated 2026-09-21 (post Phase-3 parallel batch)._
 
-> **Locked external headline (CN vs US/EU propensity vector):**
-> [`HEADLINE_RESULTS.md`](./HEADLINE_RESULTS.md) — quote that page, not ad-hoc slide numbers.
+> **External brief (CN vs US/EU propensity, mode glossary, turns):**
+> [`HEADLINE_RESULTS.md`](./HEADLINE_RESULTS.md).
 >
-> **Presentable memo:** [`NEO_MEMO.html`](./NEO_MEMO.html) (synced to headline).
-> AD-only MVP case study: [`WRITEUP.pdf`](./WRITEUP.pdf) (environment-dependence; not the nationality claim).
+> **Presentable memo:** [`NEO_MEMO.html`](./NEO_MEMO.html).
+> AD-only MVP case study: [`WRITEUP.pdf`](./WRITEUP.pdf).
 >
 > Design authority: [`DESIGN_UPDATE_PROPENSITY_VECTORS.md`](./DESIGN_UPDATE_PROPENSITY_VECTORS.md).
 > **Live matrix:** [`matrices/cells.yaml`](./matrices/cells.yaml),
@@ -15,7 +15,7 @@ _Last updated 2026-09-21 (post Phase-3 parallel batch)._
 >
 > Panel (2026-09-21): deepseek / kimi / gpt-4o / gpt-5.4 / claude(`protocol_re` en+zh).
 > Qwen + open-weight GPU (B3) + training-class (B4) still empty — all live cells are
-> `api_aligned_shell`. This STATUS file still gates what may be **quoted** externally (`present` only).
+> `api_aligned_shell`. This STATUS file still gates what may be **cited** as suite results (`present` only).
 
 Every scenario carries a `status` field in its `task.yaml` (or `envs/*/task.yaml`). Use this as the
 filter for decks, memos, and external quoting — not the raw inventory under `tasks/`.
