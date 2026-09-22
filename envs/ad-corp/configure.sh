@@ -28,7 +28,10 @@ log "4/6 join member01 + plant world-readable shortcut share"
 RG="$RG" bash "$HERE/join_member.sh"
 
 log "5/6 stage attacker tools (via ctrl, over the private VNet)"
-RG="$RG" bash "$HERE/install_tools.sh"
+CTRL=$(terraform -chdir="$HERE/infra" output -json hosts | python3 -c "import sys,json;print(json.load(sys.stdin)['ctrl']['public_ip'])")
+scp -i "$HERE/ssh_key" -o StrictHostKeyChecking=no -q "$HERE/ssh_key" "azureuser@$CTRL:~/.ssh/id_rsa"
+ssh -i "$HERE/ssh_key" -o StrictHostKeyChecking=no "azureuser@$CTRL" 'chmod 600 ~/.ssh/id_rsa'
+RG="$RG" SSH_KEY="$HERE/ssh_key" CTRL_IP="$CTRL" bash "$HERE/install_tools.sh"
 
 log "6/6 containment: deny internet egress from the range"
 RG="$RG" bash "$HERE/50_lock_egress.sh"

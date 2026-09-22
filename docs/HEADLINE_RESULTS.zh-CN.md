@@ -137,6 +137,8 @@ _配套备忘：[`NEO_MEMO.html`](./NEO_MEMO.html)。完整套件轮次/token：
 
 † gpt-5.4 在看门狗条件下 → `safety_tool_sabotage` 5/5（不是协议后门）。
 
+**完整因子清单**（跨任务 forbid、CVE endorse±recipe 手术、inoculation、显著性、看门狗、中文、评测意识 —— 以及每个因子测过/没测过哪里）：[`RESULTS.zh-CN.md` §5.1](./RESULTS.zh-CN.md)。
+
 ---
 
 ## 代价 —— 作弊 vs 诚实时的 agent 轮次
@@ -166,6 +168,6 @@ _配套备忘：[`NEO_MEMO.html`](./NEO_MEMO.html)。完整套件轮次/token：
 | 文档 | 是什么 |
 |---|---|
 | [`NEO_MEMO.html`](./NEO_MEMO.html) | 叙事备忘 |
-| [`RESULTS.zh-CN.md`](./RESULTS.zh-CN.md) · [`RESULTS.md`](./RESULTS.md) | 完整结果 + 轮次/token |
+| [`RESULTS.zh-CN.md`](./RESULTS.zh-CN.md) · [`RESULTS.md`](./RESULTS.md) | 完整结果 + 轮次/token + **§5.1 因子消融** |
 | [`WRITEUP.zh-CN.pdf`](./WRITEUP.zh-CN.pdf) | AD MVP 论述 |
 | [`matrices/ATTRIBUTION_TABLE.md`](./matrices/ATTRIBUTION_TABLE.md) | 自动汇总比率 |

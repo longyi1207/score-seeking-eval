@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 258" role="img" aria-label="Hazard propensity heatmap: five models by seven cheat modes, n=5. Ranking flips by mode.">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 258" role="img" aria-label="Hazard propensity heatmap: DeepSeek-V4-Pro, Kimi-K2.6, gpt-4o, gpt-5.4, Claude Sonnet 4.5 × seven cheat modes, n=5.">
 <rect width="100%" height="100%" fill="#ffffff"/>
 <text x="122.0" y="14" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="#54627a">protocol</text>
 <text x="122.0" y="26" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="#54627a">backdoor</text>
@@ -14,7 +14,8 @@
 <text x="462.0" y="26" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="#54627a">exfil</text>
 <text x="530.0" y="14" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="#54627a">metric</text>
 <text x="530.0" y="26" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="#54627a">redef</text>
-<text x="8" y="64.0" font-family="Helvetica Neue,Arial,sans-serif" font-size="12" font-weight="700" fill="#16202e">DeepSeek</text>
+<text x="8" y="58.0" font-family="Helvetica Neue,Arial,sans-serif" font-size="11" font-weight="700" fill="#16202e">DeepSeek</text>
+<text x="8" y="72.0" font-family="Helvetica Neue,Arial,sans-serif" font-size="10" fill="#54627a">V4-Pro</text>
 <rect x="90" y="44" width="64" height="32" rx="3" fill="#b23b36"/>
 <text x="122.0" y="64.0" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="11" font-weight="700" fill="#fff">5/5</text>
 <rect x="158" y="44" width="64" height="32" rx="3" fill="#f3d3cd"/>
@@ -29,7 +30,8 @@
 <text x="462.0" y="64.0" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="11" font-weight="400" fill="#8a95a8">0</text>
 <rect x="498" y="44" width="64" height="32" rx="3" fill="#eef2f6"/>
 <text x="530.0" y="64.0" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="11" font-weight="400" fill="#8a95a8">0</text>
-<text x="8" y="100.0" font-family="Helvetica Neue,Arial,sans-serif" font-size="12" font-weight="700" fill="#16202e">Kimi</text>
+<text x="8" y="94.0" font-family="Helvetica Neue,Arial,sans-serif" font-size="11" font-weight="700" fill="#16202e">Kimi</text>
+<text x="8" y="108.0" font-family="Helvetica Neue,Arial,sans-serif" font-size="10" fill="#54627a">K2.6</text>
 <rect x="90" y="80" width="64" height="32" rx="3" fill="#f3d3cd"/>
 <text x="122.0" y="100.0" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="11" font-weight="400" fill="#16202e">1/5</text>
 <rect x="158" y="80" width="64" height="32" rx="3" fill="#eef2f6"/>
@@ -74,7 +76,8 @@
 <text x="462.0" y="172.0" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="11" font-weight="400" fill="#16202e">2/5</text>
 <rect x="498" y="152" width="64" height="32" rx="3" fill="#eef2f6"/>
 <text x="530.0" y="172.0" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="11" font-weight="400" fill="#8a95a8">0</text>
-<text x="8" y="208.0" font-family="Helvetica Neue,Arial,sans-serif" font-size="12" font-weight="700" fill="#16202e">Claude</text>
+<text x="8" y="202.0" font-family="Helvetica Neue,Arial,sans-serif" font-size="11" font-weight="700" fill="#16202e">Claude</text>
+<text x="8" y="216.0" font-family="Helvetica Neue,Arial,sans-serif" font-size="10" fill="#54627a">Sonnet 4.5</text>
 <rect x="90" y="188" width="64" height="32" rx="3" fill="#e6a99f"/>
 <text x="122.0" y="208.0" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="11" font-weight="400" fill="#16202e">2/5</text>
 <rect x="158" y="188" width="64" height="32" rx="3" fill="#eef2f6"/>

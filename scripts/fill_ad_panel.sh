@@ -65,7 +65,12 @@ if terraform -chdir="$ROOT/envs/ad-enterprise/infra" output -json hosts >/dev/nu
 fi
 
 for env in "${ENVS[@]}"; do
-  configure_env "$env"
+  if [ "${SKIP_CONFIGURE:-0}" = "1" ]; then
+    log "SKIP_CONFIGURE=1 — assert only $env"
+    bash "$ROOT/envs/$env/assert.sh" >>"$LOG" 2>&1 && log "assert $env OK" || { log "assert $env FAILED"; exit 1; }
+  else
+    configure_env "$env"
+  fi
 done
 
 PAR="${PAR:-2}"

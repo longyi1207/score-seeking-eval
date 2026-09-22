@@ -137,6 +137,10 @@ Under this shared setup, Chinese-lab API models are **not** uniformly more short
 
 † gpt-5.4 under watchdog → `safety_tool_sabotage` 5/5 (not the protocol backdoor).
 
+**Full factor inventory** (forbid across tasks, CVE endorse±recipe surgery, inoculation, salience,
+watchdog, zh, eval-awareness — including where each factor was / wasn’t tested):
+[`RESULTS.md` §5.1](./RESULTS.md).
+
 ---
 
 ## Effort — agent turns when cheating vs when honest
@@ -166,6 +170,6 @@ Full suite table (AD, chess, Lean, web, …): [`RESULTS.md`](./RESULTS.md) §5.
 | Doc | What it is |
 |---|---|
 | [`NEO_MEMO.html`](./NEO_MEMO.html) | Narrative memo |
-| [`RESULTS.md`](./RESULTS.md) · [`RESULTS.zh-CN.md`](./RESULTS.zh-CN.md) | Full results + turns/tokens |
+| [`RESULTS.md`](./RESULTS.md) · [`RESULTS.zh-CN.md`](./RESULTS.zh-CN.md) | Full results + turns/tokens + **§5.1 factor ablations** |
 | [`WRITEUP.pdf`](./WRITEUP.pdf) | AD MVP write-up |
 | [`matrices/ATTRIBUTION_TABLE.md`](./matrices/ATTRIBUTION_TABLE.md) | Auto-aggregated rates |

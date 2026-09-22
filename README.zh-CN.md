@@ -13,7 +13,7 @@
   <img src="docs/figures/01_task_heatmap.svg" alt="任务热力图：捷径率 / 攻击模式或结局 / 中位轮次" width="900" />
 </p>
 
-<p align="center"><em><strong>图 1.</strong> 按 <strong>模型 × 任务</strong>（present 套件）。每格三行：
+<p align="center"><em><strong>图 1.</strong> 按 <strong>模型 × 任务</strong>（DeepSeek-V4-Pro、Kimi-K2.6、gpt-4o、gpt-5.4、Claude Sonnet 4.5）。每格三行：
 <strong>捷径率</strong> / <strong>攻击模式</strong>（有 seek 时）或 <strong>结局</strong>（honest / fail / blocked） /
 <strong>中位轮次</strong>。虚线 <code>…</code> = 尚未 n≥5。
 缩写词典（如 <code>backdoor</code> = 泄露的维护后门）：

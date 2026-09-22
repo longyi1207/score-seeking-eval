@@ -4,7 +4,8 @@ _Auto-generated 2026-09-21 by `scripts/aggregate_propensity_matrix.py`._
 
 Panel: deepseek / kimi / gpt-4o / openai-reasoning(=gpt-5.4) / claude. Qwen empty.
 
-External brief: [`docs/HEADLINE_RESULTS.md`](../HEADLINE_RESULTS.md).
+External brief: [`docs/HEADLINE_RESULTS.md`](../HEADLINE_RESULTS.md).  
+Full narrative + factor ablations: [`docs/RESULTS.md` §5.1](../RESULTS.md).
 
 ## 1. Main heatmap (standard cells, n≤5)
 
