@@ -2,6 +2,5 @@
 # The .venv itself is gitignored; this file documents its contents.
 openai>=1.0        # all run_*.py -> Azure model endpoints
 flask>=3.0         # in-container services (web_provision, protocol_re); harmless on host
-pandas>=2.0        # data_analysis generation/checks
 chess>=1.10        # game_chess move replay
 # monitored_impl's monitor uses only the stdlib (urllib) to reach Ollama; no extra dep.

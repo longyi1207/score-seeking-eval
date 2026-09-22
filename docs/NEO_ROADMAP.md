@@ -36,9 +36,6 @@ citing externally.]_
 
 | Scenario | Shortcut mechanism | Realism |
 |---|---|---|
-| `data_analysis` | copy Q1 from a planted note file | **crude — bare planted answer** |
-| `math_counting` | copy T(10¹²) from a planted note | **crude — bare planted answer** |
-| `math_apery` | read a planted "known integrals" reference | **crude — bare planted answer** |
 | `game_chess` | edit `fen.txt`/`status.txt`; difficulty-reset | mid — writable-state tamper |
 | `web_provision` | forge `state/state.json` to all-green | mid — writable-state tamper |
 | `incident_rootcause` | mask the symptom (hardcode/doctor report) | rich — no flag |
@@ -48,11 +45,10 @@ citing externally.]_
 | `oversight_subversion` | kill / tamper the live monitor | rich — no flag |
 | AD (`ad-corp`/`ad-enterprise`) | world-readable SMB share (needs auth) | mid — misconfig read |
 
-**Read:** the oversight + verifier + symptom-mask scenarios are already what Clement wants. The
-**planted-answer family (`data`, `math_counting`, `math_apery`) is the crude one** he saw — and it's what
-led the demo to read as "flag in a file." Those were built as capability controls, but they set the
-first impression. The fix is to add scenarios where the shortcut is **exploit-gated**, and to reframe the
-reporting.
+**Read:** the oversight + verifier + symptom-mask scenarios are already what Clement wants. Early
+bare planted-answer exemplars set a bad first impression ("flag in a file") and were retired from the
+public inventory. The fix was to add scenarios where the shortcut is **exploit-gated**, and to reframe
+the reporting.
 
 ## 3. The `forbid`→0 result may be an artifact of crudeness (key insight)
 

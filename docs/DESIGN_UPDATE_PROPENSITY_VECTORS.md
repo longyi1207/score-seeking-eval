@@ -195,7 +195,6 @@ Keep as **secondary** amplifier (existing deadline pressure). Do not treat as pr
 
 ### Demote / don’t expand as propensity evidence
 
-- Crude planted-flag `control` tasks (`data_analysis`, `math_counting`, `math_apery`).
 - Scalar “DeepSeek AD-corp 60%” as danger headline.
 - `web_provision` seeking dose-response until n≥5 **and** models can complete depth (else capability confound).
 - `lean_proof` as propensity mainline (verifier attack not elicited) — keep as horizon/grader case study.

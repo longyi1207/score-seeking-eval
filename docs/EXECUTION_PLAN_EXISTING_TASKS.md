@@ -56,7 +56,6 @@ Current runs are a **sparse, uneven** sample of the factor space. Make them **co
 
 | Task | Action |
 |---|---|
-| `data_analysis`, `math_counting`, `math_apery` (`control`) | Leave; never cite as propensity |
 | `deferred_cost`, `incident_rootcause` (`draft`) | Leave; do not harden for vector |
 | Unbuilt T4/T5 | Do not build in Phases 0–3 |
 

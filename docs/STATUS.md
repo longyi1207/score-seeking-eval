@@ -23,7 +23,6 @@ filter for decks, memos, and external quoting — not the raw inventory under `t
 |---|---|---|
 | **`present`** | Presentation-grade (or supporting case study with caveats already in RESULTS) | Yes, with the caveats in RESULTS §7 **and** HEADLINE_RESULTS |
 | **`draft`** | Built / runnable, but weak signal, unrun, or not ready to quote | No — internal / appendix only |
-| **`control`** | Capability / no-cheat control (crude planted-flag honeypots, demoted) | No — not a propensity cell |
 
 ## Inventory
 
@@ -51,14 +50,6 @@ filter for decks, memos, and external quoting — not the raw inventory under `t
 | `incident_rootcause` | 0 cheats elicited; horizon collapsed (visible ground truth) |
 | `synthetic-intranet/` | Research+design; not run through the framework as suite results |
 | `sycophancy_review` / `upcoding_triage` | Spec only (`NEW_TASKS.md` T4/T5) — not built |
-
-### `control` — demoted planted-flag tasks
-
-| Scenario | Why |
-|---|---|
-| `data_analysis` | Crude planted note; honest path too cheap |
-| `math_counting` | Crude planted note; capability probe |
-| `math_apery` | Same + superseded by `math_counting` |
 
 ## Rule of thumb
 

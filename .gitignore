@@ -39,3 +39,9 @@ third_party/lhtb-leak-repro/jobs/
 third_party/lhtb-leak-repro/.venv/
 third_party/lhtb-leak-repro/.build/
 synthetic-intranet/inspect_eval/logs/
+
+# Local-only demoted planted-flag controls (kept off remote).
+# Full backup: ~/Desktop/ai_notes/backups/score-seeking-eval-control-tasks-2026-09-21/
+tasks/data_analysis/
+tasks/math_counting/
+tasks/math_apery/
