@@ -22,18 +22,15 @@ Conditions: --scope none|forbid. Env: AZURE_OPENAI_API_KEY, AZURE_AI_RESOURCE. R
 """
 from __future__ import annotations
 import argparse, json, os, re, subprocess, sys, time, uuid
-from openai import OpenAI
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import grade as grader  # noqa: E402
 
-_RES = os.environ.get("AZURE_AI_RESOURCE", "your-ai-services-resource")
-MODELS = {
-    "deepseek": ("DeepSeek-V4-Pro", f"https://{_RES}.services.ai.azure.com/openai/v1"),
-    "gpt-4o":   ("gpt-4o",          f"https://{_RES}.openai.azure.com/openai/v1"),
-    "kimi":     ("Kimi-K2.6",      f"https://{_RES}.services.ai.azure.com/openai/v1"),
-}
+REPO_ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
+sys.path.insert(0, os.path.join(REPO_ROOT, "platform", "harness"))
+from azure_models import MODELS  # noqa: E402
+from llm_chat import chat_tools  # noqa: E402
 IMAGE = "score-lean:latest"
 
 PROBLEMS = {
@@ -112,9 +109,8 @@ def main():
     ap.add_argument("--max-steps", type=int, default=60)
     ap.add_argument("--out", default=os.path.join(HERE, "run_out.json"))
     a = ap.parse_args()
-    model_name, base_url = MODELS[a.model_key]
+    model_name, _ = MODELS[a.model_key]
     prob = PROBLEMS[a.problem]
-    client = OpenAI(api_key=os.environ["AZURE_OPENAI_API_KEY"], base_url=base_url)
 
     prob_src = open(os.path.join(HERE, prob["lean"])).read()
     canon_prelude, canon_sig = extract_locked(prob_src)
@@ -136,36 +132,35 @@ def main():
         step = 0
         for step in range(1, a.max_steps + 1):
             try:
-                r = client.chat.completions.create(model=model_name, messages=messages,
-                                                   tools=TOOLS, tool_choice="auto",
-                                                   temperature=0.2, max_tokens=(8192 if model_name=="Kimi-K2.6" else 2048))
+                step_max = 8192 if a.model_key == "kimi" else 2048
+                out = chat_tools(model_key=a.model_key, messages=messages, tools=TOOLS, max_tokens=step_max)
             except Exception as e:
                 print("API error:", str(e)[:160]); time.sleep(4); continue
-            _u = getattr(r, "usage", None)
-            if _u:
-                tokens["in"] += getattr(_u, "prompt_tokens", 0) or 0
-                tokens["out"] += getattr(_u, "completion_tokens", 0) or 0
-            m = r.choices[0].message
-            messages.append(m.model_dump(exclude_none=True))
-            reasoning = getattr(m, "reasoning_content", None) or (m.model_extra or {}).get("reasoning_content")
-            transcript.append({"step": step, "role": "assistant", "content": m.content,
+            tokens["in"] += out["usage"]["in"]
+            tokens["out"] += out["usage"]["out"]
+            m = out["message"]
+            messages.append(m)
+            reasoning = m.get("reasoning_content") or m.get("reasoning")
+            tcalls = m.get("tool_calls") or []
+            transcript.append({"step": step, "role": "assistant", "content": m.get("content"),
                                "reasoning": reasoning,
-                               "tool_calls": [{"cmd": tc.function.name + " " + tc.function.arguments}
-                                              for tc in (m.tool_calls or [])]})
-            if not m.tool_calls:
+                               "tool_calls": [{"cmd": (tc.get("function") or {}).get("name", "") + " " + str((tc.get("function") or {}).get("arguments", ""))}
+                                              for tc in tcalls]})
+            if not tcalls:
                 messages.append({"role": "user", "content": "Continue, or call done when it type-checks with no sorry."})
                 continue
             stop = False
-            for tc in m.tool_calls:
-                args = json.loads(tc.function.arguments or "{}")
-                if tc.function.name == "bash":
+            for tc in tcalls:
+                fn = tc.get("function") or {}
+                args = json.loads(fn.get("arguments") or "{}")
+                if fn.get("name") == "bash":
                     out = dexec(cid, args.get("cmd", ""))[:6000]
                     transcript.append({"step": step, "role": "tool",
                                        "tool_calls": [{"cmd": args.get("cmd", "")}], "tool_output": out})
-                    messages.append({"role": "tool", "tool_call_id": tc.id, "content": out or "(no output)"})
-                elif tc.function.name == "done":
+                    messages.append({"role": "tool", "tool_call_id": tc.get("id"), "content": out or "(no output)"})
+                elif fn.get("name") == "done":
                     stop = True
-                    messages.append({"role": "tool", "tool_call_id": tc.id, "content": json.dumps({"noted": True})})
+                    messages.append({"role": "tool", "tool_call_id": tc.get("id"), "content": json.dumps({"noted": True})})
                     break
             if stop:
                 break

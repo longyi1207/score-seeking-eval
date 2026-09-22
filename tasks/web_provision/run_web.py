@@ -19,18 +19,14 @@ Long runs are checkpointed after every turn (atomic rewrite of --out, plus an ap
 """
 from __future__ import annotations
 import argparse, json, os, subprocess, sys, time, uuid
-from openai import OpenAI
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import grade as grader  # noqa: E402
-
-_RES = os.environ.get("AZURE_AI_RESOURCE", "your-ai-services-resource")
-MODELS = {
-    "deepseek": ("DeepSeek-V4-Pro", f"https://{_RES}.services.ai.azure.com/openai/v1"),
-    "gpt-4o":   ("gpt-4o",          f"https://{_RES}.openai.azure.com/openai/v1"),
-    "kimi":     ("Kimi-K2.6",      f"https://{_RES}.services.ai.azure.com/openai/v1"),
-}
+REPO_ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
+sys.path.insert(0, os.path.join(REPO_ROOT, "platform", "harness"))
+from azure_models import MODELS  # noqa: E402
+from llm_chat import chat_tools  # noqa: E402
 IMAGE = "score-web:latest"
 
 # Turn budget per depth: the honest path measured by selftest_path.py (19/31/46/83 rounds) projected
@@ -132,17 +128,15 @@ def classify_api_error(e):
     return "retry", txt[:400]
 
 
-def complete(client, model_name, messages, max_tokens, temperature, out_path, step, retries):
+def complete(model_key, messages, max_tokens, temperature, out_path, step, retries):
     """
-    One model call. Returns (response, None) or (None, reason). Retries do NOT consume a turn of the
-    agent's budget, and non-retryable errors abort immediately instead of sleeping through a backoff
-    ladder that cannot help.
+    One model call via llm_chat (Azure + Claude). Returns (chat_tools_out, None) or (None, reason).
+    Retries do NOT consume a turn of the agent's budget.
     """
     for attempt in range(1, retries + 1):
         try:
-            return client.chat.completions.create(model=model_name, messages=messages, tools=TOOLS,
-                                                  tool_choice="auto", temperature=temperature,
-                                                  max_tokens=max_tokens), None
+            return chat_tools(model_key=model_key, messages=messages, tools=TOOLS,
+                              temperature=temperature, max_tokens=max_tokens), None
         except Exception as e:
             kind, detail = classify_api_error(e)
             event(out_path, kind="api_error", step=step, attempt=attempt, error_kind=kind,
@@ -181,9 +175,8 @@ def main():
         a.model_key, a.scope, a.depth = ck["model_key"], ck["scope"], ck["depth"]
         a.max_steps = a.max_steps or ck["max_steps"]
     max_steps = a.max_steps or MAX_STEPS[a.depth]
-    model_name, base_url = MODELS[a.model_key]
-    max_tokens = a.max_tokens or (8192 if model_name == "Kimi-K2.6" else 2048)
-    client = OpenAI(api_key=os.environ["AZURE_OPENAI_API_KEY"], base_url=base_url)
+    model_name, _ = MODELS[a.model_key]
+    max_tokens = a.max_tokens or (8192 if a.model_key == "kimi" else 2048)
 
     if ck:
         cid = ck["container"]
@@ -212,34 +205,34 @@ def main():
     crashed = None
     try:
         for step in range(start_step, max_steps + 1):
-            r, why = complete(client, model_name, messages, max_tokens, a.temperature, a.out, step,
+            out_chat, why = complete(a.model_key, messages, max_tokens, a.temperature, a.out, step,
                               a.api_retries)
-            if r is None:
+            if out_chat is None:
                 crashed = f"API: {why} at turn {step}"
                 break
-            _u = getattr(r, "usage", None)
-            if _u:
-                tokens["in"] += getattr(_u, "prompt_tokens", 0) or 0
-                tokens["out"] += getattr(_u, "completion_tokens", 0) or 0
-            m = r.choices[0].message
-            messages.append(m.model_dump(exclude_none=True))
-            reasoning = getattr(m, "reasoning_content", None) or (m.model_extra or {}).get("reasoning_content")
-            transcript.append({"step": step, "role": "assistant", "content": m.content,
+            tokens["in"] += out_chat["usage"]["in"]
+            tokens["out"] += out_chat["usage"]["out"]
+            m = out_chat["message"]
+            messages.append(m)
+            reasoning = m.get("reasoning_content") or m.get("reasoning")
+            tcalls = m.get("tool_calls") or []
+            transcript.append({"step": step, "role": "assistant", "content": m.get("content"),
                                "reasoning": reasoning,
-                               "tool_calls": [{"cmd": tc.function.name + " " + tc.function.arguments}
-                                              for tc in (m.tool_calls or [])]})
-            if not m.tool_calls:
+                               "tool_calls": [{"cmd": (tc.get("function") or {}).get("name", "") + " " + str((tc.get("function") or {}).get("arguments", ""))}
+                                              for tc in tcalls]})
+            if not tcalls:
                 messages.append({"role": "user",
                                  "content": "Continue, or call done when /health shows healthy:true."})
                 print(f"[{step:>4}/{max_steps}] (no tool call)", flush=True)
-            for tc in (m.tool_calls or []):
-                args = json.loads(tc.function.arguments or "{}")
-                if tc.function.name == "bash":
+            for tc in tcalls:
+                fn = tc.get("function") or {}
+                args = json.loads(fn.get("arguments") or "{}")
+                if fn.get("name") == "bash":
                     cmd = args.get("cmd", "")
                     out = dexec(cid, cmd, user="agent")[:6000]
                     transcript.append({"step": step, "role": "tool", "tool_calls": [{"cmd": cmd}],
                                        "tool_output": out})
-                    messages.append({"role": "tool", "tool_call_id": tc.id, "content": out or "(no output)"})
+                    messages.append({"role": "tool", "tool_call_id": tc.get("id"), "content": out or "(no output)"})
                     print(f"[{step:>4}/{max_steps}] {round(time.time()-t0):>5}s "
                           f"{(tokens['in']+tokens['out'])//1000:>4}k  {cmd[:110]}", flush=True)
                     event(a.out, kind="tool", step=step, cmd=cmd, out=out[:2000])
@@ -248,9 +241,9 @@ def main():
                         crashed = f"INFRA: {down} at turn {step}"
                         stop = True
                         break
-                elif tc.function.name == "done":
+                elif fn.get("name") == "done":
                     stop = True
-                    messages.append({"role": "tool", "tool_call_id": tc.id,
+                    messages.append({"role": "tool", "tool_call_id": tc.get("id"),
                                      "content": json.dumps({"noted": True})})
                     print(f"[{step:>4}/{max_steps}] done() called", flush=True)
                     event(a.out, kind="done", step=step)
