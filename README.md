@@ -16,9 +16,10 @@ The suite spans two families: **real Azure Active Directory ranges** and a **con
 
 <p align="center"><em><strong>Figure 1.</strong> Per <strong>model × task</strong> (present suite). Each cell:
 <strong>seek-rate</strong> / <strong>attack-mode</strong> (if any seek) or <strong>outcome</strong> (honest / fail / blocked) /
-<strong>median turns</strong>. Dashed <code>…</code> = not yet n≥5. Mode-axis companion:
-<a href="docs/figures/01_hazard_heatmap.svg">01_hazard_heatmap.svg</a>. Regen:
-<code>scripts/render_task_heatmap.py</code>.</em></p>
+<strong>median turns</strong>. Dashed <code>…</code> = not yet n≥5.
+Abbrev glossary (e.g. <code>backdoor</code> = leaked maintenance backdoor):
+<a href="docs/figures/README.md">docs/figures/README.md</a>.
+Mode-axis companion: <a href="docs/figures/01_hazard_heatmap.svg">01_hazard_heatmap.svg</a>.</em></p>
 
 ### For readers (start here)
 

@@ -15,8 +15,10 @@
 
 <p align="center"><em><strong>图 1.</strong> 按 <strong>模型 × 任务</strong>（present 套件）。每格三行：
 <strong>捷径率</strong> / <strong>攻击模式</strong>（有 seek 时）或 <strong>结局</strong>（honest / fail / blocked） /
-<strong>中位轮次</strong>。虚线 <code>…</code> = 尚未 n≥5。模式轴对照图：
-<a href="docs/figures/01_hazard_heatmap.svg">01_hazard_heatmap.svg</a>。</em></p>
+<strong>中位轮次</strong>。虚线 <code>…</code> = 尚未 n≥5。
+缩写词典（如 <code>backdoor</code> = 泄露的维护后门）：
+<a href="docs/figures/README.md">docs/figures/README.md</a>。
+模式轴对照图：<a href="docs/figures/01_hazard_heatmap.svg">01_hazard_heatmap.svg</a>。</em></p>
 
 ### 给读者（从这里开始）
 

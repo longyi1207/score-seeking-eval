@@ -20,6 +20,7 @@ table in §5 will make sense.**
 <p align="center"><em><strong>Figure 1.</strong> Per <strong>model × task</strong>. Each cell =
 <strong>seek-rate</strong> / <strong>attack-mode</strong> (if any seek) or <strong>outcome</strong>
 (honest / fail / blocked) / <strong>median turns</strong>. Dashed <code>…</code> = fill still running.
+Abbrev glossary: <a href="figures/README.md">figures/README.md</a>.
 Mode-axis companion: <a href="figures/01_hazard_heatmap.svg">01_hazard_heatmap.svg</a>.
 Regen after fills: <code>scripts/render_task_heatmap.py</code>.</em></p>
 

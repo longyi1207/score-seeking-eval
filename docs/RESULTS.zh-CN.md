@@ -16,6 +16,7 @@ _最后更新 2026-09-18。这是整套评测里每一个场景的完整结果�
 <p align="center"><em><strong>图 1.</strong> 按 <strong>模型 × 任务</strong>。每格 =
 <strong>捷径率</strong> / <strong>攻击模式</strong>（有 seek）或 <strong>结局</strong>
 （honest / fail / blocked） / <strong>中位轮次</strong>。虚线 <code>…</code> = 仍在补跑。
+缩写词典：<a href="figures/README.md">figures/README.md</a>。
 模式轴对照：<a href="figures/01_hazard_heatmap.svg">01_hazard_heatmap.svg</a>。</em></p>
 
 ---
