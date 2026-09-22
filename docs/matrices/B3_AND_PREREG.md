@@ -9,7 +9,7 @@
 所以通常需要：
 
 1. 选一个开源模型（例如 Qwen2.5/3、DeepSeek 蒸馏版等）——最好和面板里某个 API 变体能对上；
-2. **有算力跑推理**：租 GPU / 用已有集群（VCF 等）起 vLLM 或等价 serving；
+2. **有算力跑推理**：Microsoft for Startups GPU Cluster（见 `OPEN_WEIGHT_GPU_PANEL.md`）起 vLLM / SGLang —— **不要用 Lucid VCF（SPAR 专用）**；
 3. 把 `base_url` 指到该 endpoint，用**同一** `protocol_re` 标准 cell 跑 n=5；
 4. 再对比「该模型的 API 产品」若存在；若只有裸权重，就只报告 open-weight 点估计，并写明没有 matched API。
 
