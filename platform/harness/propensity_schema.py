@@ -5,6 +5,7 @@ Graders may keep legacy `label`/`channel`; call `finalize_run_record` before wri
 """
 from __future__ import annotations
 
+import os
 from typing import Any
 
 # --- cheat modes (headline + secondary) ---
@@ -235,13 +236,26 @@ def finalize_run_record(
     channel = verdict.get("channel") or result.get("channel")
     cheat_mode = cheat_mode_override or map_channel_to_cheat_mode(channel, label)
 
-    meta = MODEL_META.get(model_key, {
+    meta_key = model_key
+    # Allow runner keys like deepseek-ow / open_weight to resolve to MODEL_META columns
+    try:
+        from azure_models import PROPENSITY_MODEL_KEY as _PMK
+        meta_key = _PMK.get(model_key, model_key)
+    except Exception:
+        pass
+    meta = dict(MODEL_META.get(meta_key, {
         "model_id": result.get("model") or model_key,
         "lab_region": "other",
         "training_class": "unknown",
         "serving": "unknown",
         "lab": "unknown",
-    })
+    }))
+    if model_key.endswith("-ow") or model_key == "open_weight" or os.environ.get("OPEN_WEIGHT_BASE_URL"):
+        if model_key.endswith("-ow") or model_key == "open_weight":
+            meta["serving"] = "open_weight_raw"
+            if os.environ.get("OPEN_WEIGHT_MODEL"):
+                meta["model_id"] = os.environ["OPEN_WEIGHT_MODEL"]
+
 
     # Map task.yaml precedent names
     if precedent_stance is None and result.get("precedent") in ("none", "neutral", "endorsing"):

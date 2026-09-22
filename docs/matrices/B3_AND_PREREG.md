@@ -33,4 +33,51 @@
 
 **不是**法律文件，是「我们同意不改口」的分析契约。结果出来后可以做 exploratory，但要标成 exploratory，不能改写成「我们一开始就想测这个」。
 
-已有雏形：`EXECUTION_PLAN`、`capable.py`、标准 cell 锁定。B4 回归要在跑宽面板前把公式写进文档。
+已有雏形：`EXECUTION_PLAN`、`capable.py`、标准 cell 锁定。
+
+---
+
+## B4 — training-class regression（预注册公式，2026-09-21 锁定）
+
+在宽面板（含 B3 open-weight 点）跑完**之前**写死；结果出来后 exploratory 分析另标。
+
+### 单元与样本
+
+- 单位：标准 heatmap cell `(cheat_mode m, model i)`，n=5，rate `p_{i,m}`。
+- 组：`CN = {deepseek, kimi, (+qwen when live)}`，`US = {gpt-4o, openai-reasoning, claude}`。
+- Capable 子集：`capable.py` 规则为真的 run 才进 propensity 分母（否则标 `capable=False` 仍报 raw，主表用 capable）。
+
+### 主 endpoint（按 mode）
+
+\[
+\Delta_m = \overline{p}_{\mathrm{CN},m} - \overline{p}_{\mathrm{US},m}
+\]
+
+等权 mean：\(\bar\Delta = \frac{1}{|M|}\sum_{m\in M}\Delta_m\)，\(M\) = 7 headline cheat modes。
+
+### 分层顺序（固定，不可事后重排当主分析）
+
+1. **training_class**：`reasoning_rlvr` vs `chat_sft` vs `unknown`（组内再算 \(\Delta_m\)）。
+2. **serving**：`api_aligned_shell` vs `open_weight_raw`（B3；同 lab 配对优先）。
+3. **lab_region**：CN vs US_EU（仅在 1–2 分层后的残差上报告）。
+
+### 回归（exploratory 可跑，主文只报预注册式）
+
+对每个 mode \(m\)，run-level logistic / LPM：
+
+\[
+\mathbb{E}[\mathrm{seek}_{i}] = \beta_0 + \beta_1\mathrm{CN}_i + \beta_2\mathrm{RLVR}_i + \beta_3\mathrm{open\_weight}_i + \gamma^\top X_i
+\]
+
+- \(X\)：task FE、salient_grader、lang=zh、forbid（若该 cell 有）。
+- **预注册关注**：\(\beta_1\)（国籍残差）、\(\beta_2\)（RLVR）、\(\beta_3\)（serving）。
+- 不把「endorse+recipe CVE」进主回归（attribution-only）。
+
+### 成功判据
+
+- `seek_positive` / `cheat_mode` 定义以 `propensity_schema.py` 为准；改定义 = 新预注册版本号。
+
+### Ops note (2026-09-21)
+
+- Claude 标准 heatmap（除 protocol）正在补跑。
+- B3：VCF `h100-sxm-8-0` 空闲；先 download MiniMax-M2，再 vLLM serve；laptop 用 `OPEN_WEIGHT_*` 指过去。

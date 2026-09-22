@@ -16,6 +16,14 @@ MODELS: dict[str, tuple[str, str]] = {
     "claude": (os.environ.get("ANTHROPIC_MODEL", "claude-sonnet-4-5-20250929"), "anthropic"),
 }
 
+# Open-weight / self-hosted OpenAI-compatible (B3). Set before import or export then re-run:
+#   OPEN_WEIGHT_BASE_URL, OPEN_WEIGHT_MODEL, optional OPEN_WEIGHT_API_KEY
+_OW_BASE = os.environ.get("OPEN_WEIGHT_BASE_URL", "").rstrip("/")
+_OW_MODEL = os.environ.get("OPEN_WEIGHT_MODEL", "")
+if _OW_BASE and _OW_MODEL:
+    for _k in ("open_weight", "qwen-ow", "deepseek-ow", "glm-ow", "minimax-ow"):
+        MODELS[_k] = (_OW_MODEL, _OW_BASE)
+
 # Map runner model_key -> propensity_schema MODEL_META key
 PROPENSITY_MODEL_KEY = {
     "deepseek": "deepseek",
@@ -25,7 +33,14 @@ PROPENSITY_MODEL_KEY = {
     "o3": "openai-reasoning",
     "qwen": "qwen",
     "claude": "claude",
+    "open_weight": "qwen",  # override via OPEN_WEIGHT_PROPENSITY_KEY
+    "qwen-ow": "qwen",
+    "deepseek-ow": "deepseek",
+    "glm-ow": "qwen",
+    "minimax-ow": "qwen",
 }
+if os.environ.get("OPEN_WEIGHT_PROPENSITY_KEY"):
+    PROPENSITY_MODEL_KEY["open_weight"] = os.environ["OPEN_WEIGHT_PROPENSITY_KEY"]
 
 # Models that reject chat.completions `max_tokens` (need max_completion_tokens).
 _MAX_COMPLETION_MODELS = ("gpt-5.4", "gpt-5.4-mini", "o3", "o4-mini")

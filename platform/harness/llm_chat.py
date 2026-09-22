@@ -17,12 +17,21 @@ ALL_MODELS = {**MODELS, **MODELS_EXTRA}
 
 
 def resolve_model(model_key: str) -> tuple[str, str, str]:
-    """Return (provider, model_name, base_url_or_sentinel). provider: azure|anthropic"""
-    if model_key == "claude" or model_key not in MODELS:
+    """Return (provider, model_name, base_url_or_sentinel). provider: azure|anthropic|openai_compat"""
+    if model_key == "claude" or (
+        model_key not in MODELS and model_key in MODELS_EXTRA
+    ):
         name, kind = MODELS_EXTRA.get(model_key, MODELS.get(model_key, (model_key, "azure")))
         if kind == "anthropic" or model_key == "claude":
             return "anthropic", CLAUDE_MODEL_ID, "anthropic"
+    if model_key not in MODELS:
+        raise KeyError(f"unknown model_key={model_key!r}; known={sorted(MODELS)}")
     name, url = MODELS[model_key]
+    # Self-hosted OpenAI-compatible (vLLM/SGLang) — not Azure Foundry
+    if model_key.endswith("-ow") or model_key == "open_weight" or (
+        url and "services.ai.azure.com" not in url and url != "anthropic"
+    ):
+        return "openai_compat", name, url
     return "azure", name, url
 
 
@@ -71,7 +80,11 @@ def chat_tools(
         return _chat_anthropic(model_name, messages, tools, max_tokens=max_tokens)
 
     from openai import OpenAI
-    client = OpenAI(api_key=os.environ["AZURE_OPENAI_API_KEY"], base_url=base)
+    if provider == "openai_compat":
+        api_key = os.environ.get("OPEN_WEIGHT_API_KEY") or os.environ.get("OPENAI_API_KEY") or "EMPTY"
+        client = OpenAI(api_key=api_key, base_url=base)
+    else:
+        client = OpenAI(api_key=os.environ["AZURE_OPENAI_API_KEY"], base_url=base)
     kwargs = dict(
         model=model_name,
         messages=messages,
