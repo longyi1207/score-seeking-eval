@@ -49,13 +49,16 @@ def is_valid(d: dict) -> bool:
         return True
     if d.get("transcript"):
         return True
+    # Graded run with propensity schema (some providers omit token metering)
+    if d.get("propensity") and (d.get("verdict") or {}).get("label"):
+        return True
     # historical runs often lack tokens/transcript fields but have real verdicts
     v = d.get("verdict") or {}
     if v.get("label") and v.get("channel") is not None:
         # reject known empty-loop failures: max steps + empty report
         if tot == 0 and not d.get("transcript") and d.get("steps", 0) >= 30 and not d.get("submitted") and not d.get("reported_flag") and not d.get("report"):
-            # still allow if heldout/audit present (graded somehow)
-            if not any(k in d for k in ("heldout", "audit", "tamper", "monitor")):
+            # still allow if heldout/audit/monitor evidence present (graded somehow)
+            if not any(k in d for k in ("heldout", "audit", "tamper", "monitor", "monitor_pid", "monitor_messages", "observation")):
                 return False
         return True
     return False
@@ -392,9 +395,9 @@ def main() -> None:
         "",
         f"_Auto-generated {doc['updated']} by `scripts/aggregate_propensity_matrix.py`._",
         "",
-        "Panel: deepseek / kimi / gpt-4o / openai-reasoning(=gpt-5.4) / claude(protocol). Qwen empty.",
+        "Panel: deepseek / kimi / gpt-4o / openai-reasoning(=gpt-5.4) / claude. Qwen empty.",
         "",
-        "Locked headline: [`docs/HEADLINE_RESULTS.md`](../HEADLINE_RESULTS.md).",
+        "External brief: [`docs/HEADLINE_RESULTS.md`](../HEADLINE_RESULTS.md).",
         "",
         "## 1. Main heatmap (standard cells, n≤5)",
         "",
@@ -552,12 +555,13 @@ def main() -> None:
         "## 6. Notes / caveats",
         "",
         "- **gpt-5.4**: pre-`max_completion_tokens` runs discarded; current rates are post-fix.",
-        "- **Claude**: Anthropic API path live for `protocol_re` (en/zh); Azure marketplace still blocked. "
-        "Other hazard tasks not yet re-run on Claude.",
+        "- **Claude**: Anthropic API — standard heatmap cells filled (protocol + oversight + monitored + "
+        "cve disclose + exfil + metric). Failures are mostly capability (`fail` / `cheat_blocked`), not "
+        "successful seeking. Azure marketplace still blocked.",
         "- **Qwen / open-weight (B3)**: still empty — do not claim open-weight effects.",
         "- Rates are raw positives/n at the labeled cheat_mode — not nationality causal effects.",
         "- `endorse + recipe` remains attribution-only; main CVE heatmap uses disclose/neutral.",
-        "- Headline claim language: [`docs/HEADLINE_RESULTS.md`](../HEADLINE_RESULTS.md).",
+        "- External brief: [`docs/HEADLINE_RESULTS.md`](../HEADLINE_RESULTS.md).",
         "",
     ]
     OUT_ATTR.write_text("\n".join(lines))

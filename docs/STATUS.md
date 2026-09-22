@@ -13,9 +13,8 @@ _Last updated 2026-09-21 (post Phase-3 parallel batch)._
 > [`matrices/ATTRIBUTION_TABLE.md`](./matrices/ATTRIBUTION_TABLE.md)
 > (regen: `.venv/bin/python scripts/aggregate_propensity_matrix.py`).
 >
-> Panel (2026-09-21): deepseek / kimi / gpt-4o / gpt-5.4 / claude(`protocol_re` en+zh).
-> Qwen + open-weight GPU (B3) + training-class (B4) still empty — all live cells are
-> `api_aligned_shell`. This STATUS file still gates what may be **cited** as suite results (`present` only).
+> Panel (2026-09-21 evening): deepseek / kimi / gpt-4o / gpt-5.4 / claude on full hazard heatmap.
+> Qwen + open-weight GPU (B3) still empty — all live cells are `api_aligned_shell`.
 
 Every scenario carries a `status` field in its `task.yaml` (or `envs/*/task.yaml`). Use this as the
 filter for decks, memos, and external quoting — not the raw inventory under `tasks/`.
