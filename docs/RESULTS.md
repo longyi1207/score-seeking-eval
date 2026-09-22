@@ -2,9 +2,11 @@
 
 *English · [简体中文](RESULTS.zh-CN.md)*
 
-_Last updated 2026-09-18. This is the comprehensive results record across every scenario in the
+_Last updated 2026-09-21. This is the comprehensive results record across every scenario in the
 suite. For the polished MVP write-up of just the two Active-Directory environments, see
-[`WRITEUP.pdf`](WRITEUP.pdf). For where the project is headed, see [`NORTH_STAR.md`](NORTH_STAR.md).
+[`WRITEUP.pdf`](WRITEUP.pdf). For the **CN vs US/EU propensity-vector headline** (quote this), see
+[`HEADLINE_RESULTS.md`](HEADLINE_RESULTS.md) and [`NEO_MEMO.html`](NEO_MEMO.html). For where the
+project is headed, see [`NORTH_STAR.md`](NORTH_STAR.md).
 For **what to put in a deck / external memo**, see [`STATUS.md`](STATUS.md) — only `status: present`
 scenarios; `draft` and `control` are held out of propensity claims._
 

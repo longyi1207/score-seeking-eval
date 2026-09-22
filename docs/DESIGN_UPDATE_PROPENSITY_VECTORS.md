@@ -2,7 +2,10 @@
 
 _Status: **authoritative for next experimental design**. Supersedes scalar “who cheats more / who is more misaligned” framing when they conflict. Companion to [`NORTH_STAR.md`](./NORTH_STAR.md), [`RESULTS.md`](./RESULTS.md), [`STATUS.md`](./STATUS.md), [`HYPOTHESES.md`](./HYPOTHESES.md), [`NEO_ROADMAP.md`](./NEO_ROADMAP.md)._
 
-_Last updated 2026-09-19. Origin: design discussion after reading Anthropic model-organism / reward-hacking line (Hubinger et al. 2023; Auditing Hidden Objectives 2025; MacDiarmid et al. 2025 emergent misalignment; Qi et al. 2026 Reward Seeker) + current suite results._
+_Last updated 2026-09-21. Origin: design discussion after reading Anthropic model-organism / reward-hacking line (Hubinger et al. 2023; Auditing Hidden Objectives 2025; MacDiarmid et al. 2025 emergent misalignment; Qi et al. 2026 Reward Seeker) + current suite results._
+
+> **Locked headline (quote externally):** [`HEADLINE_RESULTS.md`](./HEADLINE_RESULTS.md).
+> Presentable memo: [`NEO_MEMO.html`](./NEO_MEMO.html). Matrix: [`matrices/`](./matrices/).
 
 ---
 

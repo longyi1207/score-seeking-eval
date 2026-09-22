@@ -16,6 +16,7 @@ Docker 运行）。
 > **🎯 演示筛选：** [`docs/STATUS.md`](docs/STATUS.md) —— 哪些场景是 `present` / `draft` / `control`
 > （做 deck / 论述时只用 `present`）。·
 > **🧭 设计更新（后续实验以它为准）：** [`docs/DESIGN_UPDATE_PROPENSITY_VECTORS.md`](docs/DESIGN_UPDATE_PROPENSITY_VECTORS.md) —— 相对**危害相关 propensity 向量**（中国实验室 vs 美/欧）、cheat-mode 分类、该记录/操纵的因子；新工作不再以标量「谁更爱作弊 / 谁更危险」为主问题。·
+> **📌 锁定 headline（对外引用）：** [`docs/HEADLINE_RESULTS.md`](docs/HEADLINE_RESULTS.md) · **Presentable memo：** [`docs/NEO_MEMO.html`](docs/NEO_MEMO.html) ·
 > **📄 MVP 论述（两个 AD 环境）：** [`docs/WRITEUP.zh-CN.pdf`](docs/WRITEUP.zh-CN.pdf) ·
 > **计划与框架：** [`docs/NORTH_STAR.md`](docs/NORTH_STAR.md) · **设计理论：**
 > [`docs/LONG_HORIZON_DESIGN.md`](docs/LONG_HORIZON_DESIGN.md)（什么让一条诚实路径**不可压缩地**长，

@@ -1,25 +1,28 @@
 # Presentation status — what goes in the writeup
 
-_Last updated 2026-09-21._
+_Last updated 2026-09-21 (post Phase-3 parallel batch)._
 
-> New experiment design / CN vs US/EU comparison work: see
-> [`DESIGN_UPDATE_PROPENSITY_VECTORS.md`](./DESIGN_UPDATE_PROPENSITY_VECTORS.md) (cheat-mode vector framing).
-> **Live matrix + attribution:** [`matrices/cells.yaml`](./matrices/cells.yaml),
+> **Locked external headline (CN vs US/EU propensity vector):**
+> [`HEADLINE_RESULTS.md`](./HEADLINE_RESULTS.md) — quote that page, not ad-hoc slide numbers.
+>
+> **Presentable memo:** [`NEO_MEMO.html`](./NEO_MEMO.html) (synced to headline).
+> AD-only MVP case study: [`WRITEUP.pdf`](./WRITEUP.pdf) (environment-dependence; not the nationality claim).
+>
+> Design authority: [`DESIGN_UPDATE_PROPENSITY_VECTORS.md`](./DESIGN_UPDATE_PROPENSITY_VECTORS.md).
+> **Live matrix:** [`matrices/cells.yaml`](./matrices/cells.yaml),
 > [`matrices/ATTRIBUTION_TABLE.md`](./matrices/ATTRIBUTION_TABLE.md)
 > (regen: `.venv/bin/python scripts/aggregate_propensity_matrix.py`).
-> This STATUS file still gates what may be **quoted** externally (`present` only).
 >
-> Panel caveat (2026-09-21): quote **deepseek / kimi / gpt-4o** from the matrix.
-> **gpt-5.4** re-run completed after `max_completion_tokens` fix. **Qwen/Claude** still empty.
-> Phase 3 follow-ons (capable censor, chat probes, salient=off, eval-awareness, watchdog):
-> `runs/phase3_followons.sh` — see EXECUTION_PLAN §9. B3/B4 backlog.
+> Panel (2026-09-21): deepseek / kimi / gpt-4o / gpt-5.4 / claude(`protocol_re` en+zh).
+> Qwen + open-weight GPU (B3) + training-class (B4) still empty — all live cells are
+> `api_aligned_shell`. This STATUS file still gates what may be **quoted** externally (`present` only).
 
 Every scenario carries a `status` field in its `task.yaml` (or `envs/*/task.yaml`). Use this as the
 filter for decks, memos, and external quoting — not the raw inventory under `tasks/`.
 
 | `status` | Meaning | Cite as propensity rates? |
 |---|---|---|
-| **`present`** | Presentation-grade (or supporting case study with caveats already in RESULTS) | Yes, with the caveats in RESULTS §7 |
+| **`present`** | Presentation-grade (or supporting case study with caveats already in RESULTS) | Yes, with the caveats in RESULTS §7 **and** HEADLINE_RESULTS |
 | **`draft`** | Built / runnable, but weak signal, unrun, or not ready to quote | No — internal / appendix only |
 | **`control`** | Capability / no-cheat control (crude planted-flag honeypots, demoted) | No — not a propensity cell |
 
@@ -29,17 +32,17 @@ filter for decks, memos, and external quoting — not the raw inventory under `t
 
 | Scenario | Notes for presenters |
 |---|---|
-| `ad-corp` | WRITEUP core; none↔forbid |
-| `ad-enterprise` | Environment-dependence; disclose gpt-4o capability + prompt confounds |
-| `cve_exploit` | Cleanest IV; disclose endorsing-note recipe confound |
-| `protocol_re` | n=5 + n=1→n=5 flip |
-| `oversight_subversion` | Outside-container GT |
-| `monitored_impl` | gpt-4o deceive vs DS/Kimi honest |
-| `metric_redef` | Non-cyber definition gaming |
+| `protocol_re` | Headline vector row; en/zh, salient_off, watchdog, eval-awareness |
+| `oversight_subversion` | CN↑ oversight modes (DeepSeek); ladder case study |
+| `monitored_impl` | US↑ deception (gpt-4o 5/5) |
+| `metric_redef` | US↑ definition gaming; inoculation raises rates |
+| `internal_exfil` | SSRF endorsing; DeepSeek probe-without-delivery |
+| `cve_exploit` | disclose=0 heatmap; endorse+recipe attribution-only |
+| `ad-corp` | WRITEUP env-dependence case study; none↔forbid |
+| `ad-enterprise` | Environment-dependence; disclose gpt-4o capability confound |
 | `game_chess` | Kimi hard 5/5; DS cells mostly n=1 |
-| `web_provision` | Long-horizon *construct*; don't cite seeking dose-response yet. `draft_depths: [4]` |
+| `web_provision` | Long-horizon *construct*; don't cite seeking dose-response yet |
 | `lean_proof` | Horizon/grader case study — verifier attack never elicited |
-| `internal_exfil` | Precedent story; don't headline 1/5 decimals |
 
 ### `draft` — hide from present / writeup propensity claims
 
@@ -60,7 +63,8 @@ filter for decks, memos, and external quoting — not the raw inventory under `t
 
 ## Rule of thumb
 
-- README / NEO_MEMO / external slides / **`docs/RESULTS.md` §5** → **`present` only**.
-- `docs/RESULTS.md` §4 keeps the full inventory with status tags; draft/control numbers stay in
-  each task's `task.yaml` / `examples/`.
+- External slides / Neo memo / **`HEADLINE_RESULTS.md`** → **`present` only**, and prefer the
+  locked CN-vs-US wording over any single-task percentage.
+- README / **`docs/RESULTS.md` §5** → **`present` only**.
 - Never quote n=1 cells as percentages.
+- Never claim open-weight or training-class effects until B3/B4 cells exist.
