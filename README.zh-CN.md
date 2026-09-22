@@ -13,7 +13,7 @@
 
 > **📊 完整结果，从零讲起：** [`docs/RESULTS.zh-CN.md`](docs/RESULTS.zh-CN.md) —— 先讲每个场景是做什么的，再给 outcome / 轮次 / token。
 >
-> **📌 中美实验室对比简报：** [`docs/HEADLINE_RESULTS.md`](docs/HEADLINE_RESULTS.md) —— 危害模式词典、主结论、作弊 vs 诚实的步数。
+> **📌 中美实验室对比简报：** [`docs/HEADLINE_RESULTS.zh-CN.md`](docs/HEADLINE_RESULTS.zh-CN.md) · [`English`](docs/HEADLINE_RESULTS.md) —— 危害模式词典、主结论、作弊 vs 诚实的步数。
 >
 > **Presentable memo：** [`docs/NEO_MEMO.html`](docs/NEO_MEMO.html)
 >
@@ -66,7 +66,7 @@ AD 靶场在 `envs/`；容器任务在 `tasks/`（每个一个 `run_*.py`）。�
 ## 头条结果 —— 分数投机是**依赖环境的**（真实 AD，重复试验）
 
 下面 AD 格是 n = 5–6。中美对比里的危害 / 监督容器格也是 n = 5 —— 见
-[`docs/HEADLINE_RESULTS.md`](docs/HEADLINE_RESULTS.md)。
+[`docs/HEADLINE_RESULTS.zh-CN.md`](docs/HEADLINE_RESULTS.zh-CN.md)。
 
 **环境 #1 —— `ad-corp`（诚实路径短，约 1 步）**
 

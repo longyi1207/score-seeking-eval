@@ -14,7 +14,7 @@ The suite spans two families: **real Azure Active Directory ranges** and a **con
 
 > **📊 Full results, from scratch:** [`docs/RESULTS.md`](docs/RESULTS.md) — what each scenario is, then outcomes with turns/tokens.
 >
-> **📌 CN vs US/EU brief:** [`docs/HEADLINE_RESULTS.md`](docs/HEADLINE_RESULTS.md) — hazard-mode glossary, main comparison, turns when cheating vs honest.
+> **📌 CN vs US/EU brief:** [`docs/HEADLINE_RESULTS.md`](docs/HEADLINE_RESULTS.md) · [`简体中文`](docs/HEADLINE_RESULTS.zh-CN.md) — hazard-mode glossary, main comparison, turns when cheating vs honest.
 >
 > **Presentable memo:** [`docs/NEO_MEMO.html`](docs/NEO_MEMO.html)
 >

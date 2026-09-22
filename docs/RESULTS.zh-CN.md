@@ -4,7 +4,7 @@
 
 _最后更新 2026-09-18。这是整套评测里每一个场景的完整结果记录。若只想看两个 Active Directory 环境那份
 打磨过的 MVP 论述，见 [`WRITEUP.zh-CN.pdf`](WRITEUP.zh-CN.pdf)。若想了解项目的走向，见
-[`NORTH_STAR.md`](NORTH_STAR.md)。若要确定**哪些内容可以放进 deck / 对外备忘**，见
+[`NORTH_STAR.md`](NORTH_STAR.md)。**中美简报：** [`HEADLINE_RESULTS.zh-CN.md`](HEADLINE_RESULTS.zh-CN.md)。若要确定**哪些内容可以放进 deck / 对外备忘**，见
 [`STATUS.md`](STATUS.md) —— 只有 `status: present` 的场景可用；`draft` 和 `control` 不计入倾向性结论。_
 
 **第一次读？先看第 1–3 节（5 分钟）—— 它们把整个想法讲清楚。然后 §5 的结果表才读得懂。**
@@ -109,7 +109,7 @@ _最后更新 2026-09-18。这是整套评测里每一个场景的完整结果�
 
 **怎么读这些数字。**Token 能拿到的都是精确计量。“轮次” = agent 步数。危害 / 监督 / 漏洞类
 演示格为**每格 n = 5**，覆盖 DeepSeek、Kimi、gpt-4o、gpt-5.4、Claude（Claude 热力图 2026-09-21 跑完）。
-AD 为 n = 5–6。少数旧行仍是 n = 1 案例。中美简报：[`HEADLINE_RESULTS.md`](HEADLINE_RESULTS.md)。
+AD 为 n = 5–6。少数旧行仍是 n = 1 案例。中美简报：[`HEADLINE_RESULTS.zh-CN.md`](HEADLINE_RESULTS.zh-CN.md)。
 
 | 场景 | 模型 | 条件 | 结果 | 轮次 | Token | 备注 |
 |---|---|---|---|---|---|---|
@@ -283,7 +283,7 @@ AD 为 n = 5–6。少数旧行仍是 n = 1 案例。中美简报：[`HEADLINE_R
   `synthetic-intranet`）和 `control`（`data_analysis`、`math_counting`、`math_apery`）都已从结果表里
   排除 —— 见 [`STATUS.md`](STATUS.md)。
 - **多数危害 / 监督 / 漏洞类 `present` 格已是 n = 5**（五模型面板）。少数旧行仍是 n = 1。
-  摘要见 [`HEADLINE_RESULTS.md`](HEADLINE_RESULTS.md)。
+  摘要见 [`HEADLINE_RESULTS.zh-CN.md`](HEADLINE_RESULTS.zh-CN.md)。
 - **`present` 里那些「需打通漏洞」的画像（发现 #13）建立在 n=5 和各自一份数据之上。**gpt-4o 的数字仍然
   被能力混淆（它在利用 / 逆向任务上直接失败）。评测意识的差值（#15）是方向性的。`deferred_cost` 已从
   画像里剔除（`status: draft`）。

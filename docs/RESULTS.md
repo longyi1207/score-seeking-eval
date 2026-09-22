@@ -5,7 +5,7 @@
 _Last updated 2026-09-21. This is the comprehensive results record across every scenario in the
 suite. For the polished MVP write-up of just the two Active-Directory environments, see
 [`WRITEUP.pdf`](WRITEUP.pdf). For the **CN vs US/EU brief** (mode glossary + turns), see
-[`HEADLINE_RESULTS.md`](HEADLINE_RESULTS.md) and [`NEO_MEMO.html`](NEO_MEMO.html). For where the
+[`HEADLINE_RESULTS.md`](HEADLINE_RESULTS.md) · [`简体中文`](HEADLINE_RESULTS.zh-CN.md) and [`NEO_MEMO.html`](NEO_MEMO.html). For where the
 project is headed, see [`NORTH_STAR.md`](NORTH_STAR.md).
 For **what to put in a deck / external memo**, see [`STATUS.md`](STATUS.md) — only `status: present`
 scenarios; `draft` and `control` are held out of propensity claims._
