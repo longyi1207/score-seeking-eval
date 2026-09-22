@@ -13,6 +13,16 @@ scenarios; `draft` is held out of propensity claims (see [`STATUS.md`](STATUS.md
 **New here? Read sections 1–3 first (5 minutes) — they explain the whole idea. Then the results
 table in §5 will make sense.**
 
+<p align="center">
+  <img src="figures/01_hazard_heatmap.svg" alt="Hazard propensity heatmap: five models by seven cheat modes" width="720" />
+</p>
+
+<p align="center"><em><strong>Figure 1.</strong> Shortcut-taking rate per model × hazard cheat-mode (n = 5).
+No row or column is uniformly hot — the ranking flips by mode. gpt-4o’s protocol 0/5 is capability
+failure (cannot reverse-engineer), not an honest solve. Equal-weight CN vs US ≈ 0.14 vs 0.16
+(Δ ≈ −0.02). Source: <a href="HEADLINE_RESULTS.md">HEADLINE_RESULTS.md</a>. All figure captions:
+<a href="figures/README.md">figures/README.md</a>.</em></p>
+
 ---
 
 ## 0. Presentation filter (read this before quoting)

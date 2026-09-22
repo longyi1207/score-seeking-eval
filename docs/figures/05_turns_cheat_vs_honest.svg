@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 240" role="img" aria-label="On protocol reverse-engineering, median turns when cheating about 9 versus about 33 when honest.">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="24" y="28" font-family="Helvetica Neue,Arial,sans-serif" font-size="14" font-weight="700" fill="#16202e">Effort — agent turns on protocol_re</text>
+<text x="24" y="46" font-family="Helvetica Neue,Arial,sans-serif" font-size="11" fill="#54627a">Pooled medians · one turn = one agent step</text>
+<rect x="70" y="163.0" width="140" height="27.0" rx="4" fill="#b23b36"/>
+<text x="140" y="151.0" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="20" font-weight="700" fill="#b23b36">~9 turns</text>
+<text x="140" y="212" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="13" font-weight="700" fill="#16202e">Cheat</text>
+<rect x="280" y="91.0" width="140" height="99.0" rx="4" fill="#237a4d"/>
+<text x="350" y="79.0" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="20" font-weight="700" fill="#237a4d">~33 turns</text>
+<text x="350" y="212" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="13" font-weight="700" fill="#16202e">Honest / other</text>
+<text x="260" y="110" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="12" fill="#54627a">≈ 3.7× cheaper to cheat</text>
+</svg>

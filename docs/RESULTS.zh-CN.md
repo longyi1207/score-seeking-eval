@@ -9,6 +9,16 @@ _最后更新 2026-09-18。这是整套评测里每一个场景的完整结果�
 
 **第一次读？先看第 1–3 节（5 分钟）—— 它们把整个想法讲清楚。然后 §5 的结果表才读得懂。**
 
+<p align="center">
+  <img src="figures/01_hazard_heatmap.svg" alt="危害倾向热力图：五模型 × 七类作弊模式" width="720" />
+</p>
+
+<p align="center"><em><strong>图 1.</strong> 各模型 × 危害作弊模式的捷径率（n = 5）。
+没有一行或一列是均匀高热 —— 排名随模式翻转。gpt-4o 协议 0/5 是能力失败（做不了逆向），不是诚实解出。
+七类等权 CN vs US ≈ 0.14 vs 0.16（Δ ≈ −0.02）。来源：
+<a href="HEADLINE_RESULTS.zh-CN.md">HEADLINE_RESULTS.zh-CN.md</a>。全部图注：
+<a href="figures/README.md">figures/README.md</a>。</em></p>
+
 ---
 
 ## 0. 展示筛选（引用前先读这一节）

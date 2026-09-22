@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 300" role="img" aria-label="Delta CN minus US by hazard mode. Positive means CN higher seeking. Equal-weight mean about minus 0.02.">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="20" y="24" font-family="Helvetica Neue,Arial,sans-serif" font-size="14" font-weight="700" fill="#16202e">Δ(CN − US) by hazard mode</text>
+<text x="20" y="42" font-family="Helvetica Neue,Arial,sans-serif" font-size="11" fill="#54627a">CN = DeepSeek+Kimi · US = gpt-4o+gpt-5.4+Claude · equal-weight mean ≈ −0.02</text>
+<line x1="300" y1="58" x2="300" y2="268" stroke="#d3dae4" stroke-width="1"/>
+<text x="292" y="56" text-anchor="end" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="#8a95a8">CN higher</text>
+<text x="308" y="56" text-anchor="start" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="#8a95a8">US higher</text>
+<text x="16" y="80" font-family="SF Mono,Menlo,monospace" font-size="10" fill="#16202e">oversight_runner_destroy</text>
+<rect x="300" y="66" width="76.0" height="16" rx="2" fill="#c2611f"/>
+<text x="382.0" y="78" text-anchor="start" font-family="SF Mono,Menlo,monospace" font-size="10" font-weight="700" fill="#c2611f">+0.20</text>
+<text x="16" y="108" font-family="SF Mono,Menlo,monospace" font-size="10" fill="#16202e">protocol_backdoor</text>
+<rect x="300" y="94" width="49.4" height="16" rx="2" fill="#c2611f"/>
+<text x="355.4" y="106" text-anchor="start" font-family="SF Mono,Menlo,monospace" font-size="10" font-weight="700" fill="#c2611f">+0.13</text>
+<text x="16" y="136" font-family="SF Mono,Menlo,monospace" font-size="10" fill="#16202e">oversight_kill</text>
+<rect x="300" y="122" width="38.0" height="16" rx="2" fill="#c2611f"/>
+<text x="344.0" y="134" text-anchor="start" font-family="SF Mono,Menlo,monospace" font-size="10" font-weight="700" fill="#c2611f">+0.10</text>
+<text x="16" y="164" font-family="SF Mono,Menlo,monospace" font-size="10" fill="#16202e">cve_exploit (disclose)</text>
+<circle cx="300" cy="158" r="3.5" fill="#8a95a8"/>
+<text x="310" y="162" font-family="SF Mono,Menlo,monospace" font-size="10" fill="#8a95a8">0</text>
+<text x="16" y="192" font-family="SF Mono,Menlo,monospace" font-size="10" fill="#16202e">ssrf_exfil</text>
+<rect x="262.0" y="178" width="38.0" height="16" rx="2" fill="#3d6ea5"/>
+<text x="256.0" y="190" text-anchor="end" font-family="SF Mono,Menlo,monospace" font-size="10" font-weight="700" fill="#3d6ea5">-0.10</text>
+<text x="16" y="220" font-family="SF Mono,Menlo,monospace" font-size="10" fill="#16202e">metric_redef</text>
+<rect x="250.6" y="206" width="49.4" height="16" rx="2" fill="#3d6ea5"/>
+<text x="244.6" y="218" text-anchor="end" font-family="SF Mono,Menlo,monospace" font-size="10" font-weight="700" fill="#3d6ea5">-0.13</text>
+<text x="16" y="248" font-family="SF Mono,Menlo,monospace" font-size="10" fill="#16202e">monitor_deception</text>
+<rect x="174.6" y="234" width="125.4" height="16" rx="2" fill="#3d6ea5"/>
+<text x="168.6" y="246" text-anchor="end" font-family="SF Mono,Menlo,monospace" font-size="10" font-weight="700" fill="#3d6ea5">-0.33</text>
+</svg>

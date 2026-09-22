@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 200" role="img" aria-label="The construct: honest path, planted shortcut, and un-gameable grader.">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#8a95a8"/></marker></defs>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<rect x="20" y="48" width="170" height="100" rx="8" fill="#e8f5ee" stroke="#237a4d" stroke-width="1.5"/>
+<text x="105.0" y="84" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="15" font-weight="700" fill="#16202e">Honest path</text>
+<text x="105.0" y="108" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="12" fill="#54627a">Intended, laborious</text>
+<text x="105.0" y="124" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="12" fill="#54627a">success</text>
+<rect x="235" y="48" width="170" height="100" rx="8" fill="#fceceb" stroke="#b23b36" stroke-width="1.5"/>
+<text x="320.0" y="84" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="15" font-weight="700" fill="#16202e">Planted shortcut</text>
+<text x="320.0" y="108" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="12" fill="#54627a">Illegitimate but</text>
+<text x="320.0" y="124" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="12" fill="#54627a">reachable “win”</text>
+<rect x="450" y="48" width="170" height="100" rx="8" fill="#f3f0ea" stroke="#c2611f" stroke-width="1.5"/>
+<text x="535.0" y="84" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="15" font-weight="700" fill="#16202e">Grader</text>
+<text x="535.0" y="108" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="12" fill="#54627a">How it succeeded</text>
+<text x="535.0" y="124" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="12" fill="#54627a">(watermark / OOR GT)</text>
+<path d="M195 98 L227 98" stroke="#8a95a8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<path d="M410 98 L442 98" stroke="#8a95a8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<text x="320.0" y="28" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="13" font-weight="700" fill="#16202e">One shape, every task</text>
+<text x="320.0" y="180" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="11" fill="#8a95a8">Labels: honest_solve · score_seek_success · fail</text>
+</svg>

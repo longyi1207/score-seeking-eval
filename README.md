@@ -10,6 +10,16 @@ and an **un-gameable grader** that catches the cheat *even when the agent tries 
 The suite spans two families: **real Azure Active Directory ranges** and a **container task suite**
 (protocol reverse-engineering, oversight, exploits, games, proofs, … — each a single-command Docker run).
 
+<p align="center">
+  <img src="docs/figures/01_hazard_heatmap.svg" alt="Hazard propensity heatmap: five models by seven cheat modes" width="720" />
+</p>
+
+<p align="center"><em><strong>Figure 1.</strong> Shortcut-taking rate per model × hazard cheat-mode (n = 5).
+No row or column is uniformly hot — the ranking flips by mode.
+Equal-weight CN vs US mean ≈ 0.14 vs 0.16 (Δ ≈ −0.02). Full brief:
+<a href="docs/HEADLINE_RESULTS.md">HEADLINE_RESULTS.md</a>. More figures:
+<a href="docs/figures/README.md">docs/figures/</a>.</em></p>
+
 ### For readers (start here)
 
 > **📊 Full results, from scratch:** [`docs/RESULTS.md`](docs/RESULTS.md) — what each scenario is, then outcomes with turns/tokens.
