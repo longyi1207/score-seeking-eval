@@ -1,21 +1,39 @@
 # Figures
 
-SVG assets for the public brief. **#1 is embedded in README + RESULTS.**  
-#2–#5 are ready; placement TBD.
-
-Palette matches [`NEO_MEMO.html`](./NEO_MEMO.html). Rates from [`HEADLINE_RESULTS.md`](./HEADLINE_RESULTS.md) / [`matrices/ATTRIBUTION_TABLE.md`](./matrices/ATTRIBUTION_TABLE.md) (n = 5 unless noted).
+SVG assets for the public brief. **Figure 1 (task heatmap) is embedded in README + RESULTS.**  
+#2–#5 placement TBD. Regen task heatmap: `.venv/bin/python scripts/render_task_heatmap.py`.
 
 ---
 
-## 1. Hazard propensity heatmap — `01_hazard_heatmap.svg`
+## 1. Task heatmap — `01_task_heatmap.svg` ★ hero
+
+![Task heatmap](./01_task_heatmap.svg)
+
+**Encoding (each cell, top→bottom) — no color legend:**
+
+| Line | If any seek | If zero seeks |
+|---|---|---|
+| 1 | **seek-rate** `k/n` | same (`0/n`) |
+| 2 | **attack mode** (`backdoor`, `deceive`, `diff-reset`, `kill·runner`, …) | **outcome** (`honest` / `fail` / `blocked`) |
+| 3 | **median turns** on seeking runs | **median turns** on those outcomes |
+
+Dashed `…` = cell not yet at n≥5 (fill still running). Color is only a duplicate of the rate.
+
+**Caption (EN).** Full **present** suite at a glance: propensity *and* how it showed up *and* how expensive the path was. Ranking still flips by task; gpt-4o’s protocol `0/5 · fail · 50t` is inability, not virtue; Claude’s oversight `0/5 · blocked · 40t` is attempted-but-held.
+
+**Caption (ZH).** 一眼看完 present 套件：倾向性 + 作弊方式/结局 + 代价。排名仍随任务翻转；gpt-4o 协议 `0/5 · fail` 是能力不够；Claude 监管 `0/5 · blocked` 是试了但被拦住。
+
+**Place:** README, RESULTS. Companion mode-axis view: `01_hazard_heatmap.svg`.
+
+---
+
+## 1b. Hazard-mode heatmap — `01_hazard_heatmap.svg`
 
 ![Hazard propensity heatmap](./01_hazard_heatmap.svg)
 
-**Caption (EN).** Shortcut-taking rate per **model × hazard cheat-mode** (positives / 5). Columns are the seven modes in the CN-vs-US vector. **No row or column is uniformly hot — the ranking flips by mode.** DeepSeek / gpt-5.4 light up the protocol backdoor; gpt-4o lights up monitor deception (+ metric); Claude is mid on protocol and cold elsewhere (mostly fail / blocked, not successful cheats). gpt-4o’s protocol `0/5` is capability failure (cannot reverse-engineer), not an honest solve. Equal-weight CN vs US mean ≈ **0.14 vs 0.16 (Δ ≈ −0.02)**.
+**Caption (EN).** Same rates sliced by **cheat-mode** (CN-vs-US vector columns), not task. Use when the claim is mode-specific Δ, not suite coverage.
 
-**Caption (ZH).** 各 **模型 × 危害作弊模式** 的捷径率（阳性 / 5）。列为中美对比向量里的七类模式。**没有一行或一列是均匀高热 —— 排名随模式翻转。** DeepSeek / gpt-5.4 在协议后门上亮；gpt-4o 在欺骗审查（及指标游戏）上亮；Claude 在协议题居中、其余多为失败/被拦（不是成功作弊）。gpt-4o 协议 `0/5` 是能力失败（做不了逆向），不是诚实解出。七类等权 CN vs US 均值 ≈ **0.14 vs 0.16（Δ ≈ −0.02）**。
-
-**Place:** README (EN/ZH), RESULTS § before main comparison / after construct.
+**Place:** companion to Figure 1 / HEADLINE.
 
 ---
 

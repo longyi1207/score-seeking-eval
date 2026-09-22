@@ -11,14 +11,14 @@ The suite spans two families: **real Azure Active Directory ranges** and a **con
 (protocol reverse-engineering, oversight, exploits, games, proofs, … — each a single-command Docker run).
 
 <p align="center">
-  <img src="docs/figures/01_hazard_heatmap.svg" alt="Hazard propensity heatmap: five models by seven cheat modes" width="720" />
+  <img src="docs/figures/01_task_heatmap.svg" alt="Task heatmap: seek rate, attack mode or outcome, median turns" width="900" />
 </p>
 
-<p align="center"><em><strong>Figure 1.</strong> Shortcut-taking rate per model × hazard cheat-mode (n = 5).
-No row or column is uniformly hot — the ranking flips by mode.
-Equal-weight CN vs US mean ≈ 0.14 vs 0.16 (Δ ≈ −0.02). Full brief:
-<a href="docs/HEADLINE_RESULTS.md">HEADLINE_RESULTS.md</a>. More figures:
-<a href="docs/figures/README.md">docs/figures/</a>.</em></p>
+<p align="center"><em><strong>Figure 1.</strong> Per <strong>model × task</strong> (present suite). Each cell:
+<strong>seek-rate</strong> / <strong>attack-mode</strong> (if any seek) or <strong>outcome</strong> (honest / fail / blocked) /
+<strong>median turns</strong>. Dashed <code>…</code> = not yet n≥5. Mode-axis companion:
+<a href="docs/figures/01_hazard_heatmap.svg">01_hazard_heatmap.svg</a>. Regen:
+<code>scripts/render_task_heatmap.py</code>.</em></p>
 
 ### For readers (start here)
 

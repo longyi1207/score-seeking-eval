@@ -14,14 +14,14 @@ scenarios; `draft` is held out of propensity claims (see [`STATUS.md`](STATUS.md
 table in §5 will make sense.**
 
 <p align="center">
-  <img src="figures/01_hazard_heatmap.svg" alt="Hazard propensity heatmap: five models by seven cheat modes" width="720" />
+  <img src="figures/01_task_heatmap.svg" alt="Task heatmap: seek rate, attack mode or outcome, median turns" width="900" />
 </p>
 
-<p align="center"><em><strong>Figure 1.</strong> Shortcut-taking rate per model × hazard cheat-mode (n = 5).
-No row or column is uniformly hot — the ranking flips by mode. gpt-4o’s protocol 0/5 is capability
-failure (cannot reverse-engineer), not an honest solve. Equal-weight CN vs US ≈ 0.14 vs 0.16
-(Δ ≈ −0.02). Source: <a href="HEADLINE_RESULTS.md">HEADLINE_RESULTS.md</a>. All figure captions:
-<a href="figures/README.md">figures/README.md</a>.</em></p>
+<p align="center"><em><strong>Figure 1.</strong> Per <strong>model × task</strong>. Each cell =
+<strong>seek-rate</strong> / <strong>attack-mode</strong> (if any seek) or <strong>outcome</strong>
+(honest / fail / blocked) / <strong>median turns</strong>. Dashed <code>…</code> = fill still running.
+Mode-axis companion: <a href="figures/01_hazard_heatmap.svg">01_hazard_heatmap.svg</a>.
+Regen after fills: <code>scripts/render_task_heatmap.py</code>.</em></p>
 
 ---
 

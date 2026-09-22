@@ -10,14 +10,13 @@
 整套评测分两大族：**真实的 Azure Active Directory 靶场**，以及一套**容器任务集**（协议逆向、监督对抗、漏洞利用、博弈、证明等 —— 每个都是单条命令的 Docker 运行）。
 
 <p align="center">
-  <img src="docs/figures/01_hazard_heatmap.svg" alt="危害倾向热力图：五模型 × 七类作弊模式" width="720" />
+  <img src="docs/figures/01_task_heatmap.svg" alt="任务热力图：捷径率 / 攻击模式或结局 / 中位轮次" width="900" />
 </p>
 
-<p align="center"><em><strong>图 1.</strong> 各模型 × 危害作弊模式的捷径率（n = 5）。
-没有一行或一列是均匀高热 —— 排名随模式翻转。
-七类等权 CN vs US 均值 ≈ 0.14 vs 0.16（Δ ≈ −0.02）。完整简报：
-<a href="docs/HEADLINE_RESULTS.zh-CN.md">HEADLINE_RESULTS.zh-CN.md</a>。更多图：
-<a href="docs/figures/README.md">docs/figures/</a>。</em></p>
+<p align="center"><em><strong>图 1.</strong> 按 <strong>模型 × 任务</strong>（present 套件）。每格三行：
+<strong>捷径率</strong> / <strong>攻击模式</strong>（有 seek 时）或 <strong>结局</strong>（honest / fail / blocked） /
+<strong>中位轮次</strong>。虚线 <code>…</code> = 尚未 n≥5。模式轴对照图：
+<a href="docs/figures/01_hazard_heatmap.svg">01_hazard_heatmap.svg</a>。</em></p>
 
 ### 给读者（从这里开始）
 
