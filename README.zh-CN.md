@@ -11,17 +11,23 @@
 **容器任务集**，横跨数学、博弈、数据、Web、调试、形式化证明、协议逆向、监督对抗（每个都是单条命令的
 Docker 运行）。
 
-> **📊 完整结果，从零讲起：** [`docs/RESULTS.zh-CN.md`](docs/RESULTS.zh-CN.md) —— 每个场景的确切 token / 轮次、
-> 发现与注意事项，写法上让第一次读的人也能从头跟到尾。·
-> **🎯 演示筛选：** [`docs/STATUS.md`](docs/STATUS.md) —— 哪些场景是 `present` / `draft` / `control`
-> （做 deck / 论述时只用 `present`）。·
-> **🧭 设计更新（后续实验以它为准）：** [`docs/DESIGN_UPDATE_PROPENSITY_VECTORS.md`](docs/DESIGN_UPDATE_PROPENSITY_VECTORS.md) —— 相对**危害相关 propensity 向量**（中国实验室 vs 美/欧）、cheat-mode 分类、该记录/操纵的因子；新工作不再以标量「谁更爱作弊 / 谁更危险」为主问题。·
-> **📌 锁定 headline（对外引用）：** [`docs/HEADLINE_RESULTS.md`](docs/HEADLINE_RESULTS.md) · **Presentable memo：** [`docs/NEO_MEMO.html`](docs/NEO_MEMO.html) ·
-> **📄 MVP 论述（两个 AD 环境）：** [`docs/WRITEUP.zh-CN.pdf`](docs/WRITEUP.zh-CN.pdf) ·
-> **计划与框架：** [`docs/NORTH_STAR.md`](docs/NORTH_STAR.md) · **设计理论：**
-> [`docs/LONG_HORIZON_DESIGN.md`](docs/LONG_HORIZON_DESIGN.md)（什么让一条诚实路径**不可压缩地**长，
-> 以及“换成 REPL 会不会把它压扁？”这条试金石）· **新增一个 AD 环境：**
-> [`ARCHITECTURE.md`](ARCHITECTURE.md)
+> **📊 完整结果，从零讲起：** [`docs/RESULTS.zh-CN.md`](docs/RESULTS.zh-CN.md) —— 每个场景的确切 token / 轮次、发现与注意事项，写法上让第一次读的人也能从头跟到尾。
+>
+> **🎯 演示筛选：** [`docs/STATUS.md`](docs/STATUS.md) —— 哪些场景是 `present` / `draft` / `control`（做 deck / 论述时只用 `present`）。
+>
+> **🧭 设计更新（后续实验以它为准）：** [`docs/DESIGN_UPDATE_PROPENSITY_VECTORS.md`](docs/DESIGN_UPDATE_PROPENSITY_VECTORS.md) —— 相对**危害相关 propensity 向量**（中国实验室 vs 美/欧）、cheat-mode 分类、该记录/操纵的因子；新工作不再以标量「谁更爱作弊 / 谁更危险」为主问题。
+>
+> **📌 锁定 headline（对外引用）：** [`docs/HEADLINE_RESULTS.md`](docs/HEADLINE_RESULTS.md)
+>
+> **Presentable memo：** [`docs/NEO_MEMO.html`](docs/NEO_MEMO.html)
+>
+> **📄 MVP 论述（两个 AD 环境）：** [`docs/WRITEUP.zh-CN.pdf`](docs/WRITEUP.zh-CN.pdf)
+>
+> **计划与框架：** [`docs/NORTH_STAR.md`](docs/NORTH_STAR.md)
+>
+> **设计理论：** [`docs/LONG_HORIZON_DESIGN.md`](docs/LONG_HORIZON_DESIGN.md) —— 什么让一条诚实路径**不可压缩地**长，以及“换成 REPL 会不会把它压扁？”这条试金石。
+>
+> **新增一个 AD 环境：** [`ARCHITECTURE.md`](ARCHITECTURE.md)
 
 ## 基本构造（同一个形状，处处如此）
 

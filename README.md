@@ -11,17 +11,23 @@ The suite spans two families: **real Azure Active Directory ranges** (the flagsh
 rates) and a **container task suite** across math, games, data, web, debugging, formal proof, protocol
 reverse-engineering, and monitor-oversight (each a single-command Docker run).
 
-> **📊 Full results, explained from scratch:** [`docs/RESULTS.md`](docs/RESULTS.md) — every scenario with
-> exact tokens/turns, findings, and caveats, written so a first-time reader can follow end to end. ·
-> **🎯 Presentation filter:** [`docs/STATUS.md`](docs/STATUS.md) — which scenarios are `present` /
-> `draft` / `control` (decks/writeups use `present` only). ·
-> **🧭 Design update (authoritative for new experiments):** [`docs/DESIGN_UPDATE_PROPENSITY_VECTORS.md`](docs/DESIGN_UPDATE_PROPENSITY_VECTORS.md) — relative **hazard propensity vectors** (CN vs US/EU), cheat-mode taxonomy, factors to log/manipulate; supersedes scalar “who cheats more / more dangerous” framing for new work. ·
-> **📌 Locked headline (quote this):** [`docs/HEADLINE_RESULTS.md`](docs/HEADLINE_RESULTS.md) · **Presentable memo:** [`docs/NEO_MEMO.html`](docs/NEO_MEMO.html) ·
-> **📄 MVP write-up (the two AD environments):** [`docs/WRITEUP.pdf`](docs/WRITEUP.pdf) ·
-> **Plan & framework:** [`docs/NORTH_STAR.md`](docs/NORTH_STAR.md) · **Design theory:**
-> [`docs/LONG_HORIZON_DESIGN.md`](docs/LONG_HORIZON_DESIGN.md) (what makes an honest path *irreducibly*
-> long, the "would a REPL collapse it?" litmus test) · **Add an AD environment:**
-> [`ARCHITECTURE.md`](ARCHITECTURE.md)
+> **📊 Full results, explained from scratch:** [`docs/RESULTS.md`](docs/RESULTS.md) — every scenario with exact tokens/turns, findings, and caveats, written so a first-time reader can follow end to end.
+>
+> **🎯 Presentation filter:** [`docs/STATUS.md`](docs/STATUS.md) — which scenarios are `present` / `draft` / `control` (decks/writeups use `present` only).
+>
+> **🧭 Design update (authoritative for new experiments):** [`docs/DESIGN_UPDATE_PROPENSITY_VECTORS.md`](docs/DESIGN_UPDATE_PROPENSITY_VECTORS.md) — relative **hazard propensity vectors** (CN vs US/EU), cheat-mode taxonomy, factors to log/manipulate; supersedes scalar “who cheats more / more dangerous” framing for new work.
+>
+> **📌 Locked headline (quote this):** [`docs/HEADLINE_RESULTS.md`](docs/HEADLINE_RESULTS.md)
+>
+> **Presentable memo:** [`docs/NEO_MEMO.html`](docs/NEO_MEMO.html)
+>
+> **📄 MVP write-up (the two AD environments):** [`docs/WRITEUP.pdf`](docs/WRITEUP.pdf)
+>
+> **Plan & framework:** [`docs/NORTH_STAR.md`](docs/NORTH_STAR.md)
+>
+> **Design theory:** [`docs/LONG_HORIZON_DESIGN.md`](docs/LONG_HORIZON_DESIGN.md) — what makes an honest path *irreducibly* long, and the "would a REPL collapse it?" litmus test.
+>
+> **Add an AD environment:** [`ARCHITECTURE.md`](ARCHITECTURE.md)
 
 ## The construct (one shape, everywhere)
 
