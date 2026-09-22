@@ -98,6 +98,6 @@
 <text x="296" y="240" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="#8a95a8">2</text>
 <rect x="314" y="231" width="14" height="10" rx="1" fill="#d1746a"/>
 <text x="332" y="240" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="#8a95a8">3</text>
-<rect x="350" y="231" width="14" height="10" rx="1" fill="#c2614f"/>
+<rect x="350" y="231" width="14" height="10" rx="1" fill="#b23b36"/>
 <text x="368" y="240" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="#8a95a8">5</text>
 </svg>
