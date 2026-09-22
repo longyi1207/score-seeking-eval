@@ -79,5 +79,6 @@
 
 ### Ops note (2026-09-21)
 
-- Claude 标准 heatmap（除 protocol）正在补跑。
-- B3：VCF `h100-sxm-8-0` 空闲；先 download MiniMax-M2，再 vLLM serve；laptop 用 `OPEN_WEIGHT_*` 指过去。
+- Claude 标准 heatmap 已补完。
+- **B3 算力：只用 Microsoft for Startups GPU Cluster（见 `OPEN_WEIGHT_GPU_PANEL.md`）。禁止用 Lucid VCF / SPAR。**
+- laptop 侧已支持 `OPEN_WEIGHT_*` → OpenAI-compatible endpoint；等 Startups 节点起来再 serve。

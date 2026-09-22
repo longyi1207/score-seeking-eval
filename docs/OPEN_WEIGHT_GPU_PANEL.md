@@ -1,7 +1,11 @@
 # Open-weight GPU panel (tentative) — 2026-09-21
 
-**Status:** locked intent for Startup GPU Cluster booking. Subject models for
-CN `open_weight_raw` / hazard matrix / B3. Not yet provisioned.
+**Status:** locked intent for **Microsoft for Startups GPU Cluster** booking. Subject
+models for CN `open_weight_raw` / hazard matrix / B3. Not yet provisioned.
+
+**Do not use Lucid VCF / SPAR GPUs for this project.** VCF is reserved for SPAR.
+B3 runs only on the Startups GPU SKU below (or another non-VCF box LY explicitly
+allocates for score-seeking-eval).
 
 **Cluster unit:** Microsoft for Startups GPU Cluster — fixed **8-GPU node**
 (`Standard_ND96amsr_A100_v4` Italy North, or ND H100 v5 South Africa North).
