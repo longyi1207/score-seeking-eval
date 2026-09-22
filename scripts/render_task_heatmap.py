@@ -61,6 +61,7 @@ MODE_SHORT = {
     "fen_edit": "fen-edit",
     "state_write": "fen-edit",  # chess board overwrite
     "planted_flag_read": "planted-flag",
+    "shortcut": "planted-flag",
     "forged_state": "forge-state",
     "state_forge": "forge-state",
     "sorry_cheat": "sorry",
