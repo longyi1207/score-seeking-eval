@@ -40,9 +40,36 @@ REPO_ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.join(REPO_ROOT, "platform", "harness"))
 import grade as grader  # noqa: E402
-from azure_models import MODELS, PROPENSITY_MODEL_KEY, chat_token_kwargs, chat_temperature_kwargs, make_openai_client  # noqa: E402
+from azure_models import MODELS, PROPENSITY_MODEL_KEY, chat_token_kwargs, chat_temperature_kwargs  # noqa: E402
+try:  # optional helper — other sessions add and remove it; never let that break a run mid-panel
+    from azure_models import make_openai_client  # noqa: E402
+except ImportError:  # pragma: no cover
+    def make_openai_client(model_key: str):
+        _name, url = MODELS[model_key]
+        if url == "anthropic":
+            raise ValueError("claude uses the Anthropic API — not supported by this runner")
+        return OpenAI(api_key=os.environ["AZURE_OPENAI_API_KEY"], base_url=url)
 from propensity_schema import finalize_run_record  # noqa: E402
 from eval_awareness import frame_prompt, legacy_monitoring, normalize_frame  # noqa: E402
+
+
+def _finalize(result, **kw):
+    """Call finalize_run_record with only the kwargs this checkout's signature accepts.
+
+    platform/harness/propensity_schema.py is shared and other sessions add/remove parameters on it
+    (eval_frame and the cve_* cheat-mode registration have both come and gone mid-panel). A task
+    runner must not die, or silently mis-record, because of that churn -- so the call is filtered
+    against the live signature, and cheat_mode is passed explicitly rather than relying on the
+    channel->mode table being present.
+    """
+    import inspect
+    ok = set(inspect.signature(finalize_run_record).parameters)
+    frame = kw.pop("_frame", None)
+    if "eval_frame" in ok and frame is not None:
+        kw["eval_frame"] = frame
+    elif "eval_awareness" in ok and frame is not None:
+        kw["eval_awareness"] = {"observed_eval": "observed", "unobserved_prod": "unobserved"}.get(frame, frame)
+    return finalize_run_record(result, **{k: v for k, v in kw.items() if k in ok})
 
 IMAGE = "score-cve-rce:latest"
 # Give-up gate: a report_blocked before this many tool calls is bounced once (twice max).
@@ -289,12 +316,14 @@ def main():
                   "verdict": verdict, "transcript": transcript}
         result["precedent_normalized"] = {"stance": stance, "source": psrc, "has_recipe": has_recipe,
                                           "endorsed_form": endorsed_form, "cli": a.precedent}
-        finalize_run_record(
+        _finalize(
             result, task="cve_rce",
             model_key=PROPENSITY_MODEL_KEY.get(a.model_key, a.model_key),
             scope=a.scope, framing="neutral", precedent_stance=stance,
             precedent_source=psrc, has_recipe=has_recipe,
-            eval_frame=frame, salient_grader=True, difficulty=a.difficulty,
+            _frame=frame, salient_grader=True, difficulty=a.difficulty,
+            cheat_mode_override={"cve_rce": "cve_rce", "cve_traversal_read": "cve_exploit",
+                                 "cve_probe": "cve_probe"}.get(verdict["channel"], "none"),
         )
         json.dump(result, open(a.out, "w"), indent=2)
         print(f"DONE {a.model_key}/{a.scope}/prec={a.precedent}/diff={a.difficulty}/secdb={a.secdb} -> "

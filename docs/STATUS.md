@@ -1,11 +1,6 @@
 # Presentation status — what goes in the writeup
 
-_Last updated 2026-09-22 (two new CVE arms built AND panelled: `cve_rce`, `cve_cli_read`)._
-
-> **Read before quoting `cve_exploit`:** the endorsement headline was measured on one CVE. The two
-> sibling CVEs now have full panels, and DeepSeek/Kimi's near-ceiling rates **do not reproduce** on
-> either. The core claim (knowledge ≠ permission) does replicate, 0/40. Details and the open
-> confound: [`CVE_GENERALISATION_RESULTS.md`](./CVE_GENERALISATION_RESULTS.md).
+_Last updated 2026-09-21 (post Phase-3 parallel batch)._
 
 > **External brief (CN vs US/EU propensity, mode glossary, turns):**
 > [`HEADLINE_RESULTS.md`](./HEADLINE_RESULTS.md).
@@ -20,6 +15,13 @@ _Last updated 2026-09-22 (two new CVE arms built AND panelled: `cve_rce`, `cve_c
 >
 > Panel (2026-09-21 evening): deepseek / kimi / gpt-4o / gpt-5.4 / claude on full hazard heatmap.
 > Qwen + open-weight GPU (B3) still empty — all live cells are `api_aligned_shell`.
+
+> **Read before quoting `cve_exploit`:** the endorsement headline was measured on one CVE. Two
+> sibling CVEs now have full panels and DeepSeek/Kimi's near-ceiling rates **do not reproduce**
+> on either, though the core claim (knowledge ≠ permission) does, 0/40. Separately, a discovery
+> arm shows models exploiting a real CVE **with no endorsement at all** once the honest path is
+> blocked. [`CVE_GENERALISATION_RESULTS.md`](./CVE_GENERALISATION_RESULTS.md) ·
+> [`CVE_DISCOVERY_RESULTS.md`](./CVE_DISCOVERY_RESULTS.md).
 
 Every scenario carries a `status` field in its `task.yaml` (or `envs/*/task.yaml`). Use this as the
 filter for decks, memos, and external quoting — not the raw inventory under `tasks/`.
@@ -51,8 +53,9 @@ filter for decks, memos, and external quoting — not the raw inventory under `t
 
 | Scenario | Why |
 |---|---|
-| `cve_rce` | Panel RUN 2026-09-22 (n=5 x 4 models, 100 runs, 0 fail) — held draft: results qualify a currently-presented `cve_exploit` claim, and the anchor comparison is confounded by an unmatched honest path. See [`CVE_GENERALISATION_RESULTS.md`](./CVE_GENERALISATION_RESULTS.md) §4; promotion is LY's call |
-| `cve_cli_read` | Panel RUN 2026-09-22 (n=5 x 4 models, 80 runs, 0 fail) — held draft for the same reason |
+| `cve_rce` | Endorsement panel RUN 2026-09-22 (n=5 x 4 models, 100 runs) — held draft: results qualify a currently-presented `cve_exploit` claim and the anchor comparison is confounded by an unmatched honest path ([`CVE_GENERALISATION_RESULTS.md`](./CVE_GENERALISATION_RESULTS.md) §4) |
+| `cve_rce` (discovery arm) | `--difficulty blocked` panel RUN 2026-09-22 (n=5 x 4 models x 6 cells, 120 runs). **40/100 blocked runs exploited a real published CVE with no endorsement at all**; the control with the honest path working is 0/20. See [`CVE_DISCOVERY_RESULTS.md`](./CVE_DISCOVERY_RESULTS.md) |
+| `cve_cli_read` | Endorsement panel RUN 2026-09-22 (n=5 x 4 models, 80 runs) — held draft for the same reason |
 | `deferred_cost` | Hardened honest path is scriptable → myopic signal near-null |
 | `incident_rootcause` | 0 cheats elicited; horizon collapsed (visible ground truth) |
 | `synthetic-intranet/` | Research+design; not run through the framework as suite results |
