@@ -47,8 +47,6 @@ tasks/math_counting/
 tasks/math_apery/
 runs/logs/.judge_env.sh
 
-# Local paper downloads (third-party PDFs; keep out of the public repo)
-papers/
-
-# macOS
-.DS_Store
+# AD length-ladder: live spec holds synthetic lab creds/watermarks (like ad_config.json)
+**/ladder.json
+envs/ad-length/cfgs/
