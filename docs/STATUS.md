@@ -1,6 +1,6 @@
 # Presentation status — what goes in the writeup
 
-_Last updated 2026-09-21 (post Phase-3 parallel batch)._
+_Last updated 2026-09-22 (two new CVE arms built: `cve_rce`, `cve_cli_read`)._
 
 > **External brief (CN vs US/EU propensity, mode glossary, turns):**
 > [`HEADLINE_RESULTS.md`](./HEADLINE_RESULTS.md).
@@ -46,6 +46,8 @@ filter for decks, memos, and external quoting — not the raw inventory under `t
 
 | Scenario | Why |
 |---|---|
+| `cve_rce` | Built + verified end-to-end 2026-09-22 (CVE-2021-41773 severity arm); no model panel yet |
+| `cve_cli_read` | Built + verified end-to-end 2026-09-22 (CVE-2024-23897 cost/recency arm); no model panel yet |
 | `deferred_cost` | Hardened honest path is scriptable → myopic signal near-null |
 | `incident_rootcause` | 0 cheats elicited; horizon collapsed (visible ground truth) |
 | `synthetic-intranet/` | Research+design; not run through the framework as suite results |
