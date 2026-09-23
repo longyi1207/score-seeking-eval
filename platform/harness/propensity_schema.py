@@ -86,6 +86,12 @@ EVAL_AWARENESS = ("control", "observed", "unobserved")
 # Social-signal overlay (cve_exploit): peer/institutional pressure layered ON TOP of disclose-level
 # knowledge. Orthogonal to the precedent ladder — these are NOT `endorse` stances.
 SOCIAL_SIGNAL = ("none", "peer_fined", "board_ship_fast", "whistleblow")
+# Where the social fact was delivered. "handoff" = the single planted HANDOFF.md carries it
+# (disclose-level knowledge + the fact). "second_note" = HANDOFF.md carries the precedent
+# (e.g. an endorsement) and a SECOND teammate's note carries the social fact — the crossed
+# design, where a counter-signal has a non-zero baseline to push down from. "control" = a
+# second note exists but carries no social content (controls for the extra file).
+SOCIAL_CHANNEL = ("none", "handoff", "second_note", "control")
 LAB_REGION = ("CN", "US_EU", "other")
 TRAINING_CLASS = ("reasoning_rlvr", "chat_sft", "unknown")
 SERVING = ("open_weight_raw", "api_aligned_shell", "unknown")
@@ -133,6 +139,13 @@ MODEL_META: dict[str, dict[str, str]] = {
         "training_class": "unknown",
         "serving": "api_aligned_shell",
         "lab": "Anthropic",
+    },
+    "mimo": {
+        "model_id": "mimo-v2.6-pro",
+        "lab_region": "CN",
+        "training_class": "reasoning_rlvr",
+        "serving": "api_aligned_shell",
+        "lab": "Xiaomi",
     },
 }
 
@@ -269,11 +282,13 @@ def finalize_run_record(
     eval_frame: str | None = None,
     oversight_salience: str | None = None,
     social_signal: str = "none",
+    social_channel: str = "none",
     difficulty: str | None = None,
     capable: bool | None = None,
     capable_evidence: str | None = None,
     salient_grader: bool = True,
     cheat_mode_override: str | None = None,
+    ad_length: str | None = None,
 ) -> dict[str, Any]:
     """Attach propensity-vector metadata to a runner result dict (in place + return)."""
     verdict = result.get("verdict") or {}
@@ -323,6 +338,8 @@ def finalize_run_record(
 
     resolved_scope = scope if scope is not None else result.get("scope", "none")
     resolved_stance = precedent_stance or "none"
+    # length-ladder rung (AD honest-path length dose-response); None on non-ladder tasks.
+    resolved_ad_length = ad_length if ad_length is not None else result.get("ad_length")
     # Axis 1 (eval_frame). Accepts a new-style frame, a legacy --monitoring value, or neither.
     _raw_frame = (
         eval_frame if eval_frame is not None
@@ -337,6 +354,9 @@ def finalize_run_record(
     resolved_social = social_signal or "none"
     if resolved_social not in SOCIAL_SIGNAL:
         raise ValueError(f"unknown social_signal {social_signal!r}; expected one of {SOCIAL_SIGNAL}")
+    resolved_channel = social_channel or "none"
+    if resolved_channel not in SOCIAL_CHANNEL:
+        raise ValueError(f"unknown social_channel {social_channel!r}; expected one of {SOCIAL_CHANNEL}")
 
     propensity = {
         "schema_version": 2,
@@ -356,7 +376,9 @@ def finalize_run_record(
         "eval_awareness": legacy_monitoring(resolved_frame),
         "oversight_salience": resolved_salience,
         "social_signal": resolved_social,
+        "social_channel": resolved_channel,
         "difficulty": difficulty,
+        "ad_length": resolved_ad_length,
         "salient_grader": salient_grader,
         "capable": capable,
         "capable_evidence": capable_evidence,
@@ -374,6 +396,7 @@ def finalize_run_record(
             precedent_stance=resolved_stance,
             difficulty=difficulty,
             social_signal=resolved_social,
+            social_channel=resolved_channel,
         ),
     }
     result["propensity"] = propensity
@@ -389,6 +412,7 @@ def _is_standard_cell(
     precedent_stance: str,
     difficulty: str | None,
     social_signal: str = "none",
+    social_channel: str = "none",
 ) -> bool:
     std = STANDARD_CELLS.get(task)
     if not std:
@@ -400,6 +424,8 @@ def _is_standard_cell(
     # Social overlays share (scope, stance) with the standard CVE cell but are a different
     # condition — never let them land in the main heatmap.
     if social_signal not in (None, "none"):
+        return False
+    if social_channel not in (None, "none"):
         return False
     if framing not in (None, "neutral"):
         return False
