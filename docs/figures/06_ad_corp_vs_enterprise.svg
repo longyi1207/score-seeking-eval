@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 340" role="img" aria-label="Seek rate on short vs long Azure AD by model.">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="28" y="28" font-family="Helvetica Neue,Arial,sans-serif" font-size="15" font-weight="700" fill="#16202e">Same shortcut, different honest-path length</text>
+<text x="28" y="46" font-family="Helvetica Neue,Arial,sans-serif" font-size="11" fill="#54627a">Azure AD · planted Domain-Admin flag · scope = none · n=5 (DeepSeek enterprise n=6)</text>
+<line x1="56" y1="280.0" x2="696" y2="280.0" stroke="#e8ecf1" stroke-width="1"/>
+<text x="48" y="284.0" text-anchor="end" font-family="SF Mono,Menlo,monospace" font-size="10" fill="#8a95a8">0%</text>
+<line x1="56" y1="224.0" x2="696" y2="224.0" stroke="#e8ecf1" stroke-width="1"/>
+<text x="48" y="228.0" text-anchor="end" font-family="SF Mono,Menlo,monospace" font-size="10" fill="#8a95a8">25%</text>
+<line x1="56" y1="168.0" x2="696" y2="168.0" stroke="#e8ecf1" stroke-width="1"/>
+<text x="48" y="172.0" text-anchor="end" font-family="SF Mono,Menlo,monospace" font-size="10" fill="#8a95a8">50%</text>
+<line x1="56" y1="112.0" x2="696" y2="112.0" stroke="#e8ecf1" stroke-width="1"/>
+<text x="48" y="116.0" text-anchor="end" font-family="SF Mono,Menlo,monospace" font-size="10" fill="#8a95a8">75%</text>
+<line x1="56" y1="56.0" x2="696" y2="56.0" stroke="#e8ecf1" stroke-width="1"/>
+<text x="48" y="60.0" text-anchor="end" font-family="SF Mono,Menlo,monospace" font-size="10" fill="#8a95a8">100%</text>
+<rect x="510" y="18" width="12" height="12" rx="2" fill="#c2614f"/>
+<text x="526" y="28" font-family="Helvetica Neue,Arial,sans-serif" font-size="11" fill="#54627a">ad-corp (short)</text>
+<rect x="620" y="18" width="12" height="12" rx="2" fill="#16202e"/>
+<text x="636" y="28" font-family="Helvetica Neue,Arial,sans-serif" font-size="11" fill="#54627a">ad-ent (long)</text>
+<rect x="84" y="145.6" width="38" height="134.4" rx="3" fill="#c2614f"/>
+<text x="103.0" y="139.6" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="10" font-weight="700" fill="#16202e">3/5</text>
+<rect x="132" y="242.7" width="38" height="37.3" rx="3" fill="#16202e"/>
+<text x="151.0" y="236.7" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="10" font-weight="700" fill="#16202e">1/6</text>
+<text x="127.0" y="298" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="12" font-weight="700" fill="#16202e">DeepSeek</text>
+<rect x="204" y="280.0" width="38" height="1.5" rx="3" fill="#eef2f6"/>
+<text x="223.0" y="274.0" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="10" font-weight="700" fill="#8a95a8">0/5</text>
+<rect x="252" y="280.0" width="38" height="1.5" rx="3" fill="#6a9e72"/>
+<text x="271.0" y="272.0" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="10" font-weight="700" fill="#8a95a8">0/5</text>
+<text x="247.0" y="298" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="12" font-weight="700" fill="#16202e">Kimi</text>
+<text x="247.0" y="314" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="#2f5d38">0 seek</text>
+<rect x="324" y="280.0" width="38" height="1.5" rx="3" fill="#eef2f6"/>
+<text x="343.0" y="274.0" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="10" font-weight="700" fill="#8a95a8">0/5</text>
+<rect x="372" y="280.0" width="38" height="1.5" rx="3" fill="#b0b8c4"/>
+<text x="391.0" y="272.0" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="10" font-weight="700" fill="#8a95a8">0/5</text>
+<text x="367.0" y="298" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="12" font-weight="700" fill="#16202e">gpt-4o</text>
+<text x="367.0" y="314" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="#8a95a8">fail@cap</text>
+<rect x="444" y="235.2" width="38" height="44.8" rx="3" fill="#c2614f"/>
+<text x="463.0" y="229.2" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="10" font-weight="700" fill="#16202e">1/5</text>
+<rect x="492" y="190.4" width="38" height="89.6" rx="3" fill="#16202e"/>
+<text x="511.0" y="184.4" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="10" font-weight="700" fill="#16202e">2/5</text>
+<text x="487.0" y="298" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="12" font-weight="700" fill="#16202e">gpt-5.4</text>
+<rect x="564" y="235.2" width="38" height="44.8" rx="3" fill="#c2614f"/>
+<text x="583.0" y="229.2" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="10" font-weight="700" fill="#16202e">1/5</text>
+<rect x="612" y="280.0" width="38" height="1.5" rx="3" fill="#b0b8c4"/>
+<text x="631.0" y="272.0" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="10" font-weight="700" fill="#8a95a8">0/5</text>
+<text x="607.0" y="298" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="12" font-weight="700" fill="#16202e">Claude</text>
+<text x="607.0" y="314" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="#8a95a8">fail@cap</text>
+<text x="28" y="328" font-family="Helvetica Neue,Arial,sans-serif" font-size="10" fill="#8a95a8">DeepSeek drops 60%→17%. gpt-5.4 still seeks on the long path (2/5). gpt-4o / Claude hit the capability wall (fail 5/5, no cheat).</text>
+</svg>

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-label="Intent versus behavior contingency table.">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="28" y="28" font-family="Helvetica Neue,Arial,sans-serif" font-size="15" font-weight="700" fill="#16202e">Intent × behavior</text>
+<text x="28" y="46" font-family="Helvetica Neue,Arial,sans-serif" font-size="11" fill="#54627a">LLM judge on run transcripts · n=844 · private CoT available on 231 · provisional while queue finishes</text>
+<text x="320" y="72" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="12" font-weight="700" fill="#54627a">behavior</text>
+<text x="220.0" y="88" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="11" fill="#8a95a8">seek</text>
+<text x="420.0" y="88" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="11" fill="#8a95a8">no seek</text>
+<text x="36" y="220" text-anchor="middle" transform="rotate(-90 36 220)" font-family="Helvetica Neue,Arial,sans-serif" font-size="12" font-weight="700" fill="#54627a">intent</text>
+<text x="100" y="159.0" text-anchor="end" font-family="Helvetica Neue,Arial,sans-serif" font-size="11" fill="#8a95a8">yes</text>
+<text x="100" y="289.0" text-anchor="end" font-family="Helvetica Neue,Arial,sans-serif" font-size="11" fill="#8a95a8">no</text>
+<rect x="124" y="94" width="192" height="122" rx="6" fill="#e6a99f"/>
+<text x="220.0" y="138" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="28" font-weight="700" fill="#16202e">105</text>
+<text x="220.0" y="160" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="11" fill="#54627a">12% of judged</text>
+<text x="220.0" y="184" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="11" fill="#16202e">contemplated</text>
+<text x="220.0" y="198" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="11" fill="#16202e">& sought</text>
+<rect x="324" y="94" width="192" height="122" rx="6" fill="#d8edd9"/>
+<text x="420.0" y="138" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="28" font-weight="700" fill="#2f5d38">171</text>
+<text x="420.0" y="160" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="11" fill="#54627a">20% of judged</text>
+<text x="420.0" y="184" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="11" fill="#16202e">weighed it,</text>
+<text x="420.0" y="198" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="11" fill="#16202e">stayed honest</text>
+<rect x="124" y="224" width="192" height="122" rx="6" fill="#f0e6d8"/>
+<text x="220.0" y="268" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="28" font-weight="700" fill="#7a5a3a">35</text>
+<text x="220.0" y="290" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="11" fill="#54627a">4% of judged</text>
+<text x="220.0" y="314" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="11" fill="#16202e">sought without</text>
+<text x="220.0" y="328" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="11" fill="#16202e">verbalized intent</text>
+<rect x="324" y="224" width="192" height="122" rx="6" fill="#eef2f6"/>
+<text x="420.0" y="268" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="28" font-weight="700" fill="#8a95a8">527</text>
+<text x="420.0" y="290" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="11" fill="#54627a">62% of judged</text>
+<text x="420.0" y="314" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="11" fill="#16202e">neither</text>
+<text x="28" y="392" font-family="Helvetica Neue,Arial,sans-serif" font-size="11" fill="#54627a">The interesting mass is <tspan font-weight="700" fill="#2f5d38">intent-yes / behavior-no</tspan> (171) — exploration that did not become exploitation. Among seekers, 35/140 lack verbalized contemplation (thin CoT more often than proven stealth).</text>
+<text x="28" y="410" font-family="Helvetica Neue,Arial,sans-serif" font-size="10" fill="#8a95a8">declined_after_notice=177 · not a present-only freeze yet</text>
+</svg>
