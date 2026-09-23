@@ -475,16 +475,34 @@ def render(grid: dict[tuple[str, str], dict | None], intent_by: dict[str, dict] 
     intent_by = intent_by if intent_by is not None else _load_intent_by_file()
     g2 = _global_intent_2x2(intent_by)
 
-    # grid + right legend panel
+    # Per-model totals across present task cells (not a task — sum column).
+    row_tot: dict[str, dict[str, int]] = {}
+    for mk in MODEL_KEYS:
+        sk = ct = n_cells = 0
+        for _short, tid in TASKS:
+            cell = grid.get((tid, mk))
+            if not cell:
+                continue
+            n_cells += 1
+            sk += int(cell["k"])
+            intent = _intent_for_files(cell_files(tid, mk), intent_by)
+            if intent:
+                ct += int(intent["contemplated"])
+        row_tot[mk] = {"seek": sk, "contemplated": ct, "n_cells": n_cells}
+
+    # grid + Σ column + right legend panel
     cw, ch, left, top = 72, 62, 100, 44
+    sum_gap, sum_w = 14, 78  # visual break before totals
     legend_w = 268
-    W = left + len(TASKS) * cw + legend_w + 16
+    grid_w = len(TASKS) * cw
+    sum_x = left + grid_w + sum_gap
+    legend_x = sum_x + sum_w + 16
+    W = legend_x + legend_w + 8
     H = max(top + len(MODEL_KEYS) * ch + 36, 430)
-    legend_x = left + len(TASKS) * cw + 18
 
     parts = [
         f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" role="img" '
-        f'aria-label="Task heatmap with cell legend and intent×behavior summary.">'
+        f'aria-label="Task heatmap with per-model totals and intent×behavior summary.">'
     ]
     parts.append(f'<rect width="100%" height="100%" fill="{PAPER}"/>')
 
@@ -495,6 +513,23 @@ def render(grid: dict[tuple[str, str], dict | None], intent_by: dict[str, dict] 
             f'<text x="{x}" y="16" text-anchor="middle" '
             f'font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="{MUTED}">{short}</text>'
         )
+
+    # Σ header — clearly not a task
+    parts.append(
+        f'<line x1="{sum_x - sum_gap / 2}" y1="{top - 6}" x2="{sum_x - sum_gap / 2}" '
+        f'y2="{top + len(MODEL_KEYS) * ch - 4}" stroke="#c5cdd8" stroke-width="1.5" '
+        f'stroke-dasharray="3 3"/>'
+    )
+    parts.append(
+        f'<text x="{sum_x + sum_w / 2}" y="12" text-anchor="middle" '
+        f'font-family="Helvetica Neue,Arial,sans-serif" font-size="10" font-weight="700" '
+        f'fill="{INK}">Σ</text>'
+    )
+    parts.append(
+        f'<text x="{sum_x + sum_w / 2}" y="24" text-anchor="middle" '
+        f'font-family="Helvetica Neue,Arial,sans-serif" font-size="7.5" fill="{FAINT}">'
+        f'seek, cont</text>'
+    )
 
     for r, (mk, (line1, line2)) in enumerate(zip(MODEL_KEYS, MODEL_LABELS)):
         y = top + r * ch
@@ -568,6 +603,24 @@ def render(grid: dict[tuple[str, str], dict | None], intent_by: dict[str, dict] 
                 f'<text x="{x + cw / 2}" y="{y + 50}" text-anchor="middle" '
                 f'font-family="SF Mono,Menlo,monospace" font-size="8.5" fill="{tc3}">{tlabel}</text>'
             )
+
+        # ---- Σ column cell (outline only — not a task) ----
+        tot = row_tot[mk]
+        sx = sum_x
+        parts.append(
+            f'<rect x="{sx + 2}" y="{y + 2}" width="{sum_w - 4}" height="{ch - 4}" rx="3" '
+            f'fill="#f7f8fa" stroke="#8a95a8" stroke-width="1.25"/>'
+        )
+        parts.append(
+            f'<text x="{sx + sum_w / 2}" y="{y + 26}" text-anchor="middle" '
+            f'font-family="SF Mono,Menlo,monospace" font-size="13" font-weight="700" fill="{INK}">'
+            f'{tot["seek"]},{tot["contemplated"]}</text>'
+        )
+        parts.append(
+            f'<text x="{sx + sum_w / 2}" y="{y + 44}" text-anchor="middle" '
+            f'font-family="Helvetica Neue,Arial,sans-serif" font-size="7.5" fill="{FAINT}">'
+            f'Σ {tot["n_cells"]} tasks</text>'
+        )
 
     # ---- right legend panel ----
     lx = legend_x
@@ -668,7 +721,7 @@ def render(grid: dict[tuple[str, str], dict | None], intent_by: dict[str, dict] 
 
     parts.append(
         f'<text x="{left}" y="{H - 10}" font-family="Helvetica Neue,Arial,sans-serif" font-size="8.5" fill="{FAINT}">'
-        f"top = seek, contemplated (seek, contemplated) · n≈5 · … = missing · planned next row: Xiaomi MiMo-V2.6-Pro</text>"
+        f"task cells: seek, contemplated · Σ = unweighted sum across tasks (not a danger score) · n≈5 · planned: MiMo-V2.6-Pro</text>"
     )
     parts.append("</svg>")
     return "\n".join(parts)

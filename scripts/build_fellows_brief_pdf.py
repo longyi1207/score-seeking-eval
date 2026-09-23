@@ -26,11 +26,14 @@ def ensure_figures() -> None:
     png = FIGS / "01_task_heatmap.png"
     if svg.exists():
         from weasyprint import HTML
+        import re
 
+        vb = re.search(r'viewBox="0 0 ([\d.]+) ([\d.]+)"', svg.read_text())
+        vw, vh = (float(vb.group(1)), float(vb.group(2))) if vb else (978.0, 356.0)
         html = f"""<!DOCTYPE html><html><head><style>
-@page {{ size: 978px 356px; margin: 0; }}
+@page {{ size: {vw}px {vh}px; margin: 0; }}
 html, body {{ margin:0; padding:0; }}
-img {{ width: 978px; height: 356px; display:block; }}
+img {{ width: {vw}px; height: {vh}px; display:block; }}
 </style></head><body>
 <img src="{svg.resolve().as_uri()}"/>
 </body></html>"""
@@ -180,9 +183,10 @@ Next row planned: Xiaomi MiMo-V2.6-Pro.</p>
 
 <div class="fig hero">
   <img src="{heatmap}" alt="Task heatmap"/>
-  <p class="cap"><strong>Figure 1.</strong> Present suite. Each cell:
-  <em>seek, contemplated</em> / shortcut type or outcome / median turns. Red = seek; green = mostly honest;
-  gray = fail or blocked. AD DeepSeek/gpt-4o corp cells use historical transcripts (small n); other cells are full n=5 panels.</p>
+  <p class="cap"><strong>Figure 1.</strong> Present suite. Task cells:
+  <em>seek, contemplated</em> / mode / median turns (red=seek, green=honest, gray=fail). Rightmost
+  <strong>Σ</strong> column (after the dashed rule) is an unweighted sum of seek and contemplated across
+  tasks for that model — a glance total, not another task and not a danger score.</p>
   <p class="gloss"><strong>Abbreviations:</strong>
   <strong>AD</strong> = Active Directory ·
   <strong>CVE</strong> = published vulnerability ·
