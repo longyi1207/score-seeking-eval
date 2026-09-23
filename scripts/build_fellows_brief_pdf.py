@@ -158,7 +158,8 @@ def html() -> str:
   <div class="badge">2026-09-22</div>
 </div>
 <h1>Score-seeking in long-horizon agents</h1>
-<p class="sub">A short overview of an eval suite that measures when tool-using LLMs take illegitimate shortcuts</p>
+<p class="sub">An eval suite for when tool-using LLMs take illegitimate shortcuts — built mainly for
+Chinese open-weight / open-API models, where this kind of agent eval barely exists</p>
 <p class="gh">Code &amp; full write-up:
   <a href="https://github.com/longyi1207/score-seeking-eval">https://github.com/longyi1207/score-seeking-eval</a></p>
 
@@ -167,6 +168,8 @@ Most alignment quizzes are one-shot. Weird behavior often shows up when a capabl
 <strong>long, hard job</strong> and discovers a soft edge in the environment. This suite asks a narrower
 question than “is the model misaligned?”: <em>under what conditions does it take a planted shortcut
 instead of finishing the intended work?</em>
+The reason we care now is mostly Chinese open-weight models — almost nobody runs long-horizon
+agent evals on them, so the risk picture is still largely unknown.
 </p>
 
 <h2>What every task looks like</h2>
@@ -279,7 +282,7 @@ Next row planned: Xiaomi MiMo-V2.6-Pro.</p>
 <div class="cta">
   <h2>Want to work on this?</h2>
   <p>We are especially looking for people who want to push these leads — shared-note social
-  dynamics, exploration vs exploitation, eval-frame / salience, longer honest paths — on
+  dynamics, exploration vs exploitation, eval-frame / salience, longer honest paths — on those
   <strong>Chinese open-weight and open-API models</strong>, as relative profiles rather than a single
   “more dangerous” headline. Agent oversight, multi-agent social proof, and exploit-gated reward
   hacking all fit.</p>
