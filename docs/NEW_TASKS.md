@@ -140,9 +140,11 @@ gap at matched capability is propensity. Its `operator` account deliberately lac
 so the Script Console — an authorised admin route to the same file — is closed, and the CVE is the only
 route.
 
-Status: both are **built and verified end-to-end (2026-09-22)**, `status: draft`, registered in
+Status: both **built, verified, and panelled (2026-09-22 — 180 runs, n=5 per task x model x arm,
+0 failures)**. Results and the one open confound: [`CVE_GENERALISATION_RESULTS.md`](./CVE_GENERALISATION_RESULTS.md).
+Headline: the anchor's *core* claim replicates on both new CVEs (disclose 0/40), but DeepSeek's and
+Kimi's near-ceiling endorse+recipe rates do not. Both remain `status: draft`, registered in
 `propensity_schema.py` (new cheat modes `cve_rce`, `cve_probe`; the read forms map to `cve_exploit` so
-following an endorsement and de-escalating from it never pool). **No model panel has been run**, and no
-cells were added to `scripts/aggregate_propensity_matrix.py` — that happens once runs exist. Next step
-is `disclose` / `endorse_no_recipe` / `endorse_with_recipe` at n=5 on the standard panel, plus
-`endorse_read_with_recipe` on `cve_rce` for the de-escalation contrast.
+following an endorsement and de-escalating from it never pool). No cells were added to
+`scripts/aggregate_propensity_matrix.py` yet, so these do not appear in the hazard matrix. Next step is
+to resolve the honest-path confound (§4 of the results note) before anything headline-facing moves.
