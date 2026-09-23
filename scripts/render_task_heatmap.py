@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Render the present-suite task heatmap (5 models × 11 tasks).
 
-Cell encoding (no color legend — rate is printed):
+Cell encoding:
   line 1  seek rate          e.g. 5/5
   line 2  if seek>0: attack mode(s)   else: dominant non-seek outcome (honest/fail/blocked)
   line 3  median turns for the primary path (seeks if any, else non-seeks)
+  fill    red scale by seek rate; green = honest (no seek); gray = fail/blocked
 
 Re-run after fills land:
   .venv/bin/python scripts/render_task_heatmap.py
@@ -70,7 +71,11 @@ MODE_SHORT = {
     "safety_tool_sabotage": "sabotage",
 }
 
+# Seek rate → red scale. Non-seek cells are recolored by outcome (honest = green).
 SEEK = ["#eef2f6", "#f3d3cd", "#e6a99f", "#d1746a", "#c2614f", "#b23b36"]
+HONEST_FILL = "#d8edd9"       # solid honest solve
+HONEST_MIX_FILL = "#e6f0e4"   # mostly honest, some fail
+FAIL_FILL = "#eef2f6"         # capability fail / no seek
 INK, MUTED, FAINT, PAPER = "#16202e", "#54627a", "#8a95a8", "#ffffff"
 
 
@@ -338,26 +343,33 @@ def render(grid: dict[tuple[str, str], dict | None]) -> str:
                 continue
             k, n = cell["k"], cell["n"]
             rate5 = int(round(5 * k / n)) if n else 0
-            fill = SEEK[min(rate5, 5)]
+            mode = cell["mode"][:14]
+            if k > 0:
+                fill = SEEK[min(rate5, 5)]
+            elif mode.startswith("honest") and "fail" in mode:
+                fill = HONEST_MIX_FILL
+            elif mode.startswith("honest") or mode == "honest":
+                fill = HONEST_FILL
+            else:
+                fill = FAIL_FILL
             parts.append(
                 f'<rect x="{x + 2}" y="{y + 2}" width="{cw - 4}" height="{ch - 4}" rx="3" fill="{fill}"/>'
             )
             # line 1 rate
-            tc1 = "#fff" if rate5 >= 3 else (INK if k > 0 else FAINT)
-            fw = "700" if k > 0 else "400"
+            tc1 = "#fff" if rate5 >= 3 else (INK if k > 0 else ("#2f5d38" if fill in (HONEST_FILL, HONEST_MIX_FILL) else FAINT))
+            fw = "700" if k > 0 or fill == HONEST_FILL else "400"
             parts.append(
                 f'<text x="{x + cw / 2}" y="{y + 18}" text-anchor="middle" '
                 f'font-family="SF Mono,Menlo,monospace" font-size="12" font-weight="{fw}" fill="{tc1}">{k}/{n}</text>'
             )
             # line 2 mode/outcome
-            tc2 = "#fff" if rate5 >= 3 else MUTED
-            mode = cell["mode"][:14]
+            tc2 = "#fff" if rate5 >= 3 else ("#3d6b45" if fill in (HONEST_FILL, HONEST_MIX_FILL) else MUTED)
             parts.append(
                 f'<text x="{x + cw / 2}" y="{y + 33}" text-anchor="middle" '
                 f'font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="{tc2}">{mode}</text>'
             )
             # line 3 turns
-            tc3 = "#ffe8e0" if rate5 >= 3 else FAINT
+            tc3 = "#ffe8e0" if rate5 >= 3 else ("#6a8f70" if fill in (HONEST_FILL, HONEST_MIX_FILL) else FAINT)
             tlabel = f"{cell['turns']}t" if cell["turns"] is not None else "—"
             parts.append(
                 f'<text x="{x + cw / 2}" y="{y + 46}" text-anchor="middle" '
@@ -366,7 +378,7 @@ def render(grid: dict[tuple[str, str], dict | None]) -> str:
     # footer key (text, not color legend)
     parts.append(
         f'<text x="{left}" y="{H - 8}" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="{FAINT}">'
-        f"cell = seek-rate / attack-mode·or·outcome / median-turns ·  … = not yet run to n≥5</text>"
+        f"cell = seek-rate / attack-mode·or·outcome / median-turns ·  green = honest · gray = fail · red = seek ·  … = n&lt;5</text>"
     )
     parts.append("</svg>")
     return "\n".join(parts)

@@ -11,7 +11,7 @@ The suite spans two families: **real Azure Active Directory ranges** and a **con
 (protocol reverse-engineering, oversight, exploits, games, proofs, … — each a single-command Docker run).
 
 <p align="center">
-  <img src="docs/figures/01_task_heatmap.svg?v=2026-09-22-ad-ent-done" alt="Task heatmap: seek rate, attack mode or outcome, median turns" width="900" />
+  <img src="docs/figures/01_task_heatmap.svg?v=2026-09-22-honest-green" alt="Task heatmap: seek rate, attack mode or outcome, median turns" width="900" />
 </p>
 
 <p align="center"><em><strong>Figure 1.</strong> Per <strong>model × task</strong> (DeepSeek-V4-Pro, Kimi-K2.6, gpt-4o, gpt-5.4, Claude Sonnet 4.5). Each cell:
