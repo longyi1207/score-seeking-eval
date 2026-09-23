@@ -160,11 +160,19 @@ def aggregate(files: list[Path]) -> dict | None:
 def glob_runs(patterns: list[str]) -> list[Path]:
     out: list[Path] = []
     for pat in patterns:
-        out.extend(RUNS.glob(pat))
+        if not pat:
+            continue
+        # Historical AD transcripts live under envs/*/transcripts/, not runs/.
+        if pat.startswith("envs/") or pat.startswith("/"):
+            out.extend(ROOT.glob(pat))
+        else:
+            out.extend(RUNS.glob(pat))
     # unique by name, prefer larger files
-    by = {}
+    by: dict[str, Path] = {}
     for p in out:
-        by[p.name] = p
+        prev = by.get(p.name)
+        if prev is None or p.stat().st_size >= prev.stat().st_size:
+            by[p.name] = p
     return sorted(by.values())
 
 
@@ -296,7 +304,9 @@ def cell_files(task: str, mk: str) -> list[Path]:
         return _first_cohort(
             [
                 [f"ad_panel/ad-corp_{mk}_none_r*.json", f"ad_corp_{mk}_none_r*.json"],
-                [f"ad_panel/ad-corp_{ds}_none_r*.json"] if mk == "deepseek" else [],
+                # Historical DeepSeek / gpt-4o case-study transcripts (pre-panel naming)
+                ["envs/ad-corp/transcripts/full_deepseek_*.json"] if mk == "deepseek" else [],
+                ["envs/ad-corp/transcripts/full_gpt4o_*.json"] if mk == "gpt-4o" else [],
             ],
             task,
         )
@@ -307,6 +317,12 @@ def cell_files(task: str, mk: str) -> list[Path]:
                     f"ad_panel/ad-enterprise_{mk}_none_r*.json",
                     f"ad_enterprise_{mk}_none_r*.json",
                 ],
+                [f"envs/ad-enterprise/transcripts/deepseek_none_t*.json"]
+                if mk == "deepseek"
+                else [],
+                [f"envs/ad-enterprise/transcripts/gpt-4o_none_t*.json"]
+                if mk == "gpt-4o"
+                else [],
             ],
             task,
         )
@@ -409,7 +425,7 @@ def _intent_for_files(files: list[Path], intent_by: dict[str, dict]) -> dict | N
         r = intent_by.get(p.name)
         if r:
             hits.append(r)
-    if len(hits) < 3:
+    if len(hits) < 1:
         return None
     yes = sum(1 for r in hits if str(r.get("intent_behavior_cell") or "").startswith("intent_yes"))
     yn = sum(1 for r in hits if r.get("intent_behavior_cell") == "intent_yes_behavior_no")
@@ -619,7 +635,7 @@ def render(grid: dict[tuple[str, str], dict | None], intent_by: dict[str, dict] 
     )
     parts.append(
         f'<text x="{lx}" y="{ty + 14}" font-family="Helvetica Neue,Arial,sans-serif" '
-        f'font-size="8" fill="{FAINT}">n={g2["n"]} · same cells as heatmap · 2nd # if ≥3 judged</text>'
+        f'font-size="8" fill="{FAINT}">n={g2["n"]} · same cells as heatmap · 2nd # when judged</text>'
     )
     mw, mh = 70, 42
     ox, oy = lx, ty + 24
@@ -652,7 +668,7 @@ def render(grid: dict[tuple[str, str], dict | None], intent_by: dict[str, dict] 
 
     parts.append(
         f'<text x="{left}" y="{H - 10}" font-family="Helvetica Neue,Arial,sans-serif" font-size="8.5" fill="{FAINT}">'
-        f"top = seek, contemplated (omit 2nd if unjudged) · n≈5 · … = missing · planned next row: Xiaomi MiMo-V2.6-Pro</text>"
+        f"top = seek, contemplated (seek, contemplated) · n≈5 · … = missing · planned next row: Xiaomi MiMo-V2.6-Pro</text>"
     )
     parts.append("</svg>")
     return "\n".join(parts)

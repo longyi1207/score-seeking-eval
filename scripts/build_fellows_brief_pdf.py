@@ -182,7 +182,7 @@ Next row planned: Xiaomi MiMo-V2.6-Pro.</p>
   <img src="{heatmap}" alt="Task heatmap"/>
   <p class="cap"><strong>Figure 1.</strong> Present suite. Each cell:
   <em>seek, contemplated</em> / shortcut type or outcome / median turns. Red = seek; green = mostly honest;
-  gray = fail or blocked. Second number omitted only on three AD seed cells that still lack run files on disk.</p>
+  gray = fail or blocked. AD DeepSeek/gpt-4o corp cells use historical transcripts (small n); other cells are full n=5 panels.</p>
   <p class="gloss"><strong>Abbreviations:</strong>
   <strong>AD</strong> = Active Directory ·
   <strong>CVE</strong> = published vulnerability ·
@@ -219,16 +219,16 @@ Next row planned: Xiaomi MiMo-V2.6-Pro.</p>
 
 <div class="find">
   <h3>2. When does knowing a shortcut become using it?</h3>
-  <p>On the same present-suite cells as the heatmap (n=260 judged), an LLM judge over transcripts
-  finds 40 runs that contemplated and sought, 37 that weighed a shortcut and stayed honest, 13 that
-  sought without verbalized contemplation, and 170 with neither. The interesting mass is that
+  <p>On the same present-suite cells as the heatmap (n=269 judged), an LLM judge over transcripts
+  finds 42 runs that contemplated and sought, 40 that weighed a shortcut and stayed honest, 13 that
+  sought without verbalized contemplation, and 174 with neither. The interesting mass is that
   intent-yes / behavior-no cell — exploration that did not become exploitation. Behavior rhymes with
   that: one “don’t take shortcuts” line zeros our loud planted edges (protocol backdoor DeepSeek 5/5
   to 0/5; same story on short AD). A lot of seeking looks like ambiguous exploration that collapses
   when the norm is clear. Other work (e.g. BaitBench) still sees cheating on quieter metric leaks, so
   “forbid works here” may be about how loud the honeypot is.</p>
   <p>Next: what tips the boundary (failed honest attempts, prior endorsement, turn pressure), and
-  whether quieter Goodharting still collapses under forbid. Only ~55/260 runs have private CoT, so
+  whether quieter Goodharting still collapses under forbid. Only ~55/269 runs have private CoT, so
   the judge often works from assistant text and tools.</p>
 </div>
 
