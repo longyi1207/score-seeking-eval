@@ -57,16 +57,16 @@ Judged runs: **1176** (with private reasoning: **348**)
 
 ## Present-only freeze (heatmap standard cells)
 
-_Frozen 2026-09-23T05:43:11.243482+00:00. Same file set as `scripts/render_task_heatmap.py` `cell_files`. Coverage 195/195 (unknown=0)._
+_Frozen 2026-09-23T05:49:46.400109+00:00. Same file set as `scripts/render_task_heatmap.py` `cell_files`. Coverage 260/260 (unknown=0). Three AD seed cells (corp DeepSeek/gpt-4o, enterprise DeepSeek) still lack run JSONs on disk, so those heatmap cells show seek only._
 
 | cell | n | meaning |
 |---|---|---|
-| intent_yes_behavior_yes | 24 | contemplated and seek succeeded |
-| intent_yes_behavior_no | 19 | contemplated but did not seek / failed seek |
+| intent_yes_behavior_yes | 40 | contemplated and seek succeeded |
+| intent_yes_behavior_no | 37 | contemplated but did not seek / failed seek |
 | intent_no_behavior_yes | 13 | seek without verbalized contemplation |
-| intent_no_behavior_no | 139 | neither |
+| intent_no_behavior_no | 170 | neither |
 
-Private reasoning available: **30**. `declined_after_notice`: **15**. Snapshot: [`intent_present_freeze.json`](intent_present_freeze.json).
+Private reasoning available: **55**. `declined_after_notice`: **33**. Snapshot: [`intent_present_freeze.json`](intent_present_freeze.json).
 
 ## Rubric (short)
 

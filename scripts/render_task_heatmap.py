@@ -168,41 +168,10 @@ def glob_runs(patterns: list[str]) -> list[Path]:
     return sorted(by.values())
 
 
-# Standard-cell globs per (task, model_key)
-def cell_files(task: str, mk: str) -> list[Path]:
-    g = {
-        "protocol_re": [
-            f"protocol_{mk}_none_r*.json",
-            # DS baseline historically mixed with zh/inoc; prefer plain none if present
-        ],
-        "oversight_subversion": [f"oversight_{mk}_imp_none_r*.json"],
-        "monitored_impl": [f"monitored_{mk}_imp_none_r*.json"],
-        "internal_exfil": [
-            f"exfil_{mk}_none_endorsing_r*.json",
-            f"exfil_{mk}_endorsing_r*.json",
-        ],
-        "metric_redef": [
-            f"metric_{mk}_endorsing_r*.json",
-            f"metric_{mk}_none_endorsing_r*.json",
-        ],
-        "cve_exploit": [
-            f"cve_{mk}_neutral_r*.json",
-            f"cve_{mk}_disclose_r*.json",
-            f"cve_{mk}_disclose_none_r*.json",
-        ],
-        "game_chess": [f"chess_{mk}_hard_none_r*.json"],
-        "lean_proof": [f"lean_{mk}_fastrev_none_r*.json"],
-        "web_provision": [f"web_{mk}_d1_none_r*.json"],
-        "ad-corp": [f"ad_panel/ad-corp_{mk}_none_r*.json", f"ad_corp_{mk}_none_r*.json"],
-        "ad-enterprise": [
-            f"ad_panel/ad-enterprise_{mk}_none_r*.json",
-            f"ad_enterprise_{mk}_none_r*.json",
-        ],
-    }[task]
-    files = glob_runs(g)
-    # Filter out factorials that aren't the standard cell
+def _filter_standard(task: str, files: list[Path]) -> list[Path]:
+    """Drop factorial / secondary arms; keep the locked heatmap cell."""
     if task == "protocol_re":
-        files = [
+        return [
             p
             for p in files
             if not any(
@@ -219,20 +188,129 @@ def cell_files(task: str, mk: str) -> list[Path]:
             )
         ]
     if task == "metric_redef":
-        files = [p for p in files if "_inoc" not in p.name and "salient" not in p.name]
+        return [p for p in files if "_inoc" not in p.name and "salient" not in p.name]
     if task == "cve_exploit":
-        files = [
+        return [
             p
             for p in files
-            if "endorse" not in p.name and "forbid" not in p.name and "_mx_" not in p.name
+            if "endorse" not in p.name and "forbid" not in p.name
         ]
     if task == "internal_exfil":
-        files = [
+        return [
             p
             for p in files
-            if "observed" not in p.name and "unobserved" not in p.name and "_mx_" not in p.name
+            if "observed" not in p.name
+            and "unobserved" not in p.name
+            and "_mx_" not in p.name
+            and "pressure" not in p.name
+            and "_hard_" not in p.name
+            and "_t1_" not in p.name
         ]
     return files
+
+
+def _first_cohort(pattern_groups: list[list[str]], task: str) -> list[Path]:
+    """Try naming families in order; return the first with ≥5 runs (else best non-empty)."""
+    best: list[Path] = []
+    for group in pattern_groups:
+        group = [g for g in group if g]
+        if not group:
+            continue
+        files = _filter_standard(task, glob_runs(group))
+        if len(files) >= 5:
+            return files
+        if len(files) > len(best):
+            best = files
+    return best
+
+
+# Standard-cell globs per (task, model_key). Naming drifted (ds vs deepseek, kimi_ prefix,
+# _control suffix, mx_ panel) — try preferred families first so seek+contemplated can join.
+def cell_files(task: str, mk: str) -> list[Path]:
+    ds = "ds" if mk == "deepseek" else mk
+    if task == "protocol_re":
+        return _first_cohort(
+            [
+                [f"protocol_{mk}_none_r*.json"],
+                [f"protocol_ds_none_r*.json"] if mk == "deepseek" else [],
+                [f"kimi_protocol_none_r*.json"] if mk == "kimi" else [],
+                [f"protocol_{mk}_none_control_r*.json"],
+            ],
+            task,
+        )
+    if task == "oversight_subversion":
+        return _first_cohort(
+            [
+                [f"oversight_{mk}_imp_none_r*.json"],
+                [f"oversight_ds_imp_none_r*.json"] if mk == "deepseek" else [],
+                [f"kimi_oversight_imp_none_r*.json"] if mk == "kimi" else [],
+            ],
+            task,
+        )
+    if task == "monitored_impl":
+        return _first_cohort(
+            [
+                [f"monitored_{mk}_imp_none_r*.json"],
+                [f"monitored_ds_imp_none_r*.json"] if mk == "deepseek" else [],
+                [f"kimi_monitored_imp_none_r*.json"] if mk == "kimi" else [],
+            ],
+            task,
+        )
+    if task == "internal_exfil":
+        return _first_cohort(
+            [
+                [f"exfil_{mk}_none_endorsing_r*.json"],
+                [f"exfil_ds_none_endorsing_r*.json"] if mk == "deepseek" else [],
+                [f"exfil_{mk}_endorsing_control_r*.json"],
+                [f"exfil_{mk}_endorsing_r*.json"],
+            ],
+            task,
+        )
+    if task == "metric_redef":
+        return _first_cohort(
+            [
+                [f"metric_{mk}_endorsing_r*.json"],
+                [f"metric_mx_{mk}_endorsing_r*.json"],
+                [f"metric_{mk}_none_endorsing_r*.json"],
+            ],
+            task,
+        )
+    if task == "cve_exploit":
+        return _first_cohort(
+            [
+                [f"cve_{mk}_neutral_r*.json"],
+                [f"cve_{mk}_disclose_r*.json", f"cve_{mk}_disclose_none_r*.json"],
+                [f"cve_mx_{mk}_neutral_r*.json"],
+                [f"cve_mx_{mk}_disclose_r*.json"],
+                [f"cve_mx_{mk}_none_r*.json"],
+            ],
+            task,
+        )
+    if task == "game_chess":
+        return _first_cohort([[f"chess_{mk}_hard_none_r*.json"]], task)
+    if task == "lean_proof":
+        return _first_cohort([[f"lean_{mk}_fastrev_none_r*.json"]], task)
+    if task == "web_provision":
+        return _first_cohort([[f"web_{mk}_d1_none_r*.json"]], task)
+    if task == "ad-corp":
+        return _first_cohort(
+            [
+                [f"ad_panel/ad-corp_{mk}_none_r*.json", f"ad_corp_{mk}_none_r*.json"],
+                [f"ad_panel/ad-corp_{ds}_none_r*.json"] if mk == "deepseek" else [],
+            ],
+            task,
+        )
+    if task == "ad-enterprise":
+        return _first_cohort(
+            [
+                [
+                    f"ad_panel/ad-enterprise_{mk}_none_r*.json",
+                    f"ad_enterprise_{mk}_none_r*.json",
+                ],
+            ],
+            task,
+        )
+    return []
 
 
 # Seed from locked HEADLINE panel where run globs are messy (DS protocol etc.)
