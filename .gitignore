@@ -45,3 +45,10 @@ synthetic-intranet/inspect_eval/logs/
 tasks/data_analysis/
 tasks/math_counting/
 tasks/math_apery/
+runs/logs/.judge_env.sh
+
+# Local paper downloads (third-party PDFs; keep out of the public repo)
+papers/
+
+# macOS
+.DS_Store
