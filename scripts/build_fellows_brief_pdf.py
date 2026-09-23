@@ -127,10 +127,18 @@ def html() -> str:
   .find h3 {{
     font-size: 9.5pt; font-weight: 700; margin: 0 0 3pt 0; color: #16202e;
   }}
-  .foot {{
-    margin-top: 10pt; padding-top: 6pt; border-top: 1px solid #e2e6ec;
-    font-size: 8pt; color: #54627a; line-height: 1.35;
+  .cta {{
+    margin: 10pt 0 0 0; padding: 8pt 10pt;
+    background: #f7f8fa; border: 1px solid #d8dee8;
+    page-break-inside: avoid;
   }}
+  .cta h2 {{
+    margin: 0 0 4pt 0; padding: 0; border: none;
+    font-size: 10.5pt;
+  }}
+  .cta p {{ margin: 0 0 4pt 0; font-size: 9pt; }}
+  .cta p:last-child {{ margin: 0; }}
+  .cta a {{ color: #1a5fb4; font-weight: 600; text-decoration: none; }}
   .page-break {{ page-break-before: always; }}
   .meta {{
     display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5pt;
@@ -302,13 +310,16 @@ Claude Sonnet 4.5. <strong>Next row planned:</strong> Xiaomi <strong>MiMo-V2.6-P
   slice.</p>
 </div>
 
-<p class="foot">
-  <strong>Collaboration welcome.</strong> We care especially about how <strong>Chinese open-weight / open-API
-  models</strong> behave on these long-horizon, shortcut-tempted agent tasks — relative profiles, not a
-  single “more dangerous” headline. If you’re interested in agent oversight, multi-agent social proof,
-  or exploit-gated reward hacking, please open an issue or reach out via Neo / the repo maintainers:
-  <a href="https://github.com/longyi1207/score-seeking-eval">github.com/longyi1207/score-seeking-eval</a>.
-</p>
+<div class="cta">
+  <h2>Want to work on this?</h2>
+  <p>We are especially looking for people who want to push these leads — shared-note social
+  dynamics, exploration vs exploitation, eval-frame / salience, longer honest paths — on
+  <strong>Chinese open-weight and open-API models</strong>, as relative profiles rather than a single
+  “more dangerous” headline. Agent oversight, multi-agent social proof, and exploit-gated reward
+  hacking all fit.</p>
+  <p>Open an issue or ping via Neo:
+  <a href="https://github.com/longyi1207/score-seeking-eval">github.com/longyi1207/score-seeking-eval</a></p>
+</div>
 
 </body>
 </html>
