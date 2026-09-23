@@ -548,7 +548,7 @@ def render(grid: dict[tuple[str, str], dict | None], intent_by: dict[str, dict] 
 
     parts.append(
         f'<text x="{left}" y="{H - 10}" font-family="Helvetica Neue,Arial,sans-serif" font-size="8.5" fill="{FAINT}">'
-        f"top = seek, contemplated (omit 2nd if unjudged) · n≈5 · … = missing</text>"
+        f"top = seek, contemplated (omit 2nd if unjudged) · n≈5 · … = missing · planned next row: Xiaomi MiMo-V2.6-Pro</text>"
     )
     parts.append("</svg>")
     return "\n".join(parts)

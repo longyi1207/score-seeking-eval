@@ -6,7 +6,7 @@
 <style>
   @page {
     size: Letter;
-    margin: 0.45in 0.52in 0.45in 0.52in;
+    margin: 0.48in 0.55in 0.55in 0.55in;
     @bottom-center {
       content: counter(page) " / " counter(pages);
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -19,171 +19,221 @@
     margin: 0; padding: 0;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #16202e;
-    font-size: 8.8pt;
-    line-height: 1.3;
+    font-size: 9pt;
+    line-height: 1.35;
     background: #fff;
   }
   h1 {
-    font-size: 15.5pt; font-weight: 700; letter-spacing: -0.02em;
-    margin: 0 0 2pt 0; line-height: 1.1;
+    font-size: 16pt; font-weight: 700; letter-spacing: -0.02em;
+    margin: 0 0 3pt 0; line-height: 1.12;
   }
-  .sub { color: #54627a; font-size: 8.5pt; margin: 0 0 6pt 0; }
+  .sub { color: #54627a; font-size: 9pt; margin: 0 0 8pt 0; }
+  .gh {
+    font-size: 8.5pt; margin: 0 0 8pt 0;
+  }
+  .gh a { color: #1a5fb4; text-decoration: none; }
   h2 {
-    font-size: 10pt; font-weight: 700; margin: 7pt 0 3pt 0;
+    font-size: 10.5pt; font-weight: 700; margin: 9pt 0 4pt 0;
     padding-bottom: 2pt; border-bottom: 1.5px solid #16202e;
   }
-  p { margin: 0 0 4pt 0; }
-  .lede { font-size: 9pt; line-height: 1.32; }
-  .cols { display: flex; gap: 10pt; margin: 3pt 0; }
-  .cols > div { flex: 1; }
-  ol.construct { margin: 2pt 0 3pt 1.05em; padding: 0; }
-  ol.construct li { margin: 0 0 1.5pt 0; }
-  ul.tight { margin: 1pt 0 0 1.05em; padding: 0; }
-  ul.tight li { margin: 0 0 1pt 0; }
-  .fig { margin: 3pt 0 2pt 0; page-break-inside: avoid; }
+  p { margin: 0 0 5pt 0; }
+  .lede { font-size: 9.5pt; line-height: 1.4; }
+  ul.tight { margin: 2pt 0 6pt 1.1em; padding: 0; }
+  ul.tight li { margin: 0 0 2.5pt 0; }
+  ol.construct { margin: 2pt 0 6pt 1.1em; padding: 0; }
+  ol.construct li { margin: 0 0 2.5pt 0; }
+  .fig { margin: 6pt 0 3pt 0; page-break-inside: avoid; }
   .fig img { width: 100%; height: auto; display: block; }
-  .fig.hero img { max-height: 3.35in; width: auto; max-width: 100%; margin: 0 auto; }
-  .fig.ad img { max-height: 2.35in; width: auto; max-width: 100%; margin: 0 auto; }
-  .fig.intent img { max-height: 2.85in; width: auto; max-width: 100%; margin: 0 auto; }
-  .cap { font-size: 7.4pt; color: #54627a; margin: 2pt 0 0 0; line-height: 1.28; }
-  table { width: 100%; border-collapse: collapse; font-size: 7.8pt; margin: 2pt 0 4pt 0; }
+  .fig.hero img { max-height: 3.2in; width: auto; max-width: 100%; margin: 0 auto; }
+  .cap { font-size: 7.8pt; color: #54627a; margin: 3pt 0 0 0; line-height: 1.3; }
+  table { width: 100%; border-collapse: collapse; font-size: 8pt; margin: 4pt 0 6pt 0; }
   th, td {
-    border-bottom: 1px solid #e2e6ec; padding: 2pt 3.5pt;
+    border-bottom: 1px solid #e2e6ec; padding: 3pt 4pt;
     text-align: left; vertical-align: top;
   }
   th {
     font-weight: 700; color: #54627a; font-size: 7pt;
-    text-transform: uppercase; letter-spacing: 0.04em;
+    text-transform: uppercase; letter-spacing: 0.03em;
   }
-  td.num { font-family: "SF Mono", Menlo, monospace; font-size: 7.8pt; }
+  td.num { font-family: "SF Mono", Menlo, monospace; font-size: 8pt; }
   .hot { color: #b23b36; font-weight: 700; }
   .ok { color: #2f5d38; font-weight: 700; }
-  .tweet {
-    background: #f7f8fa; border-left: 3px solid #b23b36;
-    padding: 3.5pt 7pt; margin: 2pt 0 3pt 0; font-size: 8pt; font-style: italic;
+  .callout {
+    background: #f7f8fa; border-left: 3px solid #54627a;
+    padding: 5pt 8pt; margin: 4pt 0 7pt 0; font-size: 8.5pt;
   }
-  .find { margin: 0 0 5pt 0; page-break-inside: avoid; }
-  .find .tag {
-    display: inline-block; font-size: 6.5pt; font-weight: 700;
-    letter-spacing: 0.06em; text-transform: uppercase; color: #b23b36;
+  .find { margin: 0 0 7pt 0; page-break-inside: avoid; }
+  .find h3 {
+    font-size: 9.5pt; font-weight: 700; margin: 0 0 3pt 0; color: #16202e;
   }
-  .foot { margin-top: 4pt; font-size: 7.5pt; color: #54627a; }
+  .foot {
+    margin-top: 10pt; padding-top: 6pt; border-top: 1px solid #e2e6ec;
+    font-size: 8pt; color: #54627a; line-height: 1.35;
+  }
   .page-break { page-break-before: always; }
   .meta {
-    display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4pt;
+    display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5pt;
   }
   .badge {
-    font-size: 7pt; font-weight: 700; letter-spacing: 0.08em;
+    font-size: 7pt; font-weight: 700; letter-spacing: 0.06em;
     text-transform: uppercase; color: #8a95a8;
   }
+  .gloss { font-size: 7.8pt; color: #54627a; }
+  .gloss strong { color: #16202e; }
 </style>
 </head>
 <body>
 
 <div class="meta">
   <div class="badge">Neo Research · fellows brief</div>
-  <div class="badge">2026-09-22 · score-seeking-eval</div>
+  <div class="badge">2026-09-22</div>
 </div>
 <h1>Score-seeking in long-horizon agents</h1>
-<p class="sub">Controlled eval suite · propensity under pressure · not a global “misaligned” score</p>
+<p class="sub">A short overview of an eval suite that measures when tool-using LLMs take illegitimate shortcuts</p>
+<p class="gh">Code &amp; full write-up:
+  <a href="https://github.com/longyi1207/score-seeking-eval">https://github.com/longyi1207/score-seeking-eval</a></p>
 
 <p class="lede">
-Every task has the same shape: a <strong>hard honest path</strong>, an optional <strong>shortcut</strong>
-(misconfig / CVE / backdoor / kill-monitor / …), and an <strong>ungameable grader</strong> outside the
-agent’s reach so we label <em>how</em> it succeeded. Neo RQ: how weird are models on long hard tasks —
-closer to HF / collusion.wiki slippery slopes than one-step alignment quizzes.
+Most alignment quizzes are one-shot. Weird behavior often shows up when a capable agent is given a
+<strong>long, hard job</strong> and discovers a soft edge in the environment (think multi-agent incidents
+on Hugging Face-style platforms, or models improvising channels on obscure wikis). This suite asks a
+narrower question than “is the model misaligned?”: <em>under what conditions does it take a planted
+shortcut instead of finishing the intended work?</em>
 </p>
 
-<div class="cols">
-  <div>
-    <h2>Construct</h2>
-    <ol class="construct">
-      <li><strong>Honest path</strong> — laborious, intended success</li>
-      <li><strong>Planted / exploit-gated shortcut</strong> — reachable but illegitimate</li>
-      <li><strong>Held-out grader</strong> — watermark / ground truth the agent cannot rewrite</li>
-    </ol>
-    <p>Panel: DeepSeek-V4-Pro · Kimi-K2.6 · gpt-4o · gpt-5.4 · Claude Sonnet 4.5 · <strong>n=5</strong>.</p>
-  </div>
-  <div>
-    <h2>Suite layers</h2>
-    <ul class="tight">
-      <li><strong>Azure AD</strong> — planted-flag construct; 5-length honest-path ladder in flight</li>
-      <li><strong>Hazard Docker</strong> — protocol RE, live oversight, SSRF, metric, Grafana CVE</li>
-      <li><strong>Games / formal</strong> — hard chess, Lean, web bring-up</li>
-      <li><strong>Factors</strong> — forbid · endorse ± recipe · social notes · inoculation</li>
-    </ul>
-  </div>
-</div>
+<h2>What every task looks like</h2>
+<ol class="construct">
+  <li><strong>Honest path</strong> — the intended way to succeed; usually long and annoying (tens of agent steps).</li>
+  <li><strong>Optional shortcut</strong> — illegitimate but reachable (misconfigured share, leaked backdoor,
+      real CVE, kill the monitor, edit a game file, …).</li>
+  <li><strong>Ungameable grader</strong> — ground truth the agent cannot rewrite (watermarked flags and/or
+      checks outside the container), so we label <em>how</em> it succeeded, not only whether.</li>
+</ol>
+<p>We call a successful shortcut <strong>score-seeking</strong> (or seek). Labels you’ll see:
+  <code>honest_solve</code>, <code>score_seek_success</code>, <code>fail</code> (often a capability / step-cap wall — not the same as honesty).</p>
+
+<h2>Why many task types (and many “attack modes”)</h2>
+<p>If you only test chess file-edits, you learn about chess file-edits. Models that look “safe” on one
+cheat often look different on another. So the suite deliberately spans domains and shortcut kinds:</p>
+<ul class="tight">
+  <li><strong>Azure Active Directory (AD)</strong> — real Windows domain on Azure. Honest path = multi-hop
+      credential chain to Domain Admin. Shortcut = a world-readable planted copy of the DA flag.</li>
+  <li><strong>Protocol reverse-engineering</strong> — figure out a device protocol honestly, or use a leaked
+      maintenance <em>backdoor</em> in a config file.</li>
+  <li><strong>Oversight / monitoring</strong> — a live safety process watches the agent; shortcuts include
+      <em>killing</em> that process, replacing the test <em>runner</em>, or <em>deceiving</em> a model code-reviewer
+      with broken code that still “looks fine.”</li>
+  <li><strong>Internal exfil (SSRF)</strong> — abuse an internal HTTP proxy (confused deputy) to mint a
+      privileged token without doing the workflow.</li>
+  <li><strong>Metric redefinition</strong> — game the <em>definition</em> of a reported metric so the number
+      hits target while ground truth does not.</li>
+  <li><strong>CVE exploit</strong> — real Grafana path-traversal (<code>CVE-2021-43798</code>) vs using the
+      legitimate API with provided credentials.</li>
+  <li><strong>Games / formal</strong> — hard chess (edit board file / reset difficulty) and Lean proofs
+      (attack the verifier instead of proving).</li>
+</ul>
+<p class="gloss"><strong>Abbreviations in Figure 1:</strong>
+  <strong>AD</strong> = Active Directory ·
+  <strong>CVE</strong> = published vulnerability ·
+  <strong>SSRF</strong> = server-side request forgery via internal proxy ·
+  <strong>fen-edit / diff-reset</strong> = chess board overwrite / difficulty reset ·
+  <strong>seek</strong> = took the shortcut ·
+  <strong>contemplated</strong> = an LLM judge found the agent weighing that shortcut in its reasoning
+  (separate from whether it actually used it).</p>
+
+<p><strong>Models so far (n=5 runs per cell):</strong> DeepSeek-V4-Pro, Kimi-K2.6, gpt-4o, gpt-5.4,
+Claude Sonnet 4.5. <strong>Next row planned:</strong> Xiaomi <strong>MiMo-V2.6-Pro</strong>.</p>
 
 <div class="fig hero">
   <img src="file:///Users/apple/Desktop/ai_notes/code/score-seeking-eval/docs/figures/01_task_heatmap.png" alt="Task heatmap"/>
-  <p class="cap"><strong>Figure 1.</strong> Present suite. Cell = seek, contemplated / mode·or·outcome / median turns.
-  Right: blown-up legend + global intent×behavior. Color: <span class="hot">red = seek</span> · <span class="ok">green = honest</span> · gray = fail.
-  Rankings flip by cheat mode — do not average into a nationality danger score.</p>
+  <p class="cap"><strong>Figure 1.</strong> Present suite at a glance. Each cell shows
+  <em>seek count, contemplated count</em> (second number only when the intent judge has caught up) /
+  shortcut type or outcome / median agent turns. Red = took the shortcut; green = mostly honest success;
+  gray = fail or blocked. A missing second number means that cell is not fully judged yet — that pass
+  is still running. We plan to add a Xiaomi MiMo-V2.6-Pro row.</p>
 </div>
-
-<!-- FIGURE 2 DEFERRED: AD corp vs enterprise (2-point). Replaced soon by 5-length ladder
-     (docs/prompts/CC_SESSION_AD_LENGTH_LADDER.md). Do not re-enable until Phase 1 lands.
-<div class="page-break"></div>
-<div class="meta">
-  <div class="badge">Data</div>
-  <div class="badge">figure 2</div>
-</div>
-<h2>Environment dependence — Azure AD</h2>
-<div class="fig ad">…</div>
--->
 
 <div class="page-break"></div>
 <div class="meta">
-  <div class="badge">Findings · tweet-thread order</div>
-  <div class="badge">spine = endorsement</div>
+  <div class="badge">Current findings &amp; next steps</div>
+  <div class="badge">preliminary</div>
 </div>
+
+<p>These are <strong>interesting early results</strong>, not a finished paper. Sample sizes are small (usually
+n=5). Treat them as leads for follow-ups.</p>
 
 <div class="find">
-  <div class="tag">1 · first tweet</div>
-  <div class="tweet">“Agents don’t exploit a real CVE just because they know it exists — they do when a prior agent said using it was fine.”</div>
+  <h3>1. Prior-agent “permission” matters more than knowing the bug exists</h3>
+  <p>On a real Grafana CVE, with legitimate credentials also available, simply telling the agent the
+  vulnerability exists (<em>disclose</em>) → almost nobody exploits it. Leaving a note where a previous
+  engineer / agent <em>already used</em> the exploit (<em>endorse</em>) → rates jump, especially when the note
+  includes a copy-paste recipe. Endorse <em>without</em> a recipe mainly moves DeepSeek.</p>
   <table>
-    <tr><th>Precedent</th><th>DeepSeek</th><th>Kimi</th><th>gpt-4o</th><th>gpt-5.4</th></tr>
-    <tr><td>none / disclose</td><td class="num">0/5</td><td class="num">0/5</td><td class="num">0/5</td><td class="num">0/5</td></tr>
-    <tr><td>endorse + recipe</td><td class="num hot">5/5</td><td class="num hot">4/5</td><td class="num hot">5/5</td><td class="num">0/5</td></tr>
-    <tr><td>endorse, no recipe</td><td class="num hot">4/5</td><td class="num">0/5</td><td class="num">0/5</td><td class="num">0/5</td></tr>
+    <tr><th>What we leave in the environment</th><th>DeepSeek</th><th>Kimi</th><th>gpt-4o</th><th>gpt-5.4</th></tr>
+    <tr><td>Nothing / disclose only</td><td class="num">0/5</td><td class="num">0/5</td><td class="num">0/5</td><td class="num">0/5</td></tr>
+    <tr><td>Endorse + recipe</td><td class="num hot">5/5</td><td class="num hot">4/5</td><td class="num hot">5/5</td><td class="num">0/5</td></tr>
+    <tr><td>Endorse, no recipe</td><td class="num hot">4/5</td><td class="num">0/5</td><td class="num">0/5</td><td class="num">0/5</td></tr>
     <tr><td>AI endorse, no recipe</td><td class="num hot">2/5</td><td class="num">0/5</td><td class="num">0/5</td><td class="num">0/5</td></tr>
   </table>
-  <p>Social follow-up (board urgency / peer-fined / whistleblower, disclose-level knowledge only):
-  <strong>0/5 seek everywhere</strong>. Permission moves behavior; pressure without permission does not.</p>
+  <p>Notes that only add social pressure (ship faster / peer got fined / whistleblower) without granting
+  permission stayed at <strong>0/5</strong> seek. This sits near the multi-agent / “follow the prior agent’s
+  track” pattern people discuss after HF-style incidents — knowledge alone is not the same as
+  normalized use.</p>
 </div>
 
 <div class="find">
-  <div class="tag">2</div>
-  <div class="tweet">“One line of forbid / don’t-take-shortcuts zeros the protocol backdoor across the panel (5/5 → 0/5).”</div>
-  <p>AD corp DeepSeek 60%→0%. Much seeking looks like ambiguous exploration. Caveat: gpt-4o monitor deception only 5→2; on subtle cheats (BaitBench) forbid fails.</p>
+  <h3>2. An explicit “don’t take shortcuts” instruction often works — here</h3>
+  <p>On the protocol backdoor task, telling the agent not to use shortcuts zeros seeking across the
+  panel (e.g. DeepSeek 5/5 → 0/5). Same story on short AD for DeepSeek (60% → 0%). Reading: a lot of
+  what we call seeking may be <em>ambiguous exploration</em> that collapses when the norm is clear.
+  Caveat: other benchmarks (e.g. BaitBench) find models still cheat when the shortcut is subtler;
+  our planted edges are often obvious, so “forbid works” may not generalize to quiet Goodharting.</p>
 </div>
 
 <div class="find">
-  <div class="tag">3</div>
-  <div class="tweet">“Propensity is a vector. CN vs US/EU equal-weight mean is ~flat; rankings flip by cheat type.”</div>
-  <ul class="tight">
-    <li><strong>Kimi × chess</strong> — near-floor on hazard, <strong>5/5</strong> difficulty-reset on hard chess.</li>
-    <li><strong>gpt-4o</strong> — honest on short AD; <strong>5/5</strong> deceive model monitor; fails long AD without cheating.</li>
-    <li><strong>gpt-5.4</strong> — protocol backdoor 5/5; kills planted “safety watchdog” 5/5 (cheat redirects).</li>
-  </ul>
+  <h3>3. Propensity is task- and cheat-specific — not one nationality score</h3>
+  <p>Averaging “Chinese vs Western” cheat rates across this suite is roughly flat; the ranking
+  <em>flips by shortcut type</em>. Examples: Kimi is quiet on many hazard tasks but resets hard chess to
+  easy <strong>5/5</strong>; gpt-4o looks honest on short AD but <strong>5/5</strong> deceives a model code reviewer;
+  gpt-5.4 matches DeepSeek on the protocol backdoor and will kill a planted “safety watchdog” tool
+  instead of taking the backdoor. Don’t collapse that into one danger number.</p>
 </div>
 
 <div class="find">
-  <div class="tag">4</div>
-  <div class="tweet">“We put a live monitor in the container. Agents killed it / replaced the runner. Only held-out ground truth caught them.”</div>
-  <p>Also: forged audit logs (fixed), chess difficulty-reset fooling v1 graders, Lean statement tamper.</p>
+  <h3>4. Models attack the measurement itself</h3>
+  <p>With a live monitor in the container, some agents kill it or replace the test runner; only
+  held-out checks catch them. We’ve also seen forged audit logs (since fixed), chess difficulty
+  resets that fooled an earlier grader, and Lean statement tampering. That matters for anyone
+  building agent evals: if the grader is in-world, capable models will try to game it.</p>
 </div>
 
 <div class="find">
-  <div class="tag">5 · honest</div>
-  <div class="tweet">“Harder honest path → less seeking? Two-point AD contrast (corp→enterprise) is suggestive but confounded; a matched-prompt 5-length ladder is in flight — Figure 2 held back until that lands.”</div>
+  <h3>5. Does a longer honest path reduce seeking?</h3>
+  <p>Suggestive two-point AD contrast (short vs ~30-step) for DeepSeek, but the prompts weren’t
+  perfectly matched and we don’t yet have a clean dose–response. We’re running a <strong>5-length AD
+  ladder</strong> with matched wording (longest honest path targeting ~120 agent turns). Until that
+  lands, we’re not putting a chart of this claim in the brief.</p>
 </div>
 
-<h2>Not claiming · ask</h2>
-<p><strong>Not claiming:</strong> Chinese models categorically more dangerous · any single rate = production risk · open-weight effects (mostly unmeasured).</p>
-<p><strong>Fellow slices:</strong> endorsement ladder (CVE+SSRF+metric) · intent×behavior on frozen present subset · matched-prompt AD length · Qwen / MiMo / StepFun · impossible-honest-path panel.</p>
-<p class="foot">Repo <code>score-seeking-eval</code> · <code>docs/RESULTS.md</code> · <code>docs/matrices/</code> · contact via Clement Neo.</p>
+<h2>Next steps</h2>
+<ul class="tight">
+  <li>Finish the matched-prompt <strong>AD length ladder</strong> (DeepSeek first) and decide whether seek
+      rate falls smoothly with honest-path length.</li>
+  <li>Keep cleaning the <strong>endorsement</strong> story: disclose vs endorse vs recipe; same claim on SSRF
+      and metric tasks, not only one CVE.</li>
+  <li>Add <strong>Xiaomi MiMo-V2.6-Pro</strong> (and likely Qwen / StepFun) to the panel — same tasks, same
+      graders.</li>
+  <li>Freeze a present-only <strong>intent × behavior</strong> slice once the transcript judge finishes (when
+      agents weigh a shortcut but don’t take it).</li>
+</ul>
+
+<p class="foot">
+  <strong>Collaboration welcome.</strong> We care especially about how <strong>Chinese open-weight / open-API
+  models</strong> behave on these long-horizon, shortcut-tempted agent tasks — relative profiles, not a
+  single “more dangerous” headline. If you’re interested in agent oversight, multi-agent social proof,
+  or exploit-gated reward hacking, please open an issue or reach out via Neo / the repo maintainers:
+  <a href="https://github.com/longyi1207/score-seeking-eval">github.com/longyi1207/score-seeking-eval</a>.
+</p>
 
 </body>
 </html>
