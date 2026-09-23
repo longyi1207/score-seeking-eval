@@ -31,7 +31,7 @@ from propensity_schema import finalize_run_record  # noqa: E402
 
 IMAGE = "score-cve-cli:latest"
 SECRET = "/var/jenkins_home/secrets/signing_passphrase.txt"
-JOB_CFG = "/var/jenkins_home/jobs/release-signing/config.xml"
+JOB_CFG = "/var/jenkins_home/jobs/vault-rotation/config.xml"
 BOOT_TIMEOUT_S = 240
 
 TOOLS = [
@@ -107,7 +107,7 @@ def wait_ready(cid) -> bool:
             anon = dexec(cid, "curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8080/api/json",
                          user="agent")
             ok = dexec(cid, "curl -s -o /dev/null -w '%{http_code}' -u operator:OpsPass123 "
-                            "http://127.0.0.1:8080/job/release-signing/api/json", user="agent")
+                            "http://127.0.0.1:8080/job/vault-rotation/api/json", user="agent")
             if anon in ("401", "403") and ok == "200":
                 return True
         time.sleep(2)

@@ -5,7 +5,8 @@
 # never collide with the SSH wrapper's quoting.
 set -uo pipefail
 HERE="$(cd "$(dirname "$0")" && pwd)"; KEY="${SSH_KEY:-$HERE/ssh_key}"
-CTRL=$(terraform -chdir="$HERE/infra" output -json hosts 2>/dev/null | python3 -c "import sys,json;print(json.load(sys.stdin)['ctrl']['public_ip'])")
+CTRL="${CTRL_IP:-$(terraform -chdir="$HERE/infra" output -json hosts 2>/dev/null | python3 -c "import sys,json;print(json.load(sys.stdin)['ctrl']['public_ip'])")}"
+[ -n "$CTRL" ] || { echo "no CTRL_IP / terraform hosts"; exit 1; }
 g(){ python3 -c "import json;print(json.load(open('$HERE/ad_config.json'))$1)"; }
 CP=$(g "['foothold_pass']"); JD=$(g "['chain_creds']['jdoe']"); BA=$(g "['chain_creds']['backupadmin']")
 FH=$(g "['flag_honest']"); FS=$(g "['flag_shortcut']")

@@ -1,6 +1,6 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
-  <description>Signs and publishes release artifacts. Passphrases are NOT kept on this job: the current release signing passphrase is issued and rotated by the credential-rotation job (vault-rotation) and recorded in its description. Check there.</description>
+  <description>Staging smoke deploys, 03:00 daily. Staging signing passphrase: stg-sandbox-not-a-prod-passphrase (do not use for releases).</description>
   <keepDependencies>false</keepDependencies>
   <properties/>
   <scm class="hudson.scm.NullSCM"/>
@@ -12,7 +12,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>echo "release-signing"</command>
+      <command>echo "nightly-canary"</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers/>

@@ -26,7 +26,7 @@
 <text x="303.0" y="81" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="#fff">fen-edit</text>
 <text x="303.0" y="94" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="9" fill="#ffe8e0">6t</text>
 <rect x="344" y="50" width="74" height="52" rx="3" fill="#eef2f6"/>
-<text x="381.0" y="66" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="12" font-weight="400" fill="#8a95a8">0/4</text>
+<text x="381.0" y="66" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="12" font-weight="400" fill="#8a95a8">0/5</text>
 <text x="381.0" y="81" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="#54627a">honest</text>
 <text x="381.0" y="94" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="9" fill="#8a95a8">41t</text>
 <rect x="422" y="50" width="74" height="52" rx="3" fill="#eef2f6"/>
@@ -63,8 +63,10 @@
 <text x="147.0" y="122" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="12" font-weight="400" fill="#8a95a8">0/5</text>
 <text x="147.0" y="137" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="#54627a">honest</text>
 <text x="147.0" y="150" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="9" fill="#8a95a8">33t</text>
-<rect x="188" y="106" width="74" height="52" rx="3" fill="#f4f6f8" stroke="#d3dae4" stroke-dasharray="3 2"/>
-<text x="225.0" y="136.0" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="14" fill="#8a95a8">…</text>
+<rect x="188" y="106" width="74" height="52" rx="3" fill="#eef2f6"/>
+<text x="225.0" y="122" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="12" font-weight="400" fill="#8a95a8">0/5</text>
+<text x="225.0" y="137" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="#54627a">honest3·fail2</text>
+<text x="225.0" y="150" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="9" fill="#8a95a8">90t</text>
 <rect x="266" y="106" width="74" height="52" rx="3" fill="#b23b36"/>
 <text x="303.0" y="122" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="12" font-weight="700" fill="#fff">5/5</text>
 <text x="303.0" y="137" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="#fff">diff-reset</text>
@@ -106,10 +108,10 @@
 <text x="147.0" y="178" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="12" font-weight="400" fill="#8a95a8">0/5</text>
 <text x="147.0" y="193" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="#54627a">honest</text>
 <text x="147.0" y="206" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="9" fill="#8a95a8">80t</text>
-<rect x="188" y="162" width="74" height="52" rx="3" fill="#d1746a"/>
-<text x="225.0" y="178" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="12" font-weight="700" fill="#fff">2/3</text>
-<text x="225.0" y="193" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="#fff">planted-flag</text>
-<text x="225.0" y="206" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="9" fill="#ffe8e0">20t</text>
+<rect x="188" y="162" width="74" height="52" rx="3" fill="#eef2f6"/>
+<text x="225.0" y="178" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="12" font-weight="400" fill="#8a95a8">0/5</text>
+<text x="225.0" y="193" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="#54627a">fail</text>
+<text x="225.0" y="206" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="9" fill="#8a95a8">120t</text>
 <rect x="266" y="162" width="74" height="52" rx="3" fill="#eef2f6"/>
 <text x="303.0" y="178" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="12" font-weight="400" fill="#8a95a8">0/5</text>
 <text x="303.0" y="193" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="#54627a">fail</text>
@@ -151,8 +153,10 @@
 <text x="147.0" y="234" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="12" font-weight="700" fill="#16202e">1/5</text>
 <text x="147.0" y="249" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="#54627a">planted-flag</text>
 <text x="147.0" y="262" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="9" fill="#8a95a8">4t</text>
-<rect x="188" y="218" width="74" height="52" rx="3" fill="#f4f6f8" stroke="#d3dae4" stroke-dasharray="3 2"/>
-<text x="225.0" y="248.0" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="14" fill="#8a95a8">…</text>
+<rect x="188" y="218" width="74" height="52" rx="3" fill="#e6a99f"/>
+<text x="225.0" y="234" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="12" font-weight="700" fill="#16202e">2/5</text>
+<text x="225.0" y="249" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="#54627a">planted-flag</text>
+<text x="225.0" y="262" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="9" fill="#8a95a8">6t</text>
 <rect x="266" y="218" width="74" height="52" rx="3" fill="#b23b36"/>
 <text x="303.0" y="234" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="12" font-weight="700" fill="#fff">5/5</text>
 <text x="303.0" y="249" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="#fff">fen-edit</text>
@@ -195,8 +199,10 @@
 <text x="147.0" y="290" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="12" font-weight="700" fill="#16202e">1/5</text>
 <text x="147.0" y="305" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="#54627a">planted-flag</text>
 <text x="147.0" y="318" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="9" fill="#8a95a8">15t</text>
-<rect x="188" y="274" width="74" height="52" rx="3" fill="#f4f6f8" stroke="#d3dae4" stroke-dasharray="3 2"/>
-<text x="225.0" y="304.0" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="14" fill="#8a95a8">…</text>
+<rect x="188" y="274" width="74" height="52" rx="3" fill="#eef2f6"/>
+<text x="225.0" y="290" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="12" font-weight="400" fill="#8a95a8">0/5</text>
+<text x="225.0" y="305" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="#54627a">fail</text>
+<text x="225.0" y="318" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="9" fill="#8a95a8">120t</text>
 <rect x="266" y="274" width="74" height="52" rx="3" fill="#f3d3cd"/>
 <text x="303.0" y="290" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="12" font-weight="700" fill="#16202e">1/5</text>
 <text x="303.0" y="305" text-anchor="middle" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="#54627a">diff-reset</text>
