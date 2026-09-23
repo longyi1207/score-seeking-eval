@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""Build docs/FELLOWS_BRIEF.pdf — ~3-page Neo fellows circulate brief (PDF, not markdown)."""
+"""Build docs/FELLOWS_BRIEF.pdf — Neo fellows circulate brief (PDF, not markdown)."""
 from __future__ import annotations
 
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -13,24 +14,56 @@ OUT_PDF = ROOT / "docs" / "FELLOWS_BRIEF.pdf"
 
 
 def ensure_figures() -> None:
-    # Heatmap SVG
     hm = ROOT / "scripts" / "render_task_heatmap.py"
     if hm.exists():
         subprocess.check_call([sys.executable, str(hm)])
-    # AD + intent PNGs (matplotlib — reliable for WeasyPrint)
     subprocess.check_call(
         [sys.executable, str(ROOT / "scripts" / "render_fellows_pngs.py")],
     )
     # Heatmap PNG: tight page matching SVG aspect (avoid letter-page whitespace)
     svg = FIGS / "01_task_heatmap.svg"
-    png = FIGS / "01_task_heatmap.png"
     if svg.exists():
         from weasyprint import HTML
-        import re
 
         vb = re.search(r'viewBox="0 0 ([\d.]+) ([\d.]+)"', svg.read_text())
         vw, vh = (float(vb.group(1)), float(vb.group(2))) if vb else (978.0, 356.0)
         html = f"""<!DOCTYPE html><html><head><style>
+@page {{ size: {vw}px {vh}px; margin: 0; }}
+html, body {{ margin:0; padding:0; }}
+img {{ width: {vw}px; height: {vh}px; display:block; }}
+</style></head><body>
+<img src="{svg.resolve().as_uri()}"/>
+</body></html>"""
+        pdf = Path("/tmp/heatmap_tight.pdf")
+        HTML(string=html).write_pdf(str(pdf))
+        subprocess.check_call(
+            [
+                "pdftoppm",
+                "-png",
+                "-r",
+                "200",
+                "-singlefile",
+                str(pdf),
+                str(FIGS / "01_task_heatmap"),
+            ]
+        )
+
+
+def html() -> str:
+    def uri(stem: str) -> str:
+        png = FIGS / f"{stem}.png"
+        svg = FIGS / f"{stem}.svg"
+        p = png if png.exists() else svg
+        return p.resolve().as_uri()
+
+    heatmap = uri("01_task_heatmap")
+
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Score-seeking in long-horizon agents — Neo fellows brief</title>
+<style>
   @page {{
     size: Letter;
     margin: 0.42in 0.52in 0.48in 0.52in;
@@ -116,117 +149,6 @@ def ensure_figures() -> None:
   .gloss strong {{ color: #16202e; }}
   .tasks {{ font-size: 8.1pt; color: #16202e; margin: 0 0 4pt 0; line-height: 1.38; }}
   .leads-intro {{ margin: 0 0 6pt 0; color: #54627a; font-size: 8.2pt; }}
-</style></head><body>
-<img src="{svg.resolve().as_uri()}"/>
-</body></html>"""
-        pdf = Path("/tmp/heatmap_tight.pdf")
-        HTML(string=html).write_pdf(str(pdf))
-        subprocess.check_call(
-            [
-                "pdftoppm",
-                "-png",
-                "-r",
-                "200",
-                "-singlefile",
-                str(pdf),
-                str(FIGS / "01_task_heatmap"),
-            ]
-        )
-
-
-def html() -> str:
-    def uri(stem: str) -> str:
-        png = FIGS / f"{stem}.png"
-        svg = FIGS / f"{stem}.svg"
-        p = png if png.exists() else svg
-        return p.resolve().as_uri()
-
-    heatmap = uri("01_task_heatmap")
-    # ad = uri("06_ad_corp_vs_enterprise")  # Fig 2 deferred — 5-length AD ladder in flight
-
-    return f"""<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8"/>
-<title>Score-seeking in long-horizon agents — Neo fellows brief</title>
-<style>
-  @page {{
-    size: Letter;
-    margin: 0.38in 0.48in 0.42in 0.48in;
-    @bottom-center {{
-      content: counter(page) " / " counter(pages);
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      font-size: 7.5pt;
-      color: #8a95a8;
-    }}
-  }}
-  * {{ box-sizing: border-box; }}
-  html, body {{
-    margin: 0; padding: 0;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #16202e;
-    font-size: 8.5pt;
-    line-height: 1.28;
-    background: #fff;
-  }}
-  h1 {{
-    font-size: 14.5pt; font-weight: 700; letter-spacing: -0.02em;
-    margin: 0 0 2pt 0; line-height: 1.1;
-  }}
-  .sub {{ color: #54627a; font-size: 8pt; margin: 0 0 3pt 0; }}
-  .gh {{ font-size: 8pt; margin: 0 0 5pt 0; }}
-  .gh a {{ color: #1a5fb4; text-decoration: none; }}
-  h2 {{
-    font-size: 9.5pt; font-weight: 700; margin: 6pt 0 2pt 0;
-    padding-bottom: 1pt; border-bottom: 1.25px solid #16202e;
-  }}
-  p {{ margin: 0 0 3.5pt 0; }}
-  .lede {{ font-size: 8.5pt; line-height: 1.32; }}
-  ul.tight {{ margin: 1pt 0 4pt 1.05em; padding: 0; }}
-  ul.tight li {{ margin: 0 0 1.5pt 0; }}
-  ol.construct {{ margin: 1pt 0 3pt 1.05em; padding: 0; }}
-  ol.construct li {{ margin: 0 0 1.5pt 0; }}
-  .fig {{ margin: 4pt 0 2pt 0; }}
-  .fig img {{ width: 100%; height: auto; display: block; }}
-  .fig.hero img {{ max-height: 2.85in; width: auto; max-width: 100%; margin: 0 auto; }}
-  .cap {{ font-size: 7.2pt; color: #54627a; margin: 2pt 0 0 0; line-height: 1.25; }}
-  table {{ width: 100%; border-collapse: collapse; font-size: 7.5pt; margin: 2pt 0 3pt 0; }}
-  th, td {{
-    border-bottom: 1px solid #e2e6ec; padding: 2pt 3pt;
-    text-align: left; vertical-align: top;
-  }}
-  th {{
-    font-weight: 700; color: #54627a; font-size: 6.5pt;
-    text-transform: uppercase; letter-spacing: 0.03em;
-  }}
-  td.num {{ font-family: "SF Mono", Menlo, monospace; font-size: 7.5pt; }}
-  .hot {{ color: #b23b36; font-weight: 700; }}
-  .ok {{ color: #2f5d38; font-weight: 700; }}
-  .find {{ margin: 0 0 5.5pt 0; }}
-  .find h3 {{
-    font-size: 8.8pt; font-weight: 700; margin: 0 0 1.5pt 0; color: #16202e;
-  }}
-  .cta {{
-    margin: 6pt 0 0 0; padding: 5pt 7pt;
-    background: #f7f8fa; border: 1px solid #d8dee8;
-  }}
-  .cta h2 {{
-    margin: 0 0 2pt 0; padding: 0; border: none;
-    font-size: 9.5pt;
-  }}
-  .cta p {{ margin: 0 0 2pt 0; font-size: 8pt; }}
-  .cta p:last-child {{ margin: 0; }}
-  .cta a {{ color: #1a5fb4; font-weight: 600; text-decoration: none; }}
-  .meta {{
-    display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3pt;
-  }}
-  .badge {{
-    font-size: 6.5pt; font-weight: 700; letter-spacing: 0.06em;
-    text-transform: uppercase; color: #8a95a8;
-  }}
-  .gloss {{ font-size: 7pt; color: #54627a; margin: 1pt 0 0 0; line-height: 1.25; }}
-  .gloss strong {{ color: #16202e; }}
-  .tasks {{ font-size: 8pt; color: #16202e; margin: 0 0 3pt 0; line-height: 1.3; }}
 </style>
 </head>
 <body>
