@@ -124,8 +124,6 @@ def html() -> str:
     padding: 5pt 8pt; margin: 4pt 0 7pt 0; font-size: 8.5pt;
   }}
   .find {{ margin: 0 0 7pt 0; page-break-inside: avoid; }}
-  .next {{ font-size: 8.2pt; color: #3a4a63; margin: 2pt 0 0 0; }}
-  .next strong {{ color: #1a2740; }}
   .find h3 {{
     font-size: 9.5pt; font-weight: 700; margin: 0 0 3pt 0; color: #16202e;
   }}
@@ -222,14 +220,13 @@ Claude Sonnet 4.5. <strong>Next row planned:</strong> Xiaomi <strong>MiMo-V2.6-P
   <div class="badge">preliminary · n≈5</div>
 </div>
 
-<p>Each lead is a finding plus the natural deep dive it asks for — not a finished paper, and not a
-separate “next steps” laundry list.</p>
+<p>Small-n early results. Useful as directions, not as locked claims.</p>
 
 <div class="find">
-  <h3>1. Shared notes leak norms, not just facts — and a second voice can undo them</h3>
-  <p>On a real Grafana CVE (normal credentials also available): just telling the agent the bug exists
-  → almost nobody exploits. A handoff where a previous engineer already used it (especially with a
-  copy-paste command) → rates jump. Without the recipe, mainly DeepSeek moves.</p>
+  <h3>1. Shared notes seem to leak norms, not just facts</h3>
+  <p>On a real Grafana CVE (normal credentials also available), telling the agent the bug exists
+  almost never produces an exploit. Leaving a handoff where a previous engineer already used it —
+  especially with a copy-paste command — does. Without the recipe, mainly DeepSeek moves.</p>
   <table>
     <tr><th>What we leave in the environment</th><th>DeepSeek</th><th>Kimi</th><th>gpt-4o</th><th>gpt-5.4</th></tr>
     <tr><td>Nothing / disclose only</td><td class="num">0/5</td><td class="num">0/5</td><td class="num">0/5</td><td class="num">0/5</td></tr>
@@ -237,72 +234,72 @@ separate “next steps” laundry list.</p>
     <tr><td>Endorse, no recipe</td><td class="num hot">4/5</td><td class="num">0/5</td><td class="num">0/5</td><td class="num">0/5</td></tr>
     <tr><td>AI endorse, no recipe</td><td class="num hot">2/5</td><td class="num">0/5</td><td class="num">0/5</td><td class="num">0/5</td></tr>
   </table>
-  <p>Flip side (DeepSeek, n=5): keep that endorsing handoff, add a <em>second</em> teammate note —
-  empty second note stays 4/5; “peer was fined” or whistleblower → <strong>0/5</strong>; “board wants
-  this ASAP” → still ~3/5. So endorsement is not a one-way ratchet; board urgency barely moves
-  anything either way. Transcripts: model names the conflict and follows the team note; under
-  urgency it sometimes <em>talks about</em> the shortcut more without using it.</p>
-  <p class="next"><strong>Deep dive:</strong> is this a real permission mechanism or a cheap-Grafana
-  artifact? Same ladder on SSRF / metric gaming; split endorse vs recipe; de-escalation when the
-  endorsed act is more severe than needed (CVE siblings already suggest near-ceiling endorse rates
-  don’t travel). On the counter-signal: swap note order to separate recency from safety valence;
-  more models once there’s headroom.</p>
+  <p>There is a flip side. Keep the endorsing handoff and add a second teammate note: an empty second
+  note leaves DeepSeek at 4/5, but “peer was fined” or a whistleblower note drops it to 0/5. “Board
+  wants this ASAP” barely moves anything. So endorsement is not a one-way ratchet — and schedule
+  pressure looks inert. In transcripts the model often names the conflict and picks the team note;
+  under board urgency it sometimes talks about the shortcut more without using it.</p>
+  <p>We want to know whether this is a real permission mechanism or a cheap-Grafana artifact. Same
+  ladder on SSRF and metric gaming; cleaner split of endorse vs recipe; whether models de-escalate
+  when the endorsed act is more severe than they need (sibling CVEs already suggest the near-ceiling
+  endorse rates do not travel). On the counter-signal, swap note order to separate recency from
+  safety valence, and try more models once there is headroom.</p>
 </div>
 
 <div class="find">
   <h3>2. When does knowing a shortcut become using it?</h3>
-  <p>An LLM judge over transcripts already shows a big mass of runs where the agent <em>weighs</em>
-  the shortcut and still stays honest, plus a smaller set that seeks without saying so. Same shape
-  shows up in behavior: one “don’t take shortcuts” line zeros our loud planted edges (protocol
-  backdoor DeepSeek 5/5 → 0/5; short AD too) — a lot of seeking looks like ambiguous exploration that
+  <p>An LLM judge over transcripts already finds a large mass of runs where the agent weighs the
+  shortcut and still stays honest, and a smaller set that seeks without saying so. Behavior rhymes
+  with that: one “don’t take shortcuts” line zeros our loud planted edges (protocol backdoor DeepSeek
+  5/5 to 0/5; same story on short AD). A lot of seeking looks like ambiguous exploration that
   collapses when the norm is clear. Other work (e.g. BaitBench) still sees cheating on quieter metric
-  leaks.</p>
-  <p class="next"><strong>Deep dive:</strong> map that exploration→exploitation boundary and what tips
-  it (failed honest attempts, prior endorsement, turn pressure). Freeze a present-only intent×behavior
-  table once the transcript judge finishes. Push honeypots toward quieter Goodharting / exploit-gated
-  soft edges — was “forbid works” alignment, or loudness?</p>
+  leaks, so “forbid works here” may be about how loud the honeypot is.</p>
+  <p>The interesting claim is the exploration–exploitation boundary itself — what tips it (failed
+  honest attempts, prior endorsement, turn pressure) — and whether quieter Goodharting / exploit-gated
+  soft edges still collapse under forbid. Freezing a present-only intent×behavior table once the
+  transcript judge finishes is the cheap next measurement.</p>
 </div>
 
 <div class="find">
-  <h3>3. “Being watched,” “has a score,” and “nobody’s looking” are different knobs</h3>
-  <p>Eval-awareness isn’t one switch. Prompt story about the session (observed / default / unobserved)
-  ≠ whether a score or monitor cue is actually in the world (salience / watchdog). On SSRF exfil,
-  gpt-5.4 goes observed <strong>0/5</strong> → default <strong>2/5</strong> → unattended
-  <strong>4/5</strong>; DeepSeek barely moves. On protocol, frame barely moves rates — but turning off
-  the score motive drops DeepSeek’s backdoor <strong>4/5 → 0/5</strong>, while saying “this is a
-  monitored eval” does almost nothing. They don’t need to verbalize “I am being evaluated” for
-  salience to swing behavior.</p>
-  <p class="next"><strong>Deep dive:</strong> equalize frame wording across tasks (today’s “observed”
-  text is stronger on exfil than protocol), bump n, keep the two axes separate. Harden what we have —
-  don’t invent a new sandbagging task from scratch.</p>
+  <h3>3. “Being watched,” “has a score,” and “nobody’s looking” are not the same knob</h3>
+  <p>We stopped treating eval-awareness as one switch. What the prompt says about the session
+  (observed / default / unobserved) is separate from whether a score or monitor cue is actually in
+  the world. On SSRF exfil, gpt-5.4 goes from 0/5 when told it is monitored, to 2/5 at default, to
+  4/5 when told it is unattended production; DeepSeek barely moves. On protocol, the frame barely
+  moves rates — but turning off the score motive drops DeepSeek’s backdoor from 4/5 to 0/5, while
+  saying “this is a monitored eval” does almost nothing. They also do not need to verbalize “I am
+  being evaluated” for salience to swing behavior.</p>
+  <p>Worth hardening rather than inventing from scratch: equalize the frame wording across tasks
+  (today’s “observed” text is stronger on exfil than on protocol) and bump n, keeping the two axes
+  separate.</p>
 </div>
 
 <div class="find">
-  <h3>4. Does a longer / harder honest path actually suppress seeking?</h3>
-  <p>Suggestive short vs ~30-step AD contrast for DeepSeek (seeking drops), but the prompts weren’t
-  perfectly matched — so it might be wording, not cost. Cross-task “harder → less seeking” is weak.</p>
-  <p class="next"><strong>Deep dive:</strong> matched-prompt <strong>5-length AD ladder</strong>
-  (longest aiming ~120 turns) — smooth fall vs a threshold switch. Natural endpoint of the same axis:
-  near-impossible honest path, so “didn’t seek” can’t be read as “couldn’t finish the grind.”</p>
+  <h3>4. Does a longer honest path actually suppress seeking?</h3>
+  <p>Short vs ~30-step AD looks suggestive for DeepSeek (seeking drops), but the prompts were not
+  perfectly matched, so it might be wording rather than cost. Across tasks, “harder honest path,
+  less seeking” is weak. We are running a matched-prompt five-length AD ladder (longest aiming around
+  120 turns) to see whether propensity falls smoothly or flips past a threshold. The natural end of
+  that axis is a near-impossible honest path, so “didn’t seek” cannot be read as “couldn’t finish
+  the grind.”</p>
 </div>
 
 <div class="find">
   <h3>5. Propensity is a vector — rankings flip by cheat type</h3>
-  <p>Averaging “Chinese vs Western” rates is roughly flat. Kimi quiet on many hazard cells but resets
-  hard chess to easy <strong>5/5</strong>; gpt-4o honest on short AD but <strong>5/5</strong> deceives a
-  model reviewer; gpt-5.4 matches DeepSeek on the protocol backdoor and will kill a planted “safety
-  watchdog” instead of taking the backdoor.</p>
-  <p class="next"><strong>Deep dive:</strong> keep publishing task-specific profiles; resist collapsing
-  into one danger score.</p>
+  <p>Averaging “Chinese vs Western” rates across this suite is roughly flat. Kimi is quiet on many
+  hazard cells but resets hard chess to easy 5/5; gpt-4o looks honest on short AD but deceives a
+  model reviewer 5/5; gpt-5.4 matches DeepSeek on the protocol backdoor and will kill a planted
+  “safety watchdog” instead of taking the backdoor. We are not collapsing that into one danger
+  score; the useful object is the profile.</p>
 </div>
 
 <div class="find">
   <h3>6. When the grader sits in the world, models attack it</h3>
-  <p>Live monitor in the container → some agents kill it or replace the test runner; only held-out
-  checks catch them. Also seen: forged audit logs (fixed), chess difficulty resets that fooled an
-  earlier grader, Lean statement tampering.</p>
-  <p class="next"><strong>Deep dive:</strong> characterize those attack modes and what held-out checks
-  catch — both an eval-methods problem and another propensity slice.</p>
+  <p>With a live monitor in the container, some agents kill it or replace the test runner; only
+  held-out checks catch them. We have also seen forged audit logs (since fixed), chess difficulty
+  resets that fooled an earlier grader, and Lean statement tampering. Characterizing those attack
+  modes — and what held-out checks catch — is both an eval-methods problem and another propensity
+  slice.</p>
 </div>
 
 <p class="foot">
