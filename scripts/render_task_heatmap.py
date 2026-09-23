@@ -340,14 +340,40 @@ def _intent_for_files(files: list[Path], intent_by: dict[str, dict]) -> dict | N
 
 
 def _global_intent_2x2(intent_by: dict[str, dict]) -> dict[str, int]:
+    """Prefer present-only freeze; else join intent rows to heatmap standard cells only."""
+    freeze_path = ROOT / "docs" / "matrices" / "intent_present_freeze.json"
+    if freeze_path.exists():
+        f = json.loads(freeze_path.read_text())
+        return {
+            "yy": f.get("yy", 0),
+            "yn": f.get("yn", 0),
+            "ny": f.get("ny", 0),
+            "nn": f.get("nn", 0),
+            "n": f.get("yy", 0) + f.get("yn", 0) + f.get("ny", 0) + f.get("nn", 0),
+            "scope": "present",
+        }
     from collections import Counter
-    c = Counter(r.get("intent_behavior_cell") for r in intent_by.values())
+
+    present_names = {
+        p.name for _, tid in TASKS for mk in MODEL_KEYS for p in cell_files(tid, mk)
+    }
+    rows = [intent_by[n] for n in present_names if n in intent_by]
+    c = Counter(r.get("intent_behavior_cell") for r in rows)
     return {
         "yy": c.get("intent_yes_behavior_yes", 0),
         "yn": c.get("intent_yes_behavior_no", 0),
         "ny": c.get("intent_no_behavior_yes", 0),
         "nn": c.get("intent_no_behavior_no", 0),
-        "n": sum(c.values()),
+        "n": sum(
+            c.get(k, 0)
+            for k in (
+                "intent_yes_behavior_yes",
+                "intent_yes_behavior_no",
+                "intent_no_behavior_yes",
+                "intent_no_behavior_no",
+            )
+        ),
+        "scope": "present",
     }
 
 
@@ -511,11 +537,11 @@ def render(grid: dict[tuple[str, str], dict | None], intent_by: dict[str, dict] 
     ty = cy + 40
     parts.append(
         f'<text x="{lx}" y="{ty}" font-family="Helvetica Neue,Arial,sans-serif" '
-        f'font-size="10" font-weight="700" fill="{INK}">Intent × behavior (all judged)</text>'
+        f'font-size="10" font-weight="700" fill="{INK}">Intent × behavior (present)</text>'
     )
     parts.append(
         f'<text x="{lx}" y="{ty + 14}" font-family="Helvetica Neue,Arial,sans-serif" '
-        f'font-size="8" fill="{FAINT}">n={g2["n"]} · 2nd number joins only when ≥3 runs judged</text>'
+        f'font-size="8" fill="{FAINT}">n={g2["n"]} · same cells as heatmap · 2nd # if ≥3 judged</text>'
     )
     mw, mh = 70, 42
     ox, oy = lx, ty + 24
@@ -527,7 +553,7 @@ def render(grid: dict[tuple[str, str], dict | None], intent_by: dict[str, dict] 
     ]
     parts.append(
         f'<text x="{ox + mw}" y="{oy - 4}" text-anchor="middle" font-size="8" fill="{FAINT}" '
-        f'font-family="Helvetica Neue,Arial,sans-serif">behavior →</text>'
+        f'font-family="Helvetica Neue,Arial,sans-serif">behavior</text>'
     )
     for col, row, val, fill, _lab in mini:
         x = ox + col * (mw + 6)

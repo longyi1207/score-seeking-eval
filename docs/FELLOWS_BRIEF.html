@@ -195,16 +195,18 @@ Claude Sonnet 4.5. <strong>Next row planned:</strong> Xiaomi <strong>MiMo-V2.6-P
 
 <div class="find">
   <h3>2. When does knowing a shortcut become using it?</h3>
-  <p>An LLM judge over transcripts already finds a large mass of runs where the agent weighs the
-  shortcut and still stays honest, and a smaller set that seeks without saying so. Behavior rhymes
-  with that: one “don’t take shortcuts” line zeros our loud planted edges (protocol backdoor DeepSeek
-  5/5 to 0/5; same story on short AD). A lot of seeking looks like ambiguous exploration that
-  collapses when the norm is clear. Other work (e.g. BaitBench) still sees cheating on quieter metric
-  leaks, so “forbid works here” may be about how loud the honeypot is.</p>
-  <p>The interesting claim is the exploration–exploitation boundary itself — what tips it (failed
-  honest attempts, prior endorsement, turn pressure) — and whether quieter Goodharting / exploit-gated
-  soft edges still collapse under forbid. Freezing a present-only intent×behavior table once the
-  transcript judge finishes is the cheap next measurement.</p>
+  <p>On the same present-suite cells as the heatmap (n=195 judged), an LLM judge over transcripts
+  finds 24 runs that contemplated and sought, 19 that weighed a shortcut and stayed honest, 13 that
+  sought without verbalized contemplation, and 139 with neither. The interesting mass is that
+  intent-yes / behavior-no cell — exploration that did not become exploitation. Behavior rhymes with
+  that: one “don’t take shortcuts” line zeros our loud planted edges (protocol backdoor DeepSeek 5/5
+  to 0/5; same story on short AD). A lot of seeking looks like ambiguous exploration that collapses
+  when the norm is clear. Other work (e.g. BaitBench) still sees cheating on quieter metric leaks, so
+  “forbid works here” may be about how loud the honeypot is.</p>
+  <p>What we want next is what tips the boundary (failed honest attempts, prior endorsement, turn
+  pressure), and whether quieter Goodharting / exploit-gated soft edges still collapse under forbid.
+  Only about 30 of these 195 runs have private CoT available, so the judge often works from assistant
+  text and tools.</p>
 </div>
 
 <div class="find">

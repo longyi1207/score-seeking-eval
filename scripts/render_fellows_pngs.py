@@ -21,20 +21,51 @@ RED_SOFT, GREEN_SOFT, GRAY = "#e6a99f", "#d8edd9", "#eef2f6"
 SEEK_BAR, INK_BAR, HONEST, FAIL = "#c2614f", "#16202e", "#6a9e72", "#b0b8c4"
 
 
-def render_intent() -> Path:
+def _load_intent_counts() -> dict:
+    freeze = ROOT / "docs/matrices/intent_present_freeze.json"
+    if freeze.exists():
+        f = json.loads(freeze.read_text())
+        return {
+            "yy": f.get("yy", 0),
+            "yn": f.get("yn", 0),
+            "ny": f.get("ny", 0),
+            "nn": f.get("nn", 0),
+            "n": f.get("yy", 0) + f.get("yn", 0) + f.get("ny", 0) + f.get("nn", 0),
+            "reasoning": f.get("reasoning_available", 0),
+            "declined": f.get("declined_after_notice", 0),
+            "subtitle": "present heatmap cells · frozen",
+        }
     rows = [
         json.loads(l)
         for l in (ROOT / "docs/matrices/cot_contemplate_codes.jsonl").read_text().splitlines()
         if l.strip()
     ]
     c = Counter(r.get("intent_behavior_cell") for r in rows)
-    yy = c.get("intent_yes_behavior_yes", 0)
-    yn = c.get("intent_yes_behavior_no", 0)
-    ny = c.get("intent_no_behavior_yes", 0)
-    nn = c.get("intent_no_behavior_no", 0)
-    n = max(sum(c.values()), 1)
-    reasoning = sum(1 for r in rows if r.get("reasoning_available"))
-    declined = sum(1 for r in rows if r.get("declined_after_notice"))
+    return {
+        "yy": c.get("intent_yes_behavior_yes", 0),
+        "yn": c.get("intent_yes_behavior_no", 0),
+        "ny": c.get("intent_no_behavior_yes", 0),
+        "nn": c.get("intent_no_behavior_no", 0),
+        "n": sum(
+            c.get(k, 0)
+            for k in (
+                "intent_yes_behavior_yes",
+                "intent_yes_behavior_no",
+                "intent_no_behavior_yes",
+                "intent_no_behavior_no",
+            )
+        ),
+        "reasoning": sum(1 for r in rows if r.get("reasoning_available")),
+        "declined": sum(1 for r in rows if r.get("declined_after_notice")),
+        "subtitle": "all judged · provisional",
+    }
+
+
+def render_intent() -> Path:
+    counts = _load_intent_counts()
+    yy, yn, ny, nn = counts["yy"], counts["yn"], counts["ny"], counts["nn"]
+    n = max(counts["n"], 1)
+    reasoning, declined = counts["reasoning"], counts["declined"]
 
     fig, ax = plt.subplots(figsize=(7.2, 4.5), dpi=180)
     ax.set_xlim(0, 10)
@@ -44,7 +75,7 @@ def render_intent() -> Path:
     ax.text(
         0.2,
         9.05,
-        f"LLM judge on run transcripts · n={n} · private CoT on {reasoning} · provisional",
+        f"LLM judge · {counts['subtitle']} · n={n} · private CoT on {reasoning}",
         fontsize=8.5,
         color=MUTED,
     )

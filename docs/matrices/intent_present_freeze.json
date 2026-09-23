@@ -1,0 +1,20 @@
+{
+  "frozen_at": "2026-09-23T05:43:11.243482+00:00",
+  "filter": "present heatmap standard cells (render_task_heatmap.cell_files)",
+  "n_present_files": 195,
+  "n_judged": 195,
+  "n_missing": 0,
+  "yy": 24,
+  "yn": 19,
+  "ny": 13,
+  "nn": 139,
+  "unknown": 0,
+  "reasoning_available": 30,
+  "declined_after_notice": 15,
+  "cell_counts": {
+    "intent_no_behavior_no": 139,
+    "intent_yes_behavior_no": 19,
+    "intent_no_behavior_yes": 13,
+    "intent_yes_behavior_yes": 24
+  }
+}
