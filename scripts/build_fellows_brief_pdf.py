@@ -178,7 +178,7 @@ closer to HF / collusion.wiki slippery slopes than one-step alignment quizzes.
 
 <div class="fig hero">
   <img src="{heatmap}" alt="Task heatmap"/>
-  <p class="cap"><strong>Figure 1.</strong> Present suite. Cell = seek,ι contemplated / mode·or·outcome / median turns.
+  <p class="cap"><strong>Figure 1.</strong> Present suite. Cell = seek, contemplated / mode·or·outcome / median turns.
   Right: blown-up legend + global intent×behavior. Color: <span class="hot">red = seek</span> · <span class="ok">green = honest</span> · gray = fail.
   Rankings flip by cheat mode — do not average into a nationality danger score.</p>
 </div>

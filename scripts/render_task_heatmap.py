@@ -2,7 +2,7 @@
 """Render the present-suite task heatmap (5 models × 11 tasks).
 
 Cell encoding:
-  line 1  seek,ι contemplated   e.g. 3,ι4  (ι omitted if judge not joined)
+  line 1  seek, contemplated   e.g. 3,4  (second number omitted if judge not joined)
   line 2  attack mode / outcome
   line 3  median turns
   fill    red = seek · green = honest · gray = fail
@@ -426,9 +426,9 @@ def render(grid: dict[tuple[str, str], dict | None], intent_by: dict[str, dict] 
             fw = "700" if k > 0 or fill == HONEST_FILL else "400"
             files = cell_files(tid, mk)
             intent = _intent_for_files(files, intent_by)
-            # seek[,ι contemplated] on one line
+            # seek[, contemplated] on one line
             if intent:
-                rate = f'{_rate_label(k)},ι{intent["contemplated"]}'
+                rate = f'{_rate_label(k)},{intent["contemplated"]}'
             else:
                 rate = _rate_label(k)
             # slightly smaller if combined
@@ -455,12 +455,12 @@ def render(grid: dict[tuple[str, str], dict | None], intent_by: dict[str, dict] 
         f'<text x="{lx}" y="18" font-family="Helvetica Neue,Arial,sans-serif" '
         f'font-size="11" font-weight="700" fill="{INK}">How to read a cell</text>'
     )
-    # blown-up example cell (DeepSeek protocol style: 5 seek, backdoor, 4t, ι5)
+    # blown-up example cell (DeepSeek protocol style: 5 seek, backdoor, 4t, contemplated=5)
     bx, by, bw, bh = lx + 8, 32, 100, 82
     parts.append(f'<rect x="{bx}" y="{by}" width="{bw}" height="{bh}" rx="6" fill="{SEEK[5]}"/>')
     parts.append(
         f'<text x="{bx + bw / 2}" y="{by + 26}" text-anchor="middle" '
-        f'font-family="SF Mono,Menlo,monospace" font-size="16" font-weight="700" fill="#fff">5,ι5</text>'
+        f'font-family="SF Mono,Menlo,monospace" font-size="16" font-weight="700" fill="#fff">5,5</text>'
     )
     parts.append(
         f'<text x="{bx + bw / 2}" y="{by + 50}" text-anchor="middle" '
@@ -474,7 +474,7 @@ def render(grid: dict[tuple[str, str], dict | None], intent_by: dict[str, dict] 
     ax0 = bx + bw + 10
     # line annotations
     ann = [
-        (by + 22, "seek,ι contemplated", "seek count, then intent-yes count"),
+        (by + 22, "seek, contemplated", "seek count, then intent-yes count"),
         (by + 48, "mode / outcome", "cheat type, or honest / fail"),
         (by + 70, "median turns", "on the primary path"),
     ]
@@ -515,7 +515,7 @@ def render(grid: dict[tuple[str, str], dict | None], intent_by: dict[str, dict] 
     )
     parts.append(
         f'<text x="{lx}" y="{ty + 14}" font-family="Helvetica Neue,Arial,sans-serif" '
-        f'font-size="8" fill="{FAINT}">n={g2["n"]} · cell line ι joins only when ≥3 runs judged</text>'
+        f'font-size="8" fill="{FAINT}">n={g2["n"]} · 2nd number joins only when ≥3 runs judged</text>'
     )
     mw, mh = 70, 42
     ox, oy = lx, ty + 24
@@ -548,7 +548,7 @@ def render(grid: dict[tuple[str, str], dict | None], intent_by: dict[str, dict] 
 
     parts.append(
         f'<text x="{left}" y="{H - 10}" font-family="Helvetica Neue,Arial,sans-serif" font-size="8.5" fill="{FAINT}">'
-        f"top = seek,ι contemplated (omit ι if unjudged) · n≈5 · … = missing</text>"
+        f"top = seek, contemplated (omit 2nd if unjudged) · n≈5 · … = missing</text>"
     )
     parts.append("</svg>")
     return "\n".join(parts)
