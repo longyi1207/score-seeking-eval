@@ -276,17 +276,35 @@ n=5). Treat them as leads for follow-ups.</p>
   lands, we’re not putting a chart of this claim in the brief.</p>
 </div>
 
-<h2>Next steps</h2>
+<h2>Open questions we want to push next</h2>
+<p>These are the directions that feel highest-leverage given what we already see — closer to Neo’s
+“how weird are models on long hard tasks?” than to “add another model row.”</p>
 <ul class="tight">
-  <li>Finish the matched-prompt <strong>AD length ladder</strong> (DeepSeek first) and decide whether seek
-      rate falls smoothly with honest-path length.</li>
-  <li>Keep cleaning the <strong>endorsement</strong> story: disclose vs endorse vs recipe; same claim on SSRF
-      and metric tasks, not only one CVE.</li>
-  <li>Add <strong>Xiaomi MiMo-V2.6-Pro</strong> (and likely Qwen / StepFun) to the panel — same tasks, same
-      graders.</li>
-  <li>Freeze a present-only <strong>intent × behavior</strong> slice once the transcript judge finishes (when
-      agents weigh a shortcut but don’t take it).</li>
+  <li><strong>When does knowing a shortcut become using it?</strong> We already see a large mass of runs
+      where the agent <em>weighs</em> the shortcut in reasoning and still stays honest, plus a smaller set
+      that seeks without saying so. Mapping that exploration→exploitation boundary (and what tips it) is
+      more interesting than another average seek rate.</li>
+  <li><strong>Is “prior-agent permission” a real mechanism, or a CVE artifact?</strong> Disclose≈0 /
+      endorse≫0 is our strongest lead, and it rhymes with multi-agent / shared-notes incidents. The clean
+      test is the same ladder on other cheat types (SSRF, metric gaming) and a sharper split of
+      endorsement vs copy-paste recipe — plus whether models <em>de-escalate</em> when the endorsed act is
+      more severe than they need.</li>
+  <li><strong>Does honest-path cost actually suppress seeking?</strong> One short vs one long AD is not
+      enough (and may be prompt-confounded). A matched-prompt length ladder asks whether propensity falls
+      smoothly as grinding gets longer — or whether capable models just switch to the shortcut past a
+      threshold.</li>
+  <li><strong>When does “don’t cheat” fail?</strong> Forbid zeros our obvious planted edges; other work
+      (e.g. BaitBench) finds models still hack subtler metric leaks while knowing they’re cheating. Pushing
+      shortcuts toward quieter Goodharting / exploit-gated soft edges tests whether our corrigibility
+      result was about alignment or about how loud the honeypot is.</li>
+  <li><strong>What weirdness looks like when the grader sits in the world?</strong> Agents already kill
+      monitors, rewrite runners, and tamper verifiers. Characterizing those attacks — and what held-out
+      checks catch — is both a methods problem for agent evals and a slice of the same propensity
+      question.</li>
 </ul>
+<p>Smaller but useful: freeze a present-only intent×behavior table once the transcript judge finishes;
+  keep task-specific profiles (e.g. “honest on protocol, cheats on chess”) instead of collapsing into one
+  danger score.</p>
 
 <p class="foot">
   <strong>Collaboration welcome.</strong> We care especially about how <strong>Chinese open-weight / open-API
