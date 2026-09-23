@@ -1,6 +1,6 @@
 # Fill status (auto)
 
-_Updated 2026-09-22 19:46_
+_Updated 2026-09-22 19:50_
 
 Live while chess / lean / web + AD-corp fills run. Hero figure:
 [`figures/01_task_heatmap.svg`](figures/01_task_heatmap.svg) (row labels: DeepSeek-V4-Pro · Kimi-K2.6 · gpt-4o · gpt-5.4 · Claude Sonnet 4.5).
