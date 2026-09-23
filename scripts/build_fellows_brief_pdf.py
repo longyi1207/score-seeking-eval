@@ -87,6 +87,7 @@ def html() -> str:
     font-size: 15pt; font-weight: 700; letter-spacing: -0.02em;
     margin: 0 0 3pt 0; line-height: 1.12;
   }}
+  .by {{ color: #54627a; font-size: 8.2pt; margin: 0 0 3pt 0; }}
   .sub {{ color: #54627a; font-size: 8.2pt; margin: 0 0 4pt 0; }}
   .gh {{ font-size: 8pt; margin: 0 0 7pt 0; }}
   .gh a {{ color: #1a5fb4; text-decoration: none; }}
@@ -158,6 +159,7 @@ def html() -> str:
   <div class="badge">2026-09-22</div>
 </div>
 <h1>Score-seeking in long-horizon agents</h1>
+<p class="by">Long Yi</p>
 <p class="sub">An eval suite for when tool-using LLMs take illegitimate shortcuts — built mainly for
 Chinese open-weight / open-API models, where this kind of agent eval barely exists</p>
 <p class="gh">Code &amp; full write-up:
