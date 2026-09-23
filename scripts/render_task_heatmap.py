@@ -715,8 +715,12 @@ def render(grid: dict[tuple[str, str], dict | None], intent_by: dict[str, dict] 
             f'font-family="Helvetica Neue,Arial,sans-serif" font-size="8" fill="{MUTED}">{_lab}</text>'
         )
     parts.append(
-        f'<text x="{ox}" y="{oy + 2 * (mh + 6) + 14}" font-family="Helvetica Neue,Arial,sans-serif" '
-        f'font-size="8" fill="{MUTED}">YY sought · YN contemplated but honest · NY seek w/o verbalized intent · NN neither</text>'
+        f'<text x="{ox}" y="{oy + 2 * (mh + 6) + 12}" font-family="Helvetica Neue,Arial,sans-serif" '
+        f'font-size="8" fill="{MUTED}">YY sought · YN contemplated but honest</text>'
+    )
+    parts.append(
+        f'<text x="{ox}" y="{oy + 2 * (mh + 6) + 24}" font-family="Helvetica Neue,Arial,sans-serif" '
+        f'font-size="8" fill="{MUTED}">NY seek w/o verbalized intent · NN neither</text>'
     )
 
     parts.append(
