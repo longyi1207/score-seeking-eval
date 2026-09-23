@@ -31,9 +31,91 @@ def ensure_figures() -> None:
         vb = re.search(r'viewBox="0 0 ([\d.]+) ([\d.]+)"', svg.read_text())
         vw, vh = (float(vb.group(1)), float(vb.group(2))) if vb else (978.0, 356.0)
         html = f"""<!DOCTYPE html><html><head><style>
-@page {{ size: {vw}px {vh}px; margin: 0; }}
-html, body {{ margin:0; padding:0; }}
-img {{ width: {vw}px; height: {vh}px; display:block; }}
+  @page {{
+    size: Letter;
+    margin: 0.42in 0.52in 0.48in 0.52in;
+    @bottom-center {{
+      content: counter(page) " / " counter(pages);
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 7.5pt;
+      color: #8a95a8;
+    }}
+  }}
+  * {{ box-sizing: border-box; }}
+  html, body {{
+    margin: 0; padding: 0;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #16202e;
+    font-size: 8.5pt;
+    line-height: 1.38;
+    background: #fff;
+  }}
+  h1 {{
+    font-size: 15pt; font-weight: 700; letter-spacing: -0.02em;
+    margin: 0 0 3pt 0; line-height: 1.12;
+  }}
+  .sub {{ color: #54627a; font-size: 8.2pt; margin: 0 0 4pt 0; }}
+  .gh {{ font-size: 8pt; margin: 0 0 7pt 0; }}
+  .gh a {{ color: #1a5fb4; text-decoration: none; }}
+  h2 {{
+    font-size: 10pt; font-weight: 700; margin: 10pt 0 4pt 0;
+    padding-bottom: 2pt; border-bottom: 1.5px solid #16202e;
+    letter-spacing: -0.01em;
+  }}
+  h2 .subhead {{
+    font-size: 7pt; font-weight: 700; letter-spacing: 0.05em;
+    text-transform: uppercase; color: #8a95a8; margin-left: 8pt;
+  }}
+  p {{ margin: 0 0 5pt 0; }}
+  .lede {{ font-size: 8.7pt; line-height: 1.4; margin-bottom: 6pt; }}
+  ul.tight {{ margin: 2pt 0 5pt 1.05em; padding: 0; }}
+  ul.tight li {{ margin: 0 0 2pt 0; }}
+  ol.construct {{ margin: 2pt 0 5pt 1.05em; padding: 0; }}
+  ol.construct li {{ margin: 0 0 2.5pt 0; }}
+  .fig {{ margin: 6pt 0 4pt 0; }}
+  .fig img {{ width: 100%; height: auto; display: block; }}
+  .fig.hero img {{ max-height: 2.95in; width: auto; max-width: 100%; margin: 0 auto; }}
+  .cap {{ font-size: 7.3pt; color: #54627a; margin: 3pt 0 0 0; line-height: 1.32; }}
+  table {{ width: 100%; border-collapse: collapse; font-size: 7.6pt; margin: 3pt 0 5pt 0; }}
+  th, td {{
+    border-bottom: 1px solid #e2e6ec; padding: 2.5pt 3.5pt;
+    text-align: left; vertical-align: top;
+  }}
+  th {{
+    font-weight: 700; color: #54627a; font-size: 6.5pt;
+    text-transform: uppercase; letter-spacing: 0.03em;
+  }}
+  td.num {{ font-family: "SF Mono", Menlo, monospace; font-size: 7.6pt; }}
+  .hot {{ color: #b23b36; font-weight: 700; }}
+  .ok {{ color: #2f5d38; font-weight: 700; }}
+  .find {{ margin: 0 0 8pt 0; }}
+  .find h3 {{
+    font-size: 9pt; font-weight: 700; margin: 0 0 2.5pt 0; color: #16202e;
+    letter-spacing: -0.01em;
+  }}
+  .cta {{
+    margin: 10pt 0 0 0; padding: 7pt 9pt;
+    background: #f7f8fa; border: 1px solid #d8dee8;
+  }}
+  .cta h2 {{
+    margin: 0 0 3pt 0; padding: 0 0 2pt 0;
+    border-bottom: 1.5px solid #16202e;
+    font-size: 10pt;
+  }}
+  .cta p {{ margin: 0 0 3pt 0; font-size: 8.2pt; line-height: 1.38; }}
+  .cta p:last-child {{ margin: 0; }}
+  .cta a {{ color: #1a5fb4; font-weight: 600; text-decoration: none; }}
+  .meta {{
+    display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4pt;
+  }}
+  .badge {{
+    font-size: 6.5pt; font-weight: 700; letter-spacing: 0.06em;
+    text-transform: uppercase; color: #8a95a8;
+  }}
+  .gloss {{ font-size: 7.1pt; color: #54627a; margin: 2pt 0 0 0; line-height: 1.32; }}
+  .gloss strong {{ color: #16202e; }}
+  .tasks {{ font-size: 8.1pt; color: #16202e; margin: 0 0 4pt 0; line-height: 1.38; }}
+  .leads-intro {{ margin: 0 0 6pt 0; color: #54627a; font-size: 8.2pt; }}
 </style></head><body>
 <img src="{svg.resolve().as_uri()}"/>
 </body></html>"""
@@ -196,12 +278,8 @@ Next row planned: Xiaomi MiMo-V2.6-Pro.</p>
   <strong>contemplated</strong> = judge found the agent weighing that shortcut (separate from using it).</p>
 </div>
 
-<div class="meta" style="margin-top:6pt;">
-  <div class="badge">Interesting leads</div>
-  <div class="badge">preliminary · n≈5</div>
-</div>
-
-<p>Small-n early results — directions, not locked claims.</p>
+<h2>Interesting leads <span class="subhead">preliminary · n≈5</span></h2>
+<p class="leads-intro">Small-n early results — directions, not locked claims.</p>
 
 <div class="find">
   <h3>1. Shared notes seem to leak norms, not just facts</h3>
