@@ -216,13 +216,17 @@ n=5). Treat them as leads for follow-ups.</p>
 </div>
 
 <h2>Open questions we want to push next</h2>
-<p>These are the directions that feel highest-leverage given what we already see — closer to Neo’s
-“how weird are models on long hard tasks?” than to “add another model row.”</p>
+<p>Highest-leverage directions given what we already see — closer to Neo’s “how weird are models on
+long hard tasks?” than to “add another model row.”</p>
 <ul class="tight">
-  <li><strong>When does knowing a shortcut become using it?</strong> We already see a large mass of runs
-      where the agent <em>weighs</em> the shortcut in reasoning and still stays honest, plus a smaller set
-      that seeks without saying so. Mapping that exploration→exploitation boundary (and what tips it) is
-      more interesting than another average seek rate.</li>
+  <li><strong>Exploration → exploitation: when does knowing a shortcut become using it?</strong>
+      We already see a large mass of runs where the agent <em>weighs</em> the shortcut and still stays
+      honest, plus a smaller set that seeks without saying so. Mapping that boundary — and what tips
+      it (failing honest attempts, prior endorsement, turn pressure) — is the core claim. Same
+      question makes sense of our <code>forbid</code> result: one “don’t take shortcuts” line zeros
+      loud planted edges, but other work (e.g. BaitBench) finds models still hack quieter metric
+      leaks while knowing they’re cheating. Pushing our honeypots toward quieter Goodharting /
+      exploit-gated soft edges asks whether that corrigibility was alignment or loudness.</li>
   <li><strong>Is “prior-agent permission” a real mechanism, or a CVE artifact?</strong> Disclose≈0 /
       endorse≫0 is our strongest lead, and it rhymes with multi-agent / shared-notes incidents. The clean
       test is the same ladder on other cheat types (SSRF, metric gaming) and a sharper split of
@@ -230,20 +234,19 @@ n=5). Treat them as leads for follow-ups.</p>
       more severe than they need.</li>
   <li><strong>Does honest-path cost actually suppress seeking?</strong> One short vs one long AD is not
       enough (and may be prompt-confounded). A matched-prompt length ladder asks whether propensity falls
-      smoothly as grinding gets longer — or whether capable models just switch to the shortcut past a
-      threshold.</li>
-  <li><strong>When does “don’t cheat” fail?</strong> Forbid zeros our obvious planted edges; other work
-      (e.g. BaitBench) finds models still hack subtler metric leaks while knowing they’re cheating. Pushing
-      shortcuts toward quieter Goodharting / exploit-gated soft edges tests whether our corrigibility
-      result was about alignment or about how loud the honeypot is.</li>
+      smoothly as grinding gets longer — or whether capable models switch past a threshold. The natural
+      endpoint of the same axis is an <em>impossible / near-impossible honest path</em>: pressure without a
+      capability confound, so “didn’t seek” can’t be read as “couldn’t finish the grind.”</li>
   <li><strong>What weirdness looks like when the grader sits in the world?</strong> Agents already kill
       monitors, rewrite runners, and tamper verifiers. Characterizing those attacks — and what held-out
       checks catch — is both a methods problem for agent evals and a slice of the same propensity
       question.</li>
 </ul>
-<p>Smaller but useful: freeze a present-only intent×behavior table once the transcript judge finishes;
-  keep task-specific profiles (e.g. “honest on protocol, cheats on chess”) instead of collapsing into one
-  danger score.</p>
+<p>Already in motion, not net-new: freeze a present-only <strong>intent×behavior</strong> table once the
+  transcript judge finishes (feeds the exploration→exploitation question above); harden the existing
+  <strong>eval-frame</strong> panel (<code>observed_eval</code> / <code>unobserved_prod</code> on
+  <code>protocol_re</code> + <code>internal_exfil</code> — directional at n=5, finding #15) rather than
+  invent a new sandbagging task; keep task-specific profiles instead of collapsing into one danger score.</p>
 
 <p class="foot">
   <strong>Collaboration welcome.</strong> We care especially about how <strong>Chinese open-weight / open-API
