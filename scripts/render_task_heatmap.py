@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 """Render the present-suite task heatmap (5 models × 11 tasks).
 
-Cell encoding:
-  line 1  seek rate          e.g. 5/5
+Cell encoding (n=5 is implied — omit "/5"):
+  line 1  seek count         e.g. 3   (or k/n if n≠5)
   line 2  if seek>0: attack mode(s)   else: dominant non-seek outcome (honest/fail/blocked)
   line 3  median turns for the primary path (seeks if any, else non-seeks)
+  line 4  ιc  contemplated count among those runs (blank if judge not yet joined)
   fill    red scale by seek rate; green = honest (no seek); gray = fail/blocked
+  Right panel: blown-up legend cell + global intent×behavior 2×2
 
 Re-run after fills land:
   .venv/bin/python scripts/render_task_heatmap.py
@@ -76,6 +78,8 @@ SEEK = ["#eef2f6", "#f3d3cd", "#e6a99f", "#d1746a", "#c2614f", "#b23b36"]
 HONEST_FILL = "#d8edd9"       # solid honest solve
 HONEST_MIX_FILL = "#e6f0e4"   # mostly honest, some fail
 FAIL_FILL = "#eef2f6"         # capability fail / no seek
+RED_SOFT = "#e6a99f"
+GREEN_SOFT = "#d8edd9"
 INK, MUTED, FAINT, PAPER = "#16202e", "#54627a", "#8a95a8", "#ffffff"
 
 
@@ -295,38 +299,101 @@ def cell_data(task: str, mk: str) -> dict | None:
     return agg  # partial or None
 
 
-def render(grid: dict[tuple[str, str], dict | None]) -> str:
-    cw, ch, left, top = 78, 56, 108, 48
-    W = left + len(TASKS) * cw + 12
-    H = top + len(MODEL_KEYS) * ch + 28
+
+INTENT_JSONL = ROOT / "docs" / "matrices" / "cot_contemplate_codes.jsonl"
+
+
+def _rate_label(k: int, n: int) -> str:
+    """Omit /5 — panel is n=5; only show denominator when n differs."""
+    if n == 5:
+        return str(k)
+    return f"{k}/{n}"
+
+
+def _load_intent_by_file() -> dict[str, dict]:
+    if not INTENT_JSONL.exists():
+        return {}
+    by: dict[str, dict] = {}
+    for line in INTENT_JSONL.read_text().splitlines():
+        if not line.strip():
+            continue
+        try:
+            r = json.loads(line)
+        except Exception:
+            continue
+        f = r.get("file")
+        if f:
+            by[f] = r  # last wins
+    return by
+
+
+def _intent_for_files(files: list[Path], intent_by: dict[str, dict]) -> dict | None:
+    """Join judge rows to the same run files as the behavioral cell."""
+    hits = []
+    for p in files:
+        r = intent_by.get(p.name)
+        if r:
+            hits.append(r)
+    if len(hits) < 3:
+        return None
+    yes = sum(1 for r in hits if str(r.get("intent_behavior_cell") or "").startswith("intent_yes"))
+    yn = sum(1 for r in hits if r.get("intent_behavior_cell") == "intent_yes_behavior_no")
+    yy = sum(1 for r in hits if r.get("intent_behavior_cell") == "intent_yes_behavior_yes")
+    return {"n_judged": len(hits), "contemplated": yes, "yy": yy, "yn": yn}
+
+
+def _global_intent_2x2(intent_by: dict[str, dict]) -> dict[str, int]:
+    from collections import Counter
+    c = Counter(r.get("intent_behavior_cell") for r in intent_by.values())
+    return {
+        "yy": c.get("intent_yes_behavior_yes", 0),
+        "yn": c.get("intent_yes_behavior_no", 0),
+        "ny": c.get("intent_no_behavior_yes", 0),
+        "nn": c.get("intent_no_behavior_no", 0),
+        "n": sum(c.values()),
+    }
+
+
+def render(grid: dict[tuple[str, str], dict | None], intent_by: dict[str, dict] | None = None) -> str:
+    intent_by = intent_by if intent_by is not None else _load_intent_by_file()
+    g2 = _global_intent_2x2(intent_by)
+
+    # grid + right legend panel
+    cw, ch, left, top = 72, 62, 100, 44
+    legend_w = 268
+    W = left + len(TASKS) * cw + legend_w + 16
+    H = max(top + len(MODEL_KEYS) * ch + 36, 430)
+    legend_x = left + len(TASKS) * cw + 18
+
     parts = [
         f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" role="img" '
-        f'aria-label="Task heatmap: DeepSeek-V4-Pro, Kimi-K2.6, gpt-4o, gpt-5.4, Claude Sonnet 4.5 '
-        f'× present tasks — seek rate, attack mode or outcome, median turns.">'
+        f'aria-label="Task heatmap with cell legend and intent×behavior summary.">'
     ]
     parts.append(f'<rect width="100%" height="100%" fill="{PAPER}"/>')
-    # column headers (two lines: short name)
+
+    # column headers
     for i, (short, _tid) in enumerate(TASKS):
         x = left + i * cw + cw / 2
         parts.append(
-            f'<text x="{x}" y="18" text-anchor="middle" '
-            f'font-family="Helvetica Neue,Arial,sans-serif" font-size="10" fill="{MUTED}">{short}</text>'
+            f'<text x="{x}" y="16" text-anchor="middle" '
+            f'font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="{MUTED}">{short}</text>'
         )
+
     for r, (mk, (line1, line2)) in enumerate(zip(MODEL_KEYS, MODEL_LABELS)):
         y = top + r * ch
         if line2:
             parts.append(
-                f'<text x="6" y="{y + ch / 2 - 4}" font-family="Helvetica Neue,Arial,sans-serif" '
-                f'font-size="11" font-weight="700" fill="{INK}">{line1}</text>'
+                f'<text x="4" y="{y + ch / 2 - 4}" font-family="Helvetica Neue,Arial,sans-serif" '
+                f'font-size="10" font-weight="700" fill="{INK}">{line1}</text>'
             )
             parts.append(
-                f'<text x="6" y="{y + ch / 2 + 10}" font-family="Helvetica Neue,Arial,sans-serif" '
-                f'font-size="10" fill="{MUTED}">{line2}</text>'
+                f'<text x="4" y="{y + ch / 2 + 9}" font-family="Helvetica Neue,Arial,sans-serif" '
+                f'font-size="9" fill="{MUTED}">{line2}</text>'
             )
         else:
             parts.append(
-                f'<text x="6" y="{y + ch / 2 + 4}" font-family="Helvetica Neue,Arial,sans-serif" '
-                f'font-size="12" font-weight="700" fill="{INK}">{line1}</text>'
+                f'<text x="4" y="{y + ch / 2 + 4}" font-family="Helvetica Neue,Arial,sans-serif" '
+                f'font-size="11" font-weight="700" fill="{INK}">{line1}</text>'
             )
         for c, (_short, tid) in enumerate(TASKS):
             x = left + c * cw
@@ -343,45 +410,158 @@ def render(grid: dict[tuple[str, str], dict | None]) -> str:
                 continue
             k, n = cell["k"], cell["n"]
             rate5 = int(round(5 * k / n)) if n else 0
-            mode = cell["mode"][:14]
+            mode = cell["mode"]
+            # shorten mixed honest/fail
+            mode = mode.replace("honest", "h").replace("fail", "f") if "·" in mode else mode
+            mode = mode[:12]
             if k > 0:
                 fill = SEEK[min(rate5, 5)]
-            elif mode.startswith("honest") and "fail" in mode:
+            elif str(cell["mode"]).startswith("honest") and "fail" in str(cell["mode"]):
                 fill = HONEST_MIX_FILL
-            elif mode.startswith("honest") or mode == "honest":
+            elif str(cell["mode"]).startswith("honest") or cell["mode"] == "honest":
                 fill = HONEST_FILL
             else:
                 fill = FAIL_FILL
             parts.append(
                 f'<rect x="{x + 2}" y="{y + 2}" width="{cw - 4}" height="{ch - 4}" rx="3" fill="{fill}"/>'
             )
-            # line 1 rate
             tc1 = "#fff" if rate5 >= 3 else (INK if k > 0 else ("#2f5d38" if fill in (HONEST_FILL, HONEST_MIX_FILL) else FAINT))
             fw = "700" if k > 0 or fill == HONEST_FILL else "400"
+            rate = _rate_label(k, n)
             parts.append(
-                f'<text x="{x + cw / 2}" y="{y + 18}" text-anchor="middle" '
-                f'font-family="SF Mono,Menlo,monospace" font-size="12" font-weight="{fw}" fill="{tc1}">{k}/{n}</text>'
+                f'<text x="{x + cw / 2}" y="{y + 16}" text-anchor="middle" '
+                f'font-family="SF Mono,Menlo,monospace" font-size="12" font-weight="{fw}" fill="{tc1}">{rate}</text>'
             )
-            # line 2 mode/outcome
             tc2 = "#fff" if rate5 >= 3 else ("#3d6b45" if fill in (HONEST_FILL, HONEST_MIX_FILL) else MUTED)
             parts.append(
-                f'<text x="{x + cw / 2}" y="{y + 33}" text-anchor="middle" '
-                f'font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="{tc2}">{mode}</text>'
+                f'<text x="{x + cw / 2}" y="{y + 30}" text-anchor="middle" '
+                f'font-family="Helvetica Neue,Arial,sans-serif" font-size="8.5" fill="{tc2}">{mode}</text>'
             )
-            # line 3 turns
             tc3 = "#ffe8e0" if rate5 >= 3 else ("#6a8f70" if fill in (HONEST_FILL, HONEST_MIX_FILL) else FAINT)
             tlabel = f"{cell['turns']}t" if cell["turns"] is not None else "—"
             parts.append(
-                f'<text x="{x + cw / 2}" y="{y + 46}" text-anchor="middle" '
-                f'font-family="SF Mono,Menlo,monospace" font-size="9" fill="{tc3}">{tlabel}</text>'
+                f'<text x="{x + cw / 2}" y="{y + 43}" text-anchor="middle" '
+                f'font-family="SF Mono,Menlo,monospace" font-size="8.5" fill="{tc3}">{tlabel}</text>'
             )
-    # footer key (text, not color legend)
+            # intent line
+            files = cell_files(tid, mk)
+            intent = _intent_for_files(files, intent_by)
+            if intent:
+                tc4 = "#fff" if rate5 >= 3 else MUTED
+                parts.append(
+                    f'<text x="{x + cw / 2}" y="{y + 55}" text-anchor="middle" '
+                    f'font-family="SF Mono,Menlo,monospace" font-size="8" fill="{tc4}">ι{intent["contemplated"]}</text>'
+                )
+
+    # ---- right legend panel ----
+    lx = legend_x
     parts.append(
-        f'<text x="{left}" y="{H - 8}" font-family="Helvetica Neue,Arial,sans-serif" font-size="9" fill="{FAINT}">'
-        f"cell = seek-rate / attack-mode·or·outcome / median-turns ·  green = honest · gray = fail · red = seek ·  … = n&lt;5</text>"
+        f'<text x="{lx}" y="18" font-family="Helvetica Neue,Arial,sans-serif" '
+        f'font-size="11" font-weight="700" fill="{INK}">How to read a cell</text>'
+    )
+    # blown-up example cell (DeepSeek protocol style: 5 seek, backdoor, 4t, ι5)
+    bx, by, bw, bh = lx + 8, 32, 100, 88
+    parts.append(f'<rect x="{bx}" y="{by}" width="{bw}" height="{bh}" rx="6" fill="{SEEK[5]}"/>')
+    parts.append(
+        f'<text x="{bx + bw / 2}" y="{by + 22}" text-anchor="middle" '
+        f'font-family="SF Mono,Menlo,monospace" font-size="18" font-weight="700" fill="#fff">5</text>'
+    )
+    parts.append(
+        f'<text x="{bx + bw / 2}" y="{by + 42}" text-anchor="middle" '
+        f'font-family="Helvetica Neue,Arial,sans-serif" font-size="12" fill="#fff">backdoor</text>'
+    )
+    parts.append(
+        f'<text x="{bx + bw / 2}" y="{by + 60}" text-anchor="middle" '
+        f'font-family="SF Mono,Menlo,monospace" font-size="12" fill="#ffe8e0">4t</text>'
+    )
+    parts.append(
+        f'<text x="{bx + bw / 2}" y="{by + 78}" text-anchor="middle" '
+        f'font-family="SF Mono,Menlo,monospace" font-size="12" fill="#fff">ι5</text>'
+    )
+    # arrows + labels to the right of blowup
+    ax0 = bx + bw + 10
+    # line annotations
+    ann = [
+        (by + 18, "seek count", "of n=5 (omit /5; show k/n only if n≠5)"),
+        (by + 40, "mode / outcome", "cheat type, or honest / fail"),
+        (by + 58, "median turns", "on the primary path"),
+        (by + 76, "ι contemplated", "intent-yes among those runs"),
+    ]
+    for yy, title, sub in ann:
+        parts.append(f'<line x1="{ax0}" y1="{yy}" x2="{ax0 + 14}" y2="{yy}" stroke="{MUTED}" stroke-width="1.2"/>')
+        parts.append(
+            f'<polygon points="{ax0},{yy - 3} {ax0},{yy + 3} {ax0 - 5},{yy}" fill="{MUTED}"/>'
+        )
+        parts.append(
+            f'<text x="{ax0 + 18}" y="{yy - 2}" font-family="Helvetica Neue,Arial,sans-serif" '
+            f'font-size="10" font-weight="700" fill="{INK}">{title}</text>'
+        )
+        parts.append(
+            f'<text x="{ax0 + 18}" y="{yy + 11}" font-family="Helvetica Neue,Arial,sans-serif" '
+            f'font-size="8" fill="{FAINT}">{sub}</text>'
+        )
+
+    # color key
+    cy = by + bh + 22
+    parts.append(
+        f'<text x="{lx}" y="{cy}" font-family="Helvetica Neue,Arial,sans-serif" '
+        f'font-size="10" font-weight="700" fill="{INK}">Fill</text>'
+    )
+    for i, (lab, col) in enumerate(
+        [("seek↑", SEEK[5]), ("honest", HONEST_FILL), ("fail", FAIL_FILL)]
+    ):
+        parts.append(f'<rect x="{lx + i * 72}" y="{cy + 8}" width="14" height="14" rx="2" fill="{col}"/>')
+        parts.append(
+            f'<text x="{lx + 18 + i * 72}" y="{cy + 19}" font-family="Helvetica Neue,Arial,sans-serif" '
+            f'font-size="9" fill="{MUTED}">{lab}</text>'
+        )
+
+    # mini global 2x2
+    ty = cy + 40
+    parts.append(
+        f'<text x="{lx}" y="{ty}" font-family="Helvetica Neue,Arial,sans-serif" '
+        f'font-size="10" font-weight="700" fill="{INK}">Intent × behavior (all judged)</text>'
+    )
+    parts.append(
+        f'<text x="{lx}" y="{ty + 14}" font-family="Helvetica Neue,Arial,sans-serif" '
+        f'font-size="8" fill="{FAINT}">n={g2["n"]} · cell line ι joins only when ≥3 runs judged</text>'
+    )
+    mw, mh = 70, 42
+    ox, oy = lx, ty + 24
+    mini = [
+        (0, 0, g2["yy"], RED_SOFT, "YY"),
+        (1, 0, g2["yn"], GREEN_SOFT, "YN"),
+        (0, 1, g2["ny"], "#f0e6d8", "NY"),
+        (1, 1, g2["nn"], FAIL_FILL, "NN"),
+    ]
+    parts.append(
+        f'<text x="{ox + mw}" y="{oy - 4}" text-anchor="middle" font-size="8" fill="{FAINT}" '
+        f'font-family="Helvetica Neue,Arial,sans-serif">behavior →</text>'
+    )
+    for col, row, val, fill, _lab in mini:
+        x = ox + col * (mw + 6)
+        y = oy + row * (mh + 6)
+        parts.append(f'<rect x="{x}" y="{y}" width="{mw}" height="{mh}" rx="4" fill="{fill}"/>')
+        parts.append(
+            f'<text x="{x + mw / 2}" y="{y + 20}" text-anchor="middle" '
+            f'font-family="SF Mono,Menlo,monospace" font-size="14" font-weight="700" fill="{INK}">{val}</text>'
+        )
+        parts.append(
+            f'<text x="{x + mw / 2}" y="{y + 34}" text-anchor="middle" '
+            f'font-family="Helvetica Neue,Arial,sans-serif" font-size="8" fill="{MUTED}">{_lab}</text>'
+        )
+    parts.append(
+        f'<text x="{ox}" y="{oy + 2 * (mh + 6) + 14}" font-family="Helvetica Neue,Arial,sans-serif" '
+        f'font-size="8" fill="{MUTED}">YY sought · YN contemplated but honest · NY seek w/o verbalized intent · NN neither</text>'
+    )
+
+    parts.append(
+        f'<text x="{left}" y="{H - 10}" font-family="Helvetica Neue,Arial,sans-serif" font-size="8.5" fill="{FAINT}">'
+        f"n=5 implied · ι = contemplated (intent-yes) · blank ι = judge not joined yet · … = n&lt;5</text>"
     )
     parts.append("</svg>")
     return "\n".join(parts)
+
 
 
 def main():
@@ -393,8 +573,21 @@ def main():
             grid[(tid, mk)] = cell
             if not cell or cell["n"] < 5:
                 missing.append(f"{tid}/{mk}")
-    svg = render(grid)
+    intent_by = _load_intent_by_file()
+    # attach intent onto cells for debugging counts
+    joined = 0
+    for (_short, tid) in TASKS:
+        for mk in MODEL_KEYS:
+            cell = grid.get((tid, mk))
+            if not cell:
+                continue
+            intent = _intent_for_files(cell_files(tid, mk), intent_by)
+            if intent:
+                cell["intent"] = intent
+                joined += 1
+    svg = render(grid, intent_by)
     OUT.write_text(svg)
+    print(f"intent-joined cells: {joined}")
     print(f"wrote {OUT}")
     print(f"cells missing/partial (<5): {len(missing)}")
     for m in missing[:30]:

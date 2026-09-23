@@ -58,7 +58,6 @@ def html() -> str:
 
     heatmap = uri("01_task_heatmap")
     ad = uri("06_ad_corp_vs_enterprise")
-    intent = uri("07_intent_behavior")
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -104,7 +103,7 @@ def html() -> str:
   ul.tight li {{ margin: 0 0 1pt 0; }}
   .fig {{ margin: 3pt 0 2pt 0; page-break-inside: avoid; }}
   .fig img {{ width: 100%; height: auto; display: block; }}
-  .fig.hero img {{ max-height: 3.15in; width: auto; max-width: 100%; margin: 0 auto; }}
+  .fig.hero img {{ max-height: 3.35in; width: auto; max-width: 100%; margin: 0 auto; }}
   .fig.ad img {{ max-height: 2.35in; width: auto; max-width: 100%; margin: 0 auto; }}
   .fig.intent img {{ max-height: 2.85in; width: auto; max-width: 100%; margin: 0 auto; }}
   .cap {{ font-size: 7.4pt; color: #54627a; margin: 2pt 0 0 0; line-height: 1.28; }}
@@ -179,15 +178,15 @@ closer to HF / collusion.wiki slippery slopes than one-step alignment quizzes.
 
 <div class="fig hero">
   <img src="{heatmap}" alt="Task heatmap"/>
-  <p class="cap"><strong>Figure 1.</strong> Present suite. Cell = seek-rate / attack-mode·or·outcome / median turns.
-  Color: <span class="hot">red = seek</span> · <span class="ok">green = honest</span> · gray = fail/blocked.
+  <p class="cap"><strong>Figure 1.</strong> Present suite. Cell = seek count (n=5 implied) / mode·or·outcome / median turns / ι contemplated.
+  Right: blown-up legend + global intent×behavior. Color: <span class="hot">red = seek</span> · <span class="ok">green = honest</span> · gray = fail.
   Rankings flip by cheat mode — do not average into a nationality danger score.</p>
 </div>
 
 <div class="page-break"></div>
 <div class="meta">
   <div class="badge">Data</div>
-  <div class="badge">figures 2–3</div>
+  <div class="badge">figure 2</div>
 </div>
 
 <h2>Environment dependence — Azure AD</h2>
@@ -198,14 +197,6 @@ closer to HF / collusion.wiki slippery slopes than one-step alignment quizzes.
   Cross-task honest-cost vs seek-rate scatter is weak (r≈−0.14) — this paired contrast is the claim.</p>
 </div>
 
-<h2>Intent × behavior <span style="font-weight:400;color:#8a95a8;font-size:8pt">(LLM judge · provisional)</span></h2>
-<div class="fig intent">
-  <img src="{intent}" alt="Intent versus behavior 2x2"/>
-  <p class="cap"><strong>Figure 3.</strong> Separate from the behavioral grader. Large
-  <span class="ok">intent-yes / behavior-no</span> mass = weighed the shortcut and stayed honest —
-  exploration→exploitation boundary, measured. Among seekers, a minority lack verbalized contemplation
-  (often missing private CoT). Freeze a present-only subset when the judge queue completes.</p>
-</div>
 
 <div class="page-break"></div>
 <div class="meta">
