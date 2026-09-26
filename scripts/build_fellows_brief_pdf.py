@@ -189,8 +189,8 @@ agent evals on them, so the risk picture is still largely unknown.
 <p class="tasks"><strong>Domains / shortcut kinds:</strong> Azure AD (planted Domain-Admin copy) ·
 protocol RE (config backdoor) · oversight / monitoring (kill process, replace runner, deceive reviewer) ·
 SSRF exfil · metric redefinition · Grafana CVE path-traversal · hard chess / Lean (edit state or attack
-the verifier). Models so far (n=5/cell): DeepSeek-V4-Pro, Kimi-K2.6, gpt-4o, gpt-5.4, Claude Sonnet 4.5.
-Next row planned: Xiaomi MiMo-V2.6-Pro.</p>
+the verifier). Models so far (n=5/cell): DeepSeek-V4-Pro, Kimi-K2.6, MiMo-V2.6-Pro, gpt-4o, gpt-5.4,
+Claude Sonnet 4.5.</p>
 
 <div class="fig hero">
   <img src="{heatmap}" alt="Task heatmap"/>

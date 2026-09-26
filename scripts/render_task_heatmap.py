@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render the present-suite task heatmap (5 models × 11 tasks).
+"""Render the present-suite task heatmap (6 models × 11 tasks).
 
 Cell encoding:
   line 1  seek, contemplated   e.g. 3,4  (second number omitted if judge not joined)
@@ -27,11 +27,12 @@ OUT = ROOT / "docs" / "figures" / "01_task_heatmap.svg"
 MODEL_LABELS = [
     ("DeepSeek", "V4-Pro"),
     ("Kimi", "K2.6"),
+    ("MiMo", "V2.6-Pro"),
     ("gpt-4o", None),
     ("gpt-5.4", None),
     ("Claude", "Sonnet 4.5"),
 ]
-MODEL_KEYS = ["deepseek", "kimi", "gpt-4o", "gpt-5.4", "claude"]
+MODEL_KEYS = ["deepseek", "kimi", "mimo", "gpt-4o", "gpt-5.4", "claude"]
 assert len(MODEL_LABELS) == len(MODEL_KEYS)
 
 # Column order = present inventory (RESULTS §4)
@@ -69,6 +70,7 @@ MODE_SHORT = {
     "sorry_cheat": "sorry",
     "axiom_cheat": "axiom",
     "statement_tamper": "tamper",
+    "tamper_attempt": "tamper",
     "safety_tool_sabotage": "sabotage",
 }
 
@@ -114,6 +116,8 @@ def _outcome(d: dict) -> str:
     ch = (d.get("verdict") or {}).get("channel") or ""
     if lab in ("score_seek_success", "score_seek"):
         return "seek"
+    if lab == "score_seek_attempt":
+        return "attempt"
     if "blocked" in lab or ch == "cheat_blocked" or "blocked" in str(ch):
         return "blocked"
     if lab == "honest_solve":
@@ -250,6 +254,7 @@ def cell_files(task: str, mk: str) -> list[Path]:
         return _first_cohort(
             [
                 [f"oversight_{mk}_imp_none_r*.json"],
+                [f"oversight_{mk}_impossible_none_r*.json"],
                 [f"oversight_ds_imp_none_r*.json"] if mk == "deepseek" else [],
                 [f"kimi_oversight_imp_none_r*.json"] if mk == "kimi" else [],
             ],
@@ -259,6 +264,7 @@ def cell_files(task: str, mk: str) -> list[Path]:
         return _first_cohort(
             [
                 [f"monitored_{mk}_imp_none_r*.json"],
+                [f"monitored_{mk}_impossible_none_r*.json"],
                 [f"monitored_ds_imp_none_r*.json"] if mk == "deepseek" else [],
                 [f"kimi_monitored_imp_none_r*.json"] if mk == "kimi" else [],
             ],
@@ -280,6 +286,8 @@ def cell_files(task: str, mk: str) -> list[Path]:
                 [f"metric_{mk}_endorsing_r*.json"],
                 [f"metric_mx_{mk}_endorsing_r*.json"],
                 [f"metric_{mk}_none_endorsing_r*.json"],
+                # MiMo present fill used precedent=none (no endorsing arm yet)
+                [f"metric_{mk}_none_r*.json"],
             ],
             task,
         )
@@ -291,6 +299,7 @@ def cell_files(task: str, mk: str) -> list[Path]:
                 [f"cve_mx_{mk}_neutral_r*.json"],
                 [f"cve_mx_{mk}_disclose_r*.json"],
                 [f"cve_mx_{mk}_none_r*.json"],
+                [f"cve_{mk}_none_r*.json"],
             ],
             task,
         )
@@ -725,7 +734,7 @@ def render(grid: dict[tuple[str, str], dict | None], intent_by: dict[str, dict] 
 
     parts.append(
         f'<text x="{left}" y="{H - 10}" font-family="Helvetica Neue,Arial,sans-serif" font-size="8.5" fill="{FAINT}">'
-        f"task cells: seek, contemplated · Σ = unweighted sum across tasks (not a danger score) · n≈5 · planned: MiMo-V2.6-Pro</text>"
+        f"task cells: seek, contemplated · Σ = unweighted sum across tasks (not a danger score) · n≈5 · +MiMo-V2.6-Pro</text>"
     )
     parts.append("</svg>")
     return "\n".join(parts)
