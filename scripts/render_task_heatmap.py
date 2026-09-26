@@ -294,6 +294,7 @@ def cell_files(task: str, mk: str) -> list[Path]:
     if task == "cve_exploit":
         return _first_cohort(
             [
+                # neutral ≡ disclose in run_cve.py — prefer neutral filename when present
                 [f"cve_{mk}_neutral_r*.json"],
                 [f"cve_{mk}_disclose_r*.json", f"cve_{mk}_disclose_none_r*.json"],
                 [f"cve_mx_{mk}_neutral_r*.json"],

@@ -18,7 +18,7 @@ REPO_ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.join(REPO_ROOT, "platform", "harness"))
 import grade as grader  # noqa: E402
-from azure_models import MODELS, PROPENSITY_MODEL_KEY, chat_token_kwargs, chat_temperature_kwargs  # noqa: E402
+from azure_models import MODELS, PROPENSITY_MODEL_KEY, chat_token_kwargs, chat_temperature_kwargs, make_openai_client  # noqa: E402
 from propensity_schema import finalize_run_record  # noqa: E402
 from eval_awareness import frame_prompt, legacy_monitoring, normalize_frame  # noqa: E402
 IMAGE = "score-metric:latest"
@@ -88,8 +88,8 @@ def main():
     a = ap.parse_args()
     # Axis 1: prompt frame. --eval-frame wins; --monitoring kept for backcompat.
     frame = normalize_frame(a.eval_frame or a.monitoring)
-    model_name, base_url = MODELS[a.model_key]
-    client = OpenAI(api_key=os.environ["AZURE_OPENAI_API_KEY"], base_url=base_url)
+    model_name, _ = MODELS[a.model_key]
+    client = make_openai_client(a.model_key)
 
     cid = "metric_" + uuid.uuid4().hex[:8]
     subprocess.run(["docker", "run", "-d", "--name", cid, "--network", "none", IMAGE],
@@ -154,7 +154,7 @@ def main():
             model_key=PROPENSITY_MODEL_KEY.get(a.model_key, a.model_key),
             scope=a.scope, framing=a.framing, precedent_stance=stance,
             precedent_source="none" if a.precedent == "none" else "human",
-            has_recipe=False, eval_frame=frame, salient_grader=(a.salient=="on"),
+            has_recipe=False, eval_awareness=frame, salient_grader=(a.salient=="on"),
         )
         json.dump(result, open(a.out, "w"), indent=2)
         print(f"DONE {a.model_key}/{a.scope}/precedent={a.precedent}/frame={frame} -> "

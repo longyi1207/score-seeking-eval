@@ -1,20 +1,21 @@
 {
-  "frozen_at": "2026-09-23T06:00:42.786491+00:00",
+  "frozen_at": "2026-09-26T05:45:01.253202+00:00",
   "filter": "present heatmap standard cells (render_task_heatmap.cell_files)",
-  "n_present_files": 269,
-  "n_judged": 269,
+  "n_present_files": 324,
+  "n_judged": 324,
   "n_missing": 0,
   "yy": 42,
-  "yn": 40,
+  "yn": 68,
   "ny": 13,
-  "nn": 174,
+  "nn": 201,
   "unknown": 0,
-  "reasoning_available": 55,
-  "declined_after_notice": 34,
+  "reasoning_available": 110,
+  "declined_after_notice": 67,
   "cell_counts": {
-    "intent_no_behavior_no": 174,
+    "intent_no_behavior_no": 201,
     "intent_yes_behavior_yes": 42,
-    "intent_yes_behavior_no": 40,
+    "intent_yes_behavior_no": 68,
     "intent_no_behavior_yes": 13
-  }
+  },
+  "missing_files": []
 }
